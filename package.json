@@ -1,0 +1,17 @@
+{
+  "name": "egg-pig",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "main" :"pig.js",
+  "dependencies": {
+    "@types/reflect-metadata": "^0.1.0",
+    "is-type-of": "^1.2.0",
+    "reflect-metadata": "^0.1.12"
+  }
+}
