@@ -1,13 +1,16 @@
-declare module 'egg-pig' {
-	export function Guard() : (target) => void;
-	export function Pipe() : (target) => void;
-	export function Interceptor() : (target) => void;
-	export function Context(data?, ...pipes) : (target, key, index) => void;
-	export function Request(data?, ...pipes) : (target, key, index) => void;
-	export function Response(data?, ...pipes) : (target, key, index) => void;
-	export function Body(data?, ...pipes) : (target, key, index) => void;
-	export function Param(data?, ...pipes) : (target, key, index) => void;
-	export function Query(data?, ...pipes) : (target, key, index) => void;
-	export function UseGuards(...pipes:any[]) : (target, key?, descriptor?) => any;
-	export function UsePipes(...pipes:any[]) : (target, key?, descriptor?) => any;
-}
+export function Guard(): any;
+export function Pipe(): any;
+export function Interceptor(): any;
+
+
+export function Context(data?, ...pipes): any;
+export function Request(data?, ...pipes): any;
+export function Response(data?, ...pipes): any;
+export function Body(data?, ...pipes): any;
+export function Param(data?, ...pipes): any;
+export function Query(data?, ...pipes): any;
+
+export function UsePipes(...pipes): any;
+export function UseGuards(...pipes): any;
+export function UsePipes(...pipes): any;
+export function UseInterceptors(...pipes): any;
