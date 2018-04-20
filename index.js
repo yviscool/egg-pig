@@ -27,32 +27,13 @@ function createMapping(paramType) {
     }
 }
 
-function setTargetCallback(proto, key) {
-    let targetCallback;
-    const { value, get } = Object.getOwnPropertyDescriptor(proto, key);
-    const callback = Reflect.getMetadata(TARGETCALBACK_METADATA, proto, key);
-    targetCallback = callback ? callback : value ? value : get;
-    Reflect.defineMetadata(TARGETCALBACK_METADATA, targetCallback, proto, key);
-}
-
-function configureClassPig(klass, pigs, metadata) {
-    const proto = klass.prototype;
-    const keys = Object.getOwnPropertyNames(proto);
-    for (const key of keys) {
-        if (key === 'constructor') continue;
-        setTargetCallback(proto, key);
-        Reflect.defineMetadata(metadata, pigs, proto.constructor);
-    }
-}
-
 function UseGuards(...guards) {
     return (target, key, descriptor) => {
         if (descriptor) {
-            Reflect.defineMetadata(TARGETCALBACK_METADATA, descriptor.value, target, key);
             Reflect.defineMetadata(GUARDS_METADATA, guards, target, key);
             return Object.getOwnPropertyDescriptor(target, key);
         }
-        configureClassPig(target, guards, GUARDS_METADATA);
+        Reflect.defineMetadata(GUARDS_METADATA, guards, target);
         return target;
     }
 }
@@ -60,11 +41,10 @@ function UseGuards(...guards) {
 function UsePipes(...pipes) {
     return (target, key, descriptor) => {
         if (descriptor) {
-            Reflect.defineMetadata(TARGETCALBACK_METADATA, descriptor.value, target, key);
             Reflect.defineMetadata(PIPES_METADATA, pipes, target, key);
             return Object.getOwnPropertyDescriptor(target, key);
         }
-        configureClassPig(target, pipes, PIPES_METADATA);
+        Reflect.defineMetadata(GUARDS_METADATA, pipes, target);
         return target;
     }
 }
@@ -72,11 +52,10 @@ function UsePipes(...pipes) {
 function UseInterceptors(...interceptors) {
     return (target, key, descriptor) => {
         if (descriptor) {
-            Reflect.defineMetadata(TARGETCALBACK_METADATA, descriptor.value, target, key);
             Reflect.defineMetadata(INTERCEPTORS_METADATA, interceptors, target, key);
             return Object.getOwnPropertyDescriptor(target, key);
         }
-        configureClassPig(target, interceptors, INTERCEPTORS_METADATA);
+        Reflect.defineMetadata(INTERCEPTORS_METADATA, interceptors, target);
         return target;
     }
 }
