@@ -31,7 +31,7 @@ function UseGuards(...guards) {
     return (target, key, descriptor) => {
         if (descriptor) {
             Reflect.defineMetadata(GUARDS_METADATA, guards, target, key);
-            return Object.getOwnPropertyDescriptor(target, key);
+            return descriptor;
         }
         Reflect.defineMetadata(GUARDS_METADATA, guards, target);
         return target;
@@ -42,7 +42,7 @@ function UsePipes(...pipes) {
     return (target, key, descriptor) => {
         if (descriptor) {
             Reflect.defineMetadata(PIPES_METADATA, pipes, target, key);
-            return Object.getOwnPropertyDescriptor(target, key);
+            return descriptor;
         }
         Reflect.defineMetadata(GUARDS_METADATA, pipes, target);
         return target;
@@ -53,7 +53,7 @@ function UseInterceptors(...interceptors) {
     return (target, key, descriptor) => {
         if (descriptor) {
             Reflect.defineMetadata(INTERCEPTORS_METADATA, interceptors, target, key);
-            return Object.getOwnPropertyDescriptor(target, key);
+            return descriptor;
         }
         Reflect.defineMetadata(INTERCEPTORS_METADATA, interceptors, target);
         return target;
@@ -72,11 +72,11 @@ function Pipe() { return function (target, key, descriptor) { } };
 function Interceptor() { return function (target, key, descriptor) { } };
 
 module.exports = {
-    Guard,
     Pipe,
+    Guard,
     Interceptor,
-    UseGuards,
     UsePipes,
+    UseGuards,
     UseInterceptors,
     Context,
     Request,

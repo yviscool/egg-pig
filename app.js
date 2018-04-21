@@ -1,6 +1,5 @@
 'use strict';
 
-const path = require('path');
 const PigConsumer = require('./lib/consumer');
 
 module.exports = app => {
