@@ -15,5 +15,5 @@ configure `xxx/config/plugin.js` to enable:
     enable: true,
     package: 'egg-pig'
   }
-```j
+```
 
