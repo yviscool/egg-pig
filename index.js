@@ -2,11 +2,14 @@ require('reflect-metadata');
 const is = require('is-type-of');
 const {
     RouteParamTypes,
+    RequestMethod,
     GUARDS_METADATA,
     INTERCEPTORS_METADATA,
     PIPES_METADATA,
     ROUTE_ARGS_METADATA,
     TARGETCALBACK_METADATA,
+    PATH_METADATA,
+    METHOD_METADATA,
 } = require('./lib/constants');
 
 function createMapping(paramType) {
@@ -23,6 +26,16 @@ function createMapping(paramType) {
                     pipes: paramPipe,
                 }
             }, target, key);
+        }
+    }
+}
+
+function createRouterMapping(methodType = RequestMethod.GET) {
+    return function (path = '/') {
+        return (target, key, descriptor) => {
+            Reflect.defineMetadata(PATH_METADATA, path, target, key);
+            Reflect.defineMetadata(METHOD_METADATA, methodType, target, key);
+            return descriptor;
         }
     }
 }
@@ -60,6 +73,8 @@ function UseInterceptors(...interceptors) {
     }
 }
 
+
+// paramtypes 
 const Body = createMapping(RouteParamTypes.BODY);
 const Param = createMapping(RouteParamTypes.PARAM);
 const Query = createMapping(RouteParamTypes.QUERY);
@@ -69,17 +84,40 @@ const Response = createMapping(RouteParamTypes.RESPONSE);
 const Session = createMapping(RouteParamTypes.SESSION);
 const Headers = createMapping(RouteParamTypes.HEADERS);
 
+// http verb 
+const Head = createRouterMapping(RequestMethod.HEAD);
+const Get = createRouterMapping(RequestMethod.GET);
+const Post = createRouterMapping(RequestMethod.POST);
+const Delete = createRouterMapping(RequestMethod.DELETE);
+const Options = createRouterMapping(RequestMethod.OPTIONS);
+const Put = createRouterMapping(RequestMethod.PUT);
+const Patch = createRouterMapping(RequestMethod.PATCH);
+const Redirect = createRouterMapping(RequestMethod.REDIRECT);
+
+
+// pipe/guard/interceptor
 function Guard() { return function (target) { } };
 function Pipe() { return function (target, key, descriptor) { } };
 function Interceptor() { return function (target, key, descriptor) { } };
 
+
+// controller
+function Controller(prefix = '/') {
+    return function (target) {
+        Reflect.defineMetadata(PATH_METADATA, prefix, target);
+    }
+}
+
 module.exports = {
+
     Pipe,
     Guard,
     Interceptor,
+
     UsePipes,
     UseGuards,
     UseInterceptors,
+
     Context,
     Request,
     Response,
@@ -88,4 +126,16 @@ module.exports = {
     Query,
     Session,
     Headers,
+
+    Head,
+    Get,
+    Post,
+    Delete,
+    Options,
+    Put,
+    Patch,
+    Redirect,
+
+
+    Controller
 }

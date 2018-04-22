@@ -11,6 +11,17 @@ export function Body(data?, ...pipes): any;
 export function Session(data?, ...pipes): any;
 export function Headers(data?, ...pipes): any;
 
+export function Head(path?): any;
+export function Get(path?): any;
+export function Post(path?): any;
+export function Delete(path?): any;
+export function Options(path?): any;
+export function Put(path?): any;
+export function Patch(path?): any;
+export function Redirect(path?): any;
+
 export function UsePipes(...pipes): any;
 export function UseGuards(...pipes): any;
 export function UseInterceptors(...pipes): any;
+
+export function Controller(path?): any;
