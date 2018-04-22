@@ -7,13 +7,14 @@
   "keywords": [
     "egg",
     "eggPlugin",
+    "egg-plugin",
     "Decorators"
   ],
   "author": "YV",
   "license": "ISC",
   "main": "index.js",
   "eggPlugin": {
-    "name": "pig"
+    "name": "eggpig"
   },
   "bugs": {
     "url": "https://github.com/yviscool/egg-pig/issues"
@@ -30,5 +31,5 @@
     "require-all": "^2.2.0",
     "rxjs": "^5.5.10"
   },
-  "version": "0.1.2"
+  "version": "0.1.3"
 }

@@ -66,6 +66,7 @@ export default class HomeController extends Controller {
 
 ```js
 import { UseInterceptors, Interceptor } from 'egg-pig';
+import 'rxjs/add/operator/do';
 
 @Interceptor()
 class XXInterceptor extends BaseContextClass {
@@ -89,10 +90,10 @@ export default class HomeController extends Controller {
 }
 ```
 
-### other Decorators
+### Other Decorators
 ```js
 import { Controller } from 'egg';
-import { Context, Request, Response, Param, Query, Body } from 'egg-pig';
+import { Context, Request, Response, Param, Query, Body, Session, Headers } from 'egg-pig';
 
 export default class HomeController extends Controller {
   public async index(
@@ -101,9 +102,18 @@ export default class HomeController extends Controller {
     @Response() res,
     @Param() param,
     @Query() query,
-    @Body() body
+    @Body() body,
+    @Session() session,
+    @Headers() headers,
   ) {
-
+    // ctx = this.ctx;
+    // req=  this.ctx.req 
+    // res = this.ctx.res
+    // param = this.ctx.params
+    // query = this.ctx.query
+    // body = this.ctx.request.body
+    // session = this.ctx.session
+    // headers = this.ctx.headers
   }
 }
-*** 
+```

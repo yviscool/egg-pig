@@ -66,6 +66,8 @@ const Query = createMapping(RouteParamTypes.QUERY);
 const Context = createMapping(RouteParamTypes.CONTEXT);
 const Request = createMapping(RouteParamTypes.REQUEST);
 const Response = createMapping(RouteParamTypes.RESPONSE);
+const Session = createMapping(RouteParamTypes.SESSION);
+const Headers = createMapping(RouteParamTypes.HEADERS);
 
 function Guard() { return function (target) { } };
 function Pipe() { return function (target, key, descriptor) { } };
@@ -84,4 +86,6 @@ module.exports = {
     Body,
     Param,
     Query,
+    Session,
+    Headers,
 }
