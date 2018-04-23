@@ -18,10 +18,10 @@ export function Delete(path?): any;
 export function Options(path?): any;
 export function Put(path?): any;
 export function Patch(path?): any;
-export function Redirect(path?): any;
 
 export function UsePipes(...pipes): any;
 export function UseGuards(...pipes): any;
 export function UseInterceptors(...pipes): any;
 
 export function Controller(path?): any;
+export function Resources(path?): any;
