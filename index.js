@@ -125,9 +125,7 @@ function Controller(prefix = '/') {
 // resources
 function Resources(name, prefix) {
     return function (target) {
-
         Reflect.defineMetadata(PATH_METADATA, { name, prefix, isRestful: true, proto: target.prototype}, target);
-
         return target;
     }
 }
