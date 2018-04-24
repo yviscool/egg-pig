@@ -117,3 +117,123 @@ export default class HomeController extends Controller {
   }
 }
 ```
+
+## Route
+configure `xxx/config/config.default.js` to enable:
+```js
+config.eggpig = {
+  route: true,
+}
+```
+
+### Controller
+
+```js
+import { BaseContextClass } from 'egg';
+import {  Controller, Get, Post, Body, Param } from 'egg-pig';
+
+@Controller('cats') // => /cats
+export default class CatsController extends BaseContextClass{
+
+  @Get()  // => router.get('/cats', index)
+  async index(){
+    this.ctx.body = 'index'; 
+  }
+
+  @Get('/get')   // => router.get('/cats/get', get)
+  async get(){
+    this.ctx.body = 'add'; 
+  }
+  
+  @Post('/add')   // => router.post('/cats/add', add)
+  async add(@Body() body){
+    this.ctx.body = body; 
+  }
+  
+}
+
+```
+
+### route name
+
+```js
+import { BaseContextClass } from 'egg';
+import {  Controller, Get, Param } from 'egg-pig';
+
+@Controller('cats')
+export default class CatsController extends BaseContextClass{
+
+  @Get('cats',':id') // router.get('cats', '/cats/:id', index)
+  async index(@Param('id') param){
+    this.ctx.body = param; 
+  }
+}
+
+```
+if you open '/cats/12' then `ctx.body = 12`
+
+### restful
+
+```js
+import { BaseContextClass } from 'egg';
+import {  Resources, Get } from 'egg-pig';
+
+@Resources('cats')    // => router.resources('/cats',CastController)
+export default class CatsController extends BaseContextClass{
+
+  async index(){  
+    this.ctx.body = 'index';
+  }
+
+  async new(){
+    this.ctx.body = 'new';
+  }
+
+  @Get('/add')    //  router.get('/cats/add', add)
+  async add(){
+    this.ctx.body = 'add'; 
+  }
+
+}
+
+```
+also you can use route name such as `@Resources('cats', '/cats')`
+
+### multiple middleware
+
+```js
+// router.ts
+export default (app:Application) => {
+  const { router } = app;
+
+  router.get('/cats/add', async (_,next) => {
+    console.log('this is middleware');
+    return next();
+  });
+};
+
+
+// cats.ts
+@Controller('cats')
+export default class CatsController extends BaseContextClass{
+
+  @Get('/add')
+  async add(){
+    this.ctx.body = 'add'; 
+  }
+}
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
