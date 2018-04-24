@@ -24,4 +24,4 @@ export function UseGuards(...pipes): any;
 export function UseInterceptors(...pipes): any;
 
 export function Controller(path?): any;
-export function Resources(path?): any;
+export function Resources(name, path?): any;

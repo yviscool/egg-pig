@@ -107,7 +107,6 @@ const Delete = createRouterMapping(RequestMethod.DELETE);
 const Options = createRouterMapping(RequestMethod.OPTIONS);
 const Put = createRouterMapping(RequestMethod.PUT);
 const Patch = createRouterMapping(RequestMethod.PATCH);
-const Resources = createRouterMapping(RequestMethod.RESOURCES);
 
 
 // pipe/guard/interceptor
@@ -127,9 +126,9 @@ function Controller(prefix = '/') {
 function Resources(name, prefix) {
     return function (target) {
 
-        Reflect.defineMetadata(PATH_METADATA, { name, prefix, isRestful: true }, target);
+        Reflect.defineMetadata(PATH_METADATA, { name, prefix, isRestful: true, proto: target.prototype}, target);
 
-        return descriptor;
+        return target;
     }
 }
 
