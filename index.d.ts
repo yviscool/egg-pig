@@ -11,13 +11,13 @@ export function Body(data?, ...pipes): any;
 export function Session(data?, ...pipes): any;
 export function Headers(data?, ...pipes): any;
 
-export function Head(name,path?): any;
-export function Get(name,path?): any;
-export function Post(name,path?): any;
-export function Delete(name,path?): any;
-export function Options(name,path?): any;
-export function Put(name,path?): any;
-export function Patch(name,path?): any;
+export function Head(name?,path?): any;
+export function Get(name?,path?): any;
+export function Post(name?,path?): any;
+export function Delete(name?,path?): any;
+export function Options(name?,path?): any;
+export function Put(name?,path?): any;
+export function Patch(name?,path?): any;
 
 export function UsePipes(...pipes): any;
 export function UseGuards(...pipes): any;
