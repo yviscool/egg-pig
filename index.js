@@ -123,12 +123,13 @@ function Controller(prefix = '/') {
 }
 
 // resources
-function Resources(name, prefix) {
+const Resources = Restful = function (name, prefix) {
     return function (target) {
-        Reflect.defineMetadata(PATH_METADATA, { name, prefix, isRestful: true, proto: target.prototype}, target);
+        Reflect.defineMetadata(PATH_METADATA, { name, prefix, isRestful: true, proto: target.prototype }, target);
         return target;
     }
 }
+
 
 module.exports = {
 
@@ -153,11 +154,12 @@ module.exports = {
     Head,
     Get,
     Post,
-    Delete,
-    Options,
     Put,
     Patch,
+    Delete,
+    Options,
 
+    Restful,
     Resources,
-    Controller
+    Controller,
 }

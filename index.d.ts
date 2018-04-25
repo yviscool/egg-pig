@@ -26,3 +26,6 @@ export function UseInterceptors(...pipes): any;
 export function Controller(path?): any;
 export function Resources(path:string): any;
 export function Resources(name, path): any;
+
+export function Restful(path:string): any;
+export function Restful(name, path): any;

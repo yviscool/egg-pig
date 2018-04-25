@@ -170,7 +170,7 @@ export default class CatsController extends BaseContextClass{
 }
 
 ```
-if you open '/cats/12' then `ctx.body = 12`
+if you open `/cats/12` then `ctx.body = 12`
 
 ### restful
 
@@ -178,7 +178,7 @@ if you open '/cats/12' then `ctx.body = 12`
 import { BaseContextClass } from 'egg';
 import {  Resources, Get } from 'egg-pig';
 
-@Resources('cats')    // => router.resources('/cats',CastController)
+@Resources('cats')    // => router.resources(''cats', /cats',CastController)
 export default class CatsController extends BaseContextClass{
 
   async index(){  
@@ -197,7 +197,8 @@ export default class CatsController extends BaseContextClass{
 }
 
 ```
-also you can use route name such as `@Resources('cats', '/cats')`
+Use route name `@Resources('cats', '/cats')`
+You can also use `@Restful()` Decorator, the same as Resources;
 
 ### multiple middleware
 
