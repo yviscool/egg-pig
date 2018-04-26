@@ -1,38 +1,55 @@
 {
-  "name": "egg-pig",
-  "description": "Pipe, Interceptor, Guard Decorators",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [
-    "egg",
-    "eggPlugin",
-    "egg-plugin",
-    "Decorators"
-  ],
-  "author": "YV",
-  "license": "ISC",
-  "main": "index.js",
-  "eggPlugin": {
-    "name": "eggpig"
-  },
-  "bugs": {
-    "url": "https://github.com/yviscool/egg-pig/issues"
-  },
-  "engines": {
-    "node": ">=6.0.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/yviscool/egg-pig"
-  },
-  "dependencies": {
-    "inflection": "^1.12.0",
-    "is-type-of": "^1.2.0",
-    "koa-convert": "^1.2.0",
-    "reflect-metadata": "^0.1.12",
-    "require-all": "^2.2.0",
-    "rxjs": "^5.5.10"
-  },
-  "version": "0.1.5"
+    "name": "egg-pig",
+    "description": "Pipe, Interceptor, Guard Decorators",
+    "keywords": [
+        "egg",
+        "eggPlugin",
+        "egg-plugin",
+        "Decorators"
+    ],
+    "author": "YV",
+    "license": "ISC",
+    "main": "index.js",
+    "eggPlugin": {
+        "name": "eggpig"
+    },
+    "bugs": {
+        "url": "https://github.com/yviscool/egg-pig/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/yviscool/egg-pig"
+    },
+    "dependencies": {
+        "inflection": "^1.12.0",
+        "is-type-of": "^1.2.0",
+        "koa-convert": "^1.2.0",
+        "reflect-metadata": "^0.1.12",
+        "require-all": "^2.2.0",
+        "rxjs": "^5.5.10"
+    },
+    "devDependencies": {
+        "autod": "^3.0.1",
+        "autod-egg": "^1.0.0",
+        "egg": "^2.6.1",
+        "egg-bin": "^4.3.5",
+        "egg-ci": "^1.8.0",
+        "egg-mock": "^3.14.0",
+        "tslib": "^1.9.0",
+        "tslint": "^4.0.0",
+        "eslint": "^4.11.0",
+        "eslint-config-egg": "^6.0.0",
+        "webstorm-disable-index": "^1.2.0"
+    },
+    "engines": {
+        "node": ">=8.9.0"
+    },
+    "scripts": {
+        "test": "egg-bin test",
+        "cov": "egg-bin cov",
+        "lint": "eslint .",
+        "ci": "npm run lint && npm run cov",
+        "autod": "autod"
+    },
+    "version": "0.1.5"
 }
