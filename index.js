@@ -98,6 +98,8 @@ const Request = createMapping(RouteParamTypes.REQUEST);
 const Response = createMapping(RouteParamTypes.RESPONSE);
 const Session = createMapping(RouteParamTypes.SESSION);
 const Headers = createMapping(RouteParamTypes.HEADERS);
+const UploadedFile = createMapping(RouteParamTypes.FILE);
+const UploadedFiles = createMapping(RouteParamTypes.FILES);
 
 // http verb
 const Head = createRouterMapping(RequestMethod.HEAD);
@@ -149,6 +151,8 @@ module.exports = {
   Query,
   Session,
   Headers,
+  UploadedFile,
+  UploadedFiles,
 
 
   Head,

@@ -10,6 +10,8 @@ export function Query(data?, ...pipes): any;
 export function Body(data?, ...pipes): any;
 export function Session(data?, ...pipes): any;
 export function Headers(data?, ...pipes): any;
+export function UploadedFile(): any;
+export function UploadedFiles(): any;
 
 export function Head(name?,path?): any;
 export function Get(name?,path?): any;
