@@ -11,13 +11,19 @@ const {
   PATH_METADATA,
   METHOD_METADATA,
   ROUTE_NAME_METADATA,
+  RENDER_METADATA,
 } = require('./lib/constants');
 
+
+function validatePath(path) {
+  return path.charAt(0) !== '/' ? '/' + path : path;
+}
+
 function createMapping(paramType) {
-  return function(data, ...pipes) {
+  return function (data, ...pipes) {
     return (target, key, index) => {
       const paramData = is.function(data) ? undefined : data;
-      const paramPipe = is.function(data) ? [ data, ...pipes ] : pipes;
+      const paramPipe = is.function(data) ? [data, ...pipes] : pipes;
       const args = Reflect.getMetadata(ROUTE_ARGS_METADATA, target, key);
       Reflect.defineMetadata(ROUTE_ARGS_METADATA, {
         ...args,
@@ -32,12 +38,12 @@ function createMapping(paramType) {
 }
 
 function createRouterMapping(methodType = RequestMethod.GET) {
-  return function(name, path) {
+  return function (name, path) {
     return (target, key, descriptor) => {
 
       // get('/user')
       if (name && !path) {
-        Reflect.defineMetadata(PATH_METADATA, name, target, key);
+        Reflect.defineMetadata(PATH_METADATA, validatePath(name), target, key);
       }
       // get()
       if (!name) {
@@ -46,7 +52,7 @@ function createRouterMapping(methodType = RequestMethod.GET) {
       // get('user','/user')
       if (name && path) {
         Reflect.defineMetadata(ROUTE_NAME_METADATA, name, target, key);
-        Reflect.defineMetadata(PATH_METADATA, path, target, key);
+        Reflect.defineMetadata(PATH_METADATA, validatePath(path), target, key);
       }
       Reflect.defineMetadata(METHOD_METADATA, methodType, target, key);
 
@@ -112,24 +118,35 @@ const Patch = createRouterMapping(RequestMethod.PATCH);
 
 
 // pipe/guard/interceptor
-function Guard() { return function(target) { }; }
-function Pipe() { return function(target, key, descriptor) { }; }
-function Interceptor() { return function(target, key, descriptor) { }; }
+function Guard() { return function (target) { }; }
+function Pipe() { return function (target, key, descriptor) { }; }
+function Interceptor() { return function (target, key, descriptor) { }; }
 
 
 // controller
 function Controller(prefix = '/') {
-  return function(target) {
-    Reflect.defineMetadata(PATH_METADATA, { prefix }, target);
+  return function (target) {
+    Reflect.defineMetadata(PATH_METADATA, { prefix: validatePath(prefix) }, target);
   };
 }
 
 // resources
 function Resources(name, prefix) {
-  return function(target) {
-    Reflect.defineMetadata(PATH_METADATA, { name, prefix, isRestful: true, proto: target.prototype }, target);
+  return function (target) {
+    Reflect.defineMetadata(PATH_METADATA, {
+      name,
+      prefix: validatePath(prefix ? prefix : name),
+      isRestful: true,
+      proto: target.prototype
+    }, target);
     return target;
   };
+}
+
+function Render(template) {
+  return function (target, key, descriptor) {
+    Reflect.defineMetadata(RENDER_METADATA, template, target, key);
+  }
 }
 
 
@@ -162,6 +179,7 @@ module.exports = {
   Patch,
   Delete,
   Options,
+  Render,
 
   Resources,
   Restful: Resources,
