@@ -41,6 +41,7 @@ export default class HomeController extends Controller {
   }
 }
 ```
+
 ### Pipe
 ```js
 import { BaseContextClass } from 'egg';
@@ -117,6 +118,26 @@ export default class HomeController extends Controller {
   }
 }
 ```
+
+### tips
+
+```js
+@Controller('cats')
+export default class CatsController extends BaseContextClass{
+
+  @Get('/add')
+  async add(){
+    return 'zjl'; // this.ctx.body = 'zjl;
+  }
+  
+  @Get('/bar')
+  async add(){
+    return await this.service.xxx.yyy(); // this.ctx.body = '';
+  }
+}
+
+```
+use return value replace ctx.body;
 
 ## Route
 configure `xxx/config/config.default.js` to enable:
@@ -226,15 +247,26 @@ export default class CatsController extends BaseContextClass{
 
 ```
 
+### render 
 
+```js
+import { BaseContextClass} from 'egg';
+import { Render,Controller, Get } from 'egg-pig';
 
+@Controller('home')
+export default class HomeController extends BaseContextClass{
 
-
-
-
-
-
-
-
-
+  @Get()   // /home
+  @Render('list.tpl')
+  public async index() {
+    const dataList = {
+      list: [
+        { id: 1, title: 'this is news 1', url: '/news/1' },
+        { id: 2, title: 'this is news 2', url: '/news/2' }
+      ]
+    };
+    return dataList;
+  }
+}
+```
 
