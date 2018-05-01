@@ -12,6 +12,7 @@ const {
   METHOD_METADATA,
   ROUTE_NAME_METADATA,
   RENDER_METADATA,
+  HEADER_METADATA,
 } = require('./lib/constants');
 
 
@@ -149,6 +150,13 @@ function Render(template) {
   }
 }
 
+function Header(name, value) {
+  return function (target, key, descriptor) {
+    const metadata = Reflect.getMetadata(HEADER_METADATA, target, key) || [];
+    Reflect.defineMetadata(HEADER_METADATA, [...metadata, ...[{name,value}]], target, key);
+  }
+}
+
 
 module.exports = {
 
@@ -170,6 +178,8 @@ module.exports = {
   Headers,
   UploadedFile,
   UploadedFiles,
+  Req: Request,
+  Res: Response,
 
 
   Head,
@@ -180,6 +190,7 @@ module.exports = {
   Delete,
   Options,
   Render,
+  Header,
 
   Resources,
   Restful: Resources,

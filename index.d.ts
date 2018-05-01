@@ -24,6 +24,9 @@ export function Options(name?: string, path?: string): any;
 export function Put(name?: string, path?: string): any;
 export function Patch(name?: string, path?: string): any;
 
+export function Render(template: string): any;
+export function Header(name: string, value: string): any;
+
 export function UsePipes(...pipes): any;
 export function UseGuards(...pipes): any;
 export function UseInterceptors(...pipes): any;
@@ -34,4 +37,4 @@ export function Resources(name: string, path: string): any;
 export function Restful(path: string): any;
 export function Restful(name: string, path: string): any;
 
-export function Render(template: string): any;
+
