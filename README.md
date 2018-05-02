@@ -17,95 +17,25 @@ configure `xxx/config/plugin.js` to enable:
   }
 ```
 
-## use 
-you can  see [nest.js](https://docs.nestjs.com/).
-
-### Guard
-
-```js
-import { BaseContextClass } from 'egg';
-import { Guard, UseGuards } from 'egg-pig';
-
-@Guard()
-export class XXGuard extends BaseContextClass {
-  canActivate(req, context){
-    return true;
-  }
-}
-
-@UseGuards(XXGuard)
-export default class HomeController extends Controller {
-  // @UseGuards(XXGuard)
-  public async index() {
-    // some logic
-  }
-}
-```
-
-### Pipe
-```js
-import { BaseContextClass } from 'egg';
-import { Pipe, UsePipes, Param, Query, Body } from 'egg-pig';
-
-@Pipe()
-class XXPipe extends BaseContextClass {
-  async transform(val, metadata) {
-    return val;  //validate val or transform val
-  }
-}
-
-@UsePipes(XXPipe)
-export default class HomeController extends Controller {
-  // @UsePipes(XXPipe)
-  public async index(@Param('xx', XXPipe) param; @Body('xx', XXPipe) body, @Query(XXPipe) quey) {
-    // some logic
-  }
-}
-```
-
-### Interceptor
-
-```js
-import { UseInterceptors, Interceptor } from 'egg-pig';
-import 'rxjs/add/operator/do';
-
-@Interceptor()
-class XXInterceptor extends BaseContextClass {
-  async intercept(req, context, stream$) {
-    console.log('Before...', );
-    const now = Date.now();
-
-    return stream$.do(
-      () => console.log(`After... ${Date.now() - now}ms`),
-    );
-  }
-}
-
-@UseInterceptors(XXInterceptor)
-export default class HomeController extends Controller {
-
-  //@UseInterceptors(XXInterceptor)
-  public async index() {
-    // some login
-  }
-}
-```
-
-### Other Decorators
+### Param Decorators
 ```js
 import { Controller } from 'egg';
-import { Context, Request, Response, Param, Query, Body, Session, Headers } from 'egg-pig';
+import { Context, Request, Response, Param, Query, Body, Session, Headers, Res, Req, UploadedFile, UploadedFiles } from 'egg-pig';
 
 export default class HomeController extends Controller {
   public async index(
     @Context() ctx,
     @Request() req,
     @Response() res,
+    @Req() req, // alias
+    @Res() res,// alias
     @Param() param,
     @Query() query,
     @Body() body,
     @Session() session,
     @Headers() headers,
+    @UploadedFile() file,
+    @UploadedFiles() files,
   ) {
     // ctx = this.ctx;
     // req=  this.ctx.req 
@@ -115,11 +45,13 @@ export default class HomeController extends Controller {
     // body = this.ctx.request.body
     // session = this.ctx.session
     // headers = this.ctx.headers
+    // file = this.ctx.getFileStream()
+    // files = this.ctx.multipart()
   }
 }
 ```
 
-### tips
+### return value
 
 ```js
 @Controller('cats')
@@ -139,14 +71,6 @@ export default class CatsController extends BaseContextClass{
 ```
 use return value replace ctx.body;
 
-## Route
-configure `xxx/config/config.default.js` to enable:
-```js
-config.eggpig = {
-  route: true,
-}
-```
-
 ### Controller
 
 ```js
@@ -159,11 +83,13 @@ export default class CatsController extends BaseContextClass{
   @Get()  // => router.get('/cats', index)
   async index(){
     this.ctx.body = 'index'; 
+    // or return 'index'
   }
 
   @Get('/get')   // => router.get('/cats/get', get)
   async get(){
-    this.ctx.body = 'add'; 
+    return 'add'
+    // or this.ctx.body = 'add'; 
   }
   
   @Post('/add')   // => router.post('/cats/add', add)
@@ -199,7 +125,8 @@ if you open `/cats/12` then `ctx.body = 12`
 import { BaseContextClass } from 'egg';
 import {  Resources, Get } from 'egg-pig';
 
-@Resources('cats')    // => router.resources(''cats', /cats',CastController)
+@Resources('cats')    // => router.resources(''cats', /cats', CastController)
+// or @Restful('cats')
 export default class CatsController extends BaseContextClass{
 
   async index(){  
@@ -269,4 +196,94 @@ export default class HomeController extends BaseContextClass{
   }
 }
 ```
+
+### Guard
+
+```js
+import { BaseContextClass } from 'egg';
+import { Guard, UseGuards, CanActivate } from 'egg-pig';
+
+@Guard()
+class XXGuard extends CanActivate{
+  canActivate(req, context){
+    return true;
+  }
+}
+
+@UseGuards(XXGuard)
+export default class HomeController extends Controller {
+  // @UseGuards(XXGuard)
+  public async index() {
+    // some logic
+  }
+}
+```
+## use 
+you can see [nest.js](https://docs.nestjs.com/).
+
+### Pipe
+```js
+import { BaseContextClass } from 'egg';
+import { Pipe, PipeTransform, UsePipes, Param, Query, Body } from 'egg-pig';
+
+@Pipe()
+class XXPipe extends PipeTransform{
+  transform(value, metadata){
+    return value;
+  }
+}
+
+@UsePipes(XXPipe)
+export default class HomeController extends Controller {
+  // @UsePipes(XXPipe)
+  public async index(@Param('xx', XXPipe) param; @Body('xx', XXPipe) body, @Query(XXPipe) quey) {
+    // some logic
+  }
+}
+```
+
+### Interceptor
+
+```js
+import { EgggInterceptor, UseInterceptors, Interceptor} from 'egg-pig';
+
+@Interceptor()
+class XXInterceptor extends EgggInterceptor {
+  async intercept(req, context, stream$) {  
+    console.log('Before...', );
+    const now = Date.now();
+
+    return stream$.do(
+      () => console.log(`After... ${Date.now() - now}ms`),
+    );
+  }
+}
+
+@UseInterceptors(XXInterceptor)
+export default class HomeController extends Controller {
+
+  //@UseInterceptors(XXInterceptor)
+  public async index() {
+    // some login
+  }
+}
+```
+
+### tips
+CanActivate, EgggInterceptor, PipeTransform are all abstract class which extends `egg/BaseContextClass`, it means you can use this on methods . such as 
+
+```js 
+class XXPipe extends PipeTransform{
+  async transform(value, metadata){
+    await this.service.foo.bar();
+    console.log(this.config)
+    this.foo(); 
+    return value;
+  }
+  foo(){
+    // logic
+  }
+}
+```
+
 
