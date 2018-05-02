@@ -10,6 +10,8 @@ export function Interceptor(): any;
 export function Context(): any;
 export function Request(): any;
 export function Response(): any;
+export function Req(): any;
+export function Res(): any;
 export function Param(data?: ParamData, ...pipes): any;
 export function Query(data?: ParamData, ...pipes): any;
 export function Body(data?: ParamData, ...pipes): any;
