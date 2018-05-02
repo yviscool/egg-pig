@@ -153,10 +153,9 @@ function Render(template) {
 function Header(name, value) {
   return function (target, key, descriptor) {
     const metadata = Reflect.getMetadata(HEADER_METADATA, target, key) || [];
-    Reflect.defineMetadata(HEADER_METADATA, [...metadata, ...[{name,value}]], target, key);
+    Reflect.defineMetadata(HEADER_METADATA, [...metadata, ...[{ name, value }]], target, key);
   }
 }
-
 
 module.exports = {
 
@@ -195,4 +194,8 @@ module.exports = {
   Resources,
   Restful: Resources,
   Controller,
+
+  CanActivate : class{},
+  PipeTransform : class{},
+  EgggInterceptor: class{},
 };

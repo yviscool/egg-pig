@@ -1,3 +1,5 @@
+import { BaseContextClass, Request } from 'egg';
+import { Observable } from 'rxjs';
 
 type ParamData = object | string | number;
 
@@ -37,4 +39,29 @@ export function Resources(name: string, path: string): any;
 export function Restful(path: string): any;
 export function Restful(name: string, path: string): any;
 
+type Paramtype = 'BODY' | 'QUERY' | 'PARAM' | 'CUSTOM';
 
+interface ArgumentMetadata {
+  readonly type: Paramtype;
+  readonly metatype?: new (...args) => any | undefined;
+  readonly data?: string | undefined;
+}
+
+export abstract class CanActivate extends BaseContextClass {
+  abstract canActivate(
+    req: Request,
+    context: any,
+  ): boolean | Promise<boolean>;
+}
+
+export abstract class EgggInterceptor extends BaseContextClass{
+  abstract intercept(
+    req: Request,
+    context: any,
+    call$: any,
+  ): Observable | Promise<Observable>;
+}
+
+export abstract class PipeTransform extends BaseContextClass{
+  abstract transform(value: any, metadata: ArgumentMetadata): any;
+}
