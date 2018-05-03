@@ -34,8 +34,8 @@ export default class HomeController extends Controller {
     @Body() body,
     @Session() session,
     @Headers() headers,
-    @UploadedFile() file,
-    @UploadedFiles() files,
+    @UploadedFile() stream,
+    @UploadedFiles() parts,
   ) {
     // ctx = this.ctx;
     // req=  this.ctx.req 
@@ -45,8 +45,8 @@ export default class HomeController extends Controller {
     // body = this.ctx.request.body
     // session = this.ctx.session
     // headers = this.ctx.headers
-    // file = this.ctx.getFileStream()
-    // files = this.ctx.multipart()
+    // stream = this.ctx.getFileStream()
+    // parts = this.ctx.multipart()
   }
 }
 ```
@@ -197,6 +197,9 @@ export default class HomeController extends BaseContextClass{
 }
 ```
 
+## use 
+you can see [nest.js](https://docs.nestjs.com/).
+
 ### Guard
 
 ```js
@@ -218,8 +221,7 @@ export default class HomeController extends Controller {
   }
 }
 ```
-## use 
-you can see [nest.js](https://docs.nestjs.com/).
+
 
 ### Pipe
 ```js
