@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
 const egg_1 = require("egg");
-const egg_pig_1 = require("egg-pig");
+const egg_pig_1 = require("../../../../../../");
 const awaitWriteStream = require("await-stream-ready");
 const sendToWormhole = require("stream-wormhole");
 const fs = require("fs");
