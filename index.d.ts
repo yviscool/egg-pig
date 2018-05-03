@@ -18,7 +18,7 @@ export function Body(data?: ParamData, ...pipes): any;
 export function Headers(data?: ParamData): any;
 export function Session(): any;
 export function UploadedFile(): any;
-export function UploadedFiles(): any;
+export function UploadedFiles(opt?): any;
 
 export function Head(name?: string, path?: string): any;
 export function Get(name?: string, path?: string): any;

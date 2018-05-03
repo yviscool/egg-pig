@@ -9,10 +9,6 @@ exports.default = (appInfo) => {
     config.keys = appInfo.name + '_1523969653835_3209';
     // add your config here
     config.middleware = [];
-    config.eggpig = {
-        pig: true,
-        route: true,
-    };
     config.security = {
         csrf: false
     };

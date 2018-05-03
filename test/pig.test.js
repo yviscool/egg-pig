@@ -1,11 +1,8 @@
 'use strict';
 
-// const assert = require('assert');
-// const request = require('supertest');
+const assert = require('assert');
 const mm = require('egg-mock');
-// const utility = require('utility');
-// const path = require('path');
-// const fs = require('fs');
+const rimraf = require('mz-modules/rimraf');
 
 describe('test/pig.test.js', () => {
     let app;
@@ -18,6 +15,7 @@ describe('test/pig.test.js', () => {
     });
 
     afterEach(mm.restore);
+    after(() => rimraf(path.join(app.config.baseDir, 'app/public')));
 
     describe('test/httpverb.js', () => {
         it('should GET verb/get', () => {
@@ -265,5 +263,52 @@ describe('test/pig.test.js', () => {
                 .expect(200)
                 .expect('/cats/1')
         });
+    });
+
+    describe('test/upload.js', () => {
+        it('should form', async () => {
+            app.mockCsrf();
+            await app.httpRequest()
+              .post('/upload/form')
+              .field('name', 'form')
+              .attach('file', path.join(__dirname, '1.jpg'))
+              .expect('Location', '/public/1.jpg')
+              .expect('ok');
+      
+            await app.httpRequest()
+              .get('/public/1.jpg')
+              .expect('content-length', '16424')
+              .expect(200);
+          });
+
+
+          it('should multiple', async () => {
+            app.mockCsrf();
+            await app.httpRequest()
+              .post('/upload/multiple')
+              .field('name1', '1')
+              .attach('file1', path.join(__dirname, '1.jpg'))
+              .field('name2', '2')
+              .attach('file2', path.join(__dirname, '2.jpg'))
+              .field('name3', '3')
+              .expect(res => {
+                assert(res.text.includes('name1: 1'));
+                assert(res.text.includes('name2: 2'));
+                assert(res.text.includes('name3: 3'));
+                assert(res.text.includes('href="/public/1.jpg"'));
+                assert(res.text.includes('href="/public/2.jpg"'));
+              })
+              .expect('ok');
+      
+            await app.httpRequest()
+              .get('/public/1.jpg')
+              .expect('content-length', '16424')
+              .expect(200);
+      
+            await app.httpRequest()
+              .get('/public/2.jpg')
+              .expect('content-length', '16424')
+              .expect(200);
+          });
     });
 });
