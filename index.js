@@ -21,10 +21,10 @@ function validatePath(path) {
 }
 
 function createMapping(paramType) {
-  return function (data, ...pipes) {
+  return function(data, ...pipes) {
     return (target, key, index) => {
       const paramData = is.function(data) ? undefined : data;
-      const paramPipe = is.function(data) ? [data, ...pipes] : pipes;
+      const paramPipe = is.function(data) ? [ data, ...pipes ] : pipes;
       const args = Reflect.getMetadata(ROUTE_ARGS_METADATA, target, key);
       Reflect.defineMetadata(ROUTE_ARGS_METADATA, {
         ...args,
@@ -39,7 +39,7 @@ function createMapping(paramType) {
 }
 
 function createRouterMapping(methodType = RequestMethod.GET) {
-  return function (name, path) {
+  return function(name, path) {
     return (target, key, descriptor) => {
 
       // get('/user')
@@ -62,7 +62,7 @@ function createRouterMapping(methodType = RequestMethod.GET) {
   };
 }
 
-function UseGuards(...guards) {
+exports.UseGuards = function UseGuards(...guards) {
   return (target, key, descriptor) => {
     if (descriptor) {
       Reflect.defineMetadata(GUARDS_METADATA, guards, target, key);
@@ -71,20 +71,20 @@ function UseGuards(...guards) {
     Reflect.defineMetadata(GUARDS_METADATA, guards, target);
     return target;
   };
-}
+};
 
-function UsePipes(...pipes) {
+exports.UsePipes = function UsePipes(...pipes) {
   return (target, key, descriptor) => {
     if (descriptor) {
       Reflect.defineMetadata(PIPES_METADATA, pipes, target, key);
       return descriptor;
     }
-    Reflect.defineMetadata(GUARDS_METADATA, pipes, target);
+    Reflect.defineMetadata(PIPES_METADATA, pipes, target);
     return target;
   };
-}
+};
 
-function UseInterceptors(...interceptors) {
+exports.UseInterceptors = function UseInterceptors(...interceptors) {
   return (target, key, descriptor) => {
     if (descriptor) {
       Reflect.defineMetadata(INTERCEPTORS_METADATA, interceptors, target, key);
@@ -93,109 +93,75 @@ function UseInterceptors(...interceptors) {
     Reflect.defineMetadata(INTERCEPTORS_METADATA, interceptors, target);
     return target;
   };
-}
-
-
-// paramtypes
-const Body = createMapping(RouteParamTypes.BODY);
-const Param = createMapping(RouteParamTypes.PARAM);
-const Query = createMapping(RouteParamTypes.QUERY);
-const Context = createMapping(RouteParamTypes.CONTEXT);
-const Request = createMapping(RouteParamTypes.REQUEST);
-const Response = createMapping(RouteParamTypes.RESPONSE);
-const Session = createMapping(RouteParamTypes.SESSION);
-const Headers = createMapping(RouteParamTypes.HEADERS);
-const UploadedFile = createMapping(RouteParamTypes.FILE);
-const UploadedFiles = createMapping(RouteParamTypes.FILES);
-
-// http verb
-const Head = createRouterMapping(RequestMethod.HEAD);
-const Get = createRouterMapping(RequestMethod.GET);
-const Post = createRouterMapping(RequestMethod.POST);
-const Delete = createRouterMapping(RequestMethod.DELETE);
-const Options = createRouterMapping(RequestMethod.OPTIONS);
-const Put = createRouterMapping(RequestMethod.PUT);
-const Patch = createRouterMapping(RequestMethod.PATCH);
+};
 
 
 // pipe/guard/interceptor
-function Guard() { return function (target) { }; }
-function Pipe() { return function (target, key, descriptor) { }; }
-function Interceptor() { return function (target, key, descriptor) { }; }
+exports.Guard = function Guard() { return function() { }; };
+exports.Pipe = function Pipe() { return function() { }; };
+exports.Interceptor = function Interceptor() { return function() { }; };
 
 
 // controller
-function Controller(prefix = '/') {
-  return function (target) {
+exports.Controller = function Controller(prefix = '/') {
+  return function(target) {
     Reflect.defineMetadata(PATH_METADATA, { prefix: validatePath(prefix) }, target);
   };
-}
+};
 
 // resources
-function Resources(name, prefix) {
-  return function (target) {
+exports.Resources = function Resources(name, prefix) {
+  return function(target) {
     Reflect.defineMetadata(PATH_METADATA, {
       name,
       prefix: validatePath(prefix ? prefix : name),
       isRestful: true,
-      proto: target.prototype
+      proto: target.prototype,
     }, target);
     return target;
   };
-}
-
-function Render(template) {
-  return function (target, key, descriptor) {
-    Reflect.defineMetadata(RENDER_METADATA, template, target, key);
-  }
-}
-
-function Header(name, value) {
-  return function (target, key, descriptor) {
-    const metadata = Reflect.getMetadata(HEADER_METADATA, target, key) || [];
-    Reflect.defineMetadata(HEADER_METADATA, [...metadata, ...[{ name, value }]], target, key);
-  }
-}
-
-module.exports = {
-
-  Pipe,
-  Guard,
-  Interceptor,
-
-  UsePipes,
-  UseGuards,
-  UseInterceptors,
-
-  Context,
-  Request,
-  Response,
-  Body,
-  Param,
-  Query,
-  Session,
-  Headers,
-  UploadedFile,
-  UploadedFiles,
-  Req: Request,
-  Res: Response,
-
-
-  Head,
-  Get,
-  Post,
-  Put,
-  Patch,
-  Delete,
-  Options,
-  Render,
-  Header,
-
-  Resources,
-  Restful: Resources,
-  Controller,
-
-  CanActivate : class{},
-  PipeTransform : class{},
-  EgggInterceptor: class{},
 };
+
+exports.Render = function Render(template) {
+  return function(target, key) {
+    Reflect.defineMetadata(RENDER_METADATA, template, target, key);
+  };
+};
+
+exports.Header = function Header(name, value) {
+  return function(target, key) {
+    const metadata = Reflect.getMetadata(HEADER_METADATA, target, key) || [];
+    Reflect.defineMetadata(HEADER_METADATA, [ ...metadata, ...[{ name, value }] ], target, key);
+  };
+};
+
+// paramtypes
+exports.Body = createMapping(RouteParamTypes.BODY);
+exports.Param = createMapping(RouteParamTypes.PARAM);
+exports.Query = createMapping(RouteParamTypes.QUERY);
+exports.Context = createMapping(RouteParamTypes.CONTEXT);
+exports.Request = createMapping(RouteParamTypes.REQUEST);
+exports.Response = createMapping(RouteParamTypes.RESPONSE);
+exports.Session = createMapping(RouteParamTypes.SESSION);
+exports.Headers = createMapping(RouteParamTypes.HEADERS);
+exports.UploadedFile = createMapping(RouteParamTypes.FILE);
+exports.UploadedFiles = createMapping(RouteParamTypes.FILES);
+
+// http verb
+exports.Head = createRouterMapping(RequestMethod.HEAD);
+exports.Get = createRouterMapping(RequestMethod.GET);
+exports.Post = createRouterMapping(RequestMethod.POST);
+exports.Delete = createRouterMapping(RequestMethod.DELETE);
+exports.Options = createRouterMapping(RequestMethod.OPTIONS);
+exports.Put = createRouterMapping(RequestMethod.PUT);
+exports.Patch = createRouterMapping(RequestMethod.PATCH);
+
+// alias
+exports.Req = exports.Request;
+exports.Res = exports.Response;
+exports.Restful = exports.Resources;
+
+
+exports.CanActivate = class { };
+exports.PipeTransform = class { };
+exports.EgggInterceptor = class { };

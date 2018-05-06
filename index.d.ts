@@ -3,6 +3,8 @@ import { Observable } from 'rxjs';
 
 type ParamData = object | string | number;
 
+type Paramtype = 'BODY' | 'QUERY' | 'PARAM' | 'CUSTOM';
+
 export function Guard(): any;
 export function Pipe(): any;
 export function Interceptor(): any;
@@ -41,7 +43,6 @@ export function Resources(name: string, path: string): any;
 export function Restful(path: string): any;
 export function Restful(name: string, path: string): any;
 
-type Paramtype = 'BODY' | 'QUERY' | 'PARAM' | 'CUSTOM';
 
 interface ArgumentMetadata {
   readonly type: Paramtype;

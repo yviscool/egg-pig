@@ -2,10 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const plugin = {
     // static: true,
-    // nunjucks: {
-    //   enable: true,
-    //   package: 'egg-view-nunjucks',
-    // },
+    nunjucks: {
+      enable: true,
+      package: 'egg-view-nunjucks',
+    },
     eggpig: {
         enable: true,
         package: 'egg-pig'
