@@ -68,3 +68,5 @@ export abstract class EgggInterceptor extends BaseContextClass{
 export abstract class PipeTransform extends BaseContextClass{
   abstract transform(value: any, metadata: ArgumentMetadata): any;
 }
+
+export function createParamDecorator( factory: (data, req) => any) : (data?: any, ...pipes) => any;

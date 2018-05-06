@@ -336,4 +336,13 @@ describe('test/pig.test.js', () => {
         .expect('/render/home');
     });
   });
+
+  describe('test/user.js', () => {
+    it('should GET user', () => {
+      return app.httpRequest()
+        .get('/user')
+        .expect(200)
+        .expect('/user/test');
+    });
+  });
 });

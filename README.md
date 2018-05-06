@@ -289,3 +289,33 @@ class XXPipe extends PipeTransform{
 ```
 
 
+### Custom Decorators
+
+```js 
+import { BaseContextClass } from 'egg';
+import { Controller, Get, PipeTransform, Pipe, createParamDecorator } from 'egg-pig';
+
+const User = createParamDecorator((data, ctx) => {
+  // data = 'test' => @User('test')
+  return ctx.user;
+});
+
+@Pipe()
+class APipe extends PipeTransform {
+  transform(val, metadata) {
+    // val => ctx.user;
+    val && metadata;
+    return val;
+  }
+}
+
+
+@Controller('user')
+export default class HomeController extends BaseContextClass {
+  @Get()
+  public async index(@User('test', APipe) user){
+    return user;
+  }
+}
+
+```

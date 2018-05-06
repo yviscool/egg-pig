@@ -16,11 +16,17 @@ const {
 } = require('./lib/constants');
 
 
+function randomString() {
+  return Math.random()
+    .toString(36)
+    .substring(2, 15);
+}
+
 function validatePath(path) {
   return path.charAt(0) !== '/' ? '/' + path : path;
 }
 
-function createMapping(paramType) {
+function createMapping(paramType, factory) {
   return function(data, ...pipes) {
     return (target, key, index) => {
       const paramData = is.function(data) ? undefined : data;
@@ -30,6 +36,7 @@ function createMapping(paramType) {
         ...args,
         [`${paramType}:${index}`]: {
           index,
+          factory,
           data: paramData,
           pipes: paramPipe,
         },
@@ -133,6 +140,10 @@ exports.Header = function Header(name, value) {
     const metadata = Reflect.getMetadata(HEADER_METADATA, target, key) || [];
     Reflect.defineMetadata(HEADER_METADATA, [ ...metadata, ...[{ name, value }] ], target, key);
   };
+};
+
+exports.createParamDecorator = function createParamDecorator(factory) {
+  return createMapping(randomString() + randomString(), factory);
 };
 
 // paramtypes
