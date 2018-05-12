@@ -67,6 +67,18 @@ describe('test/pig.test.js', () => {
 
 
   describe('test/context', () => {
+    it('should GET context/context', () => {
+      return app.httpRequest()
+        .get('/context/context')
+        .expect(200)
+        .expect('ok');
+    });
+    it('should GET context/ctx', () => {
+      return app.httpRequest()
+        .get('/context/ctx')
+        .expect(200)
+        .expect('ok');
+    });
     it('should GET context/query', () => {
       return app.httpRequest()
         .get('/context/query?id=1')

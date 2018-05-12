@@ -3,12 +3,16 @@ Pipe, Interceptor, Guard Decorators for egg.js
 
 [![NPM version][npm-image]][npm-url]
 [![build status][travis-image]][travis-url]
+[![coverage][coverage-image]][coverage-url]
 
 [npm-image]: https://img.shields.io/npm/v/egg-pig.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/egg-pig
 [travis-image]: https://travis-ci.org/yviscool/egg-pig.svg?branch=master
 [travis-url]: https://travis-ci.org/yviscool/egg-pig
+[coverage-url]: https://codecov.io/gh/yviscool/egg-pig
+[coverage-image]: https://codecov.io/gh/yviscool/egg-pig/branch/master/graph/badge.svg
 
+[![codecov]()]()
 ## Install 
 ```bash
 $ npm i egg-pig --save
@@ -33,6 +37,7 @@ import { Context, Request, Response, Param, Query, Body, Session, Headers, Res, 
 export default class HomeController extends Controller {
   public async index(
     @Context() ctx,
+    @Ctx() ctx, // alias
     @Request() req,
     @Response() res,
     @Req() req, // alias
@@ -46,15 +51,15 @@ export default class HomeController extends Controller {
     @UploadedFiles() parts,
   ) {
     // ctx = this.ctx;
-    // req=  this.ctx.req 
-    // res = this.ctx.res
-    // param = this.ctx.params
-    // query = this.ctx.query
-    // body = this.ctx.request.body
-    // session = this.ctx.session
-    // headers = this.ctx.headers
-    // stream = this.ctx.getFileStream()
-    // parts = this.ctx.multipart()
+    // req=  this.ctx.request;
+    // res = this.ctx.response;
+    // param = this.ctx.params;
+    // query = this.ctx.query;
+    // body = this.ctx.request.body;
+    // session = this.ctx.session;
+    // headers = this.ctx.headers;
+    // stream = await this.ctx.getFileStream();
+    // parts = this.ctx.multipart();
   }
 }
 ```
@@ -65,13 +70,13 @@ export default class HomeController extends Controller {
 @Controller('cats')
 export default class CatsController extends BaseContextClass{
 
-  @Get('/add')
+  @Get('/add')  // router.get('/cats/add', add)
   async add(){
     return 'zjl'; // this.ctx.body = 'zjl;
   }
   
-  @Get('/bar')
-  async add(){
+  @Get('bar')
+  async foo(){  // router.get('/cats/foo', foo)
     return await this.service.xxx.yyy(); // this.ctx.body = '';
   }
 }
@@ -94,7 +99,7 @@ export default class CatsController extends BaseContextClass{
     // or return 'index'
   }
 
-  @Get('/get')   // => router.get('/cats/get', get)
+  @Get('get')   // => router.get('/cats/get', get)
   async get(){
     return 'add'
     // or this.ctx.body = 'add'; 
@@ -102,7 +107,8 @@ export default class CatsController extends BaseContextClass{
   
   @Post('/add')   // => router.post('/cats/add', add)
   async add(@Body() body){
-    this.ctx.body = body; 
+    return body;
+     // or this.ctx.body = body;
   }
   
 }
@@ -120,7 +126,7 @@ export default class CatsController extends BaseContextClass{
 
   @Get('cats',':id') // router.get('cats', '/cats/:id', index)
   async index(@Param('id') param){
-    this.ctx.body = param; 
+    return param;
   }
 }
 
@@ -138,16 +144,16 @@ import {  Resources, Get } from 'egg-pig';
 export default class CatsController extends BaseContextClass{
 
   async index(){  
-    this.ctx.body = 'index';
+    return 'index';
   }
 
   async new(){
-    this.ctx.body = 'new';
+    return 'new';
   }
 
   @Get('/add')    //  router.get('/cats/add', add)
   async add(){
-    this.ctx.body = 'add'; 
+    return 'add';
   }
 
 }
@@ -327,3 +333,4 @@ export default class HomeController extends BaseContextClass {
 }
 
 ```
+

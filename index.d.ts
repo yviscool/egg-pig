@@ -10,6 +10,7 @@ export function Pipe(): any;
 export function Interceptor(): any;
 
 export function Context(): any;
+export function Ctx(): any;
 export function Request(): any;
 export function Response(): any;
 export function Req(): any;

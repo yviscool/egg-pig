@@ -26,6 +26,10 @@ function validatePath(path) {
   return path.charAt(0) !== '/' ? '/' + path : path;
 }
 
+function validateRouteName(name) {
+  return name.charAt(0) === '/' ? name.substring(1) : name;
+}
+
 function createMapping(paramType, factory) {
   return function(data, ...pipes) {
     return (target, key, index) => {
@@ -120,7 +124,7 @@ exports.Controller = function Controller(prefix = '/') {
 exports.Resources = function Resources(name, prefix) {
   return function(target) {
     Reflect.defineMetadata(PATH_METADATA, {
-      name,
+      name: validateRouteName(name),
       prefix: validatePath(prefix ? prefix : name),
       isRestful: true,
       proto: target.prototype,
@@ -170,6 +174,7 @@ exports.Patch = createRouterMapping(RequestMethod.PATCH);
 // alias
 exports.Req = exports.Request;
 exports.Res = exports.Response;
+exports.Ctx = exports.Context;
 exports.Restful = exports.Resources;
 
 
