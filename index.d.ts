@@ -25,6 +25,7 @@ export function UploadedFiles(opt?): any;
 
 export function Head(name?: string, path?: string): any;
 export function Get(name?: string, path?: string): any;
+export function All(name?: string, path?: string): any;
 export function Post(name?: string, path?: string): any;
 export function Delete(name?: string, path?: string): any;
 export function Options(name?: string, path?: string): any;
@@ -58,7 +59,7 @@ export abstract class CanActivate extends BaseContextClass {
   ): boolean | Promise<boolean>;
 }
 
-export abstract class EgggInterceptor extends BaseContextClass{
+export abstract class EgggInterceptor extends BaseContextClass {
   abstract intercept(
     req: Request,
     context: any,
@@ -66,8 +67,20 @@ export abstract class EgggInterceptor extends BaseContextClass{
   ): Observable | Promise<Observable>;
 }
 
-export abstract class PipeTransform extends BaseContextClass{
+export abstract class PipeTransform extends BaseContextClass {
   abstract transform(value: any, metadata: ArgumentMetadata): any;
 }
 
-export function createParamDecorator( factory: (data, req) => any) : (data?: any, ...pipes) => any;
+export function createParamDecorator(factory: (data, req) => any): (data?: any, ...pipes) => any;
+
+
+interface IMiddleware {
+  apply(...middleware: any | any[]): this;
+  forRoutes(...routes: Array<string | any >): this;
+}
+
+export class MiddlewareConsumer {
+  static setRouter(router): IMiddleware;
+  static apply(middleware: any | any[]): IMiddleware;
+}
+

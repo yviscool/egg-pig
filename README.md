@@ -12,7 +12,6 @@ Pipe, Interceptor, Guard Decorators for egg.js
 [coverage-url]: https://codecov.io/gh/yviscool/egg-pig
 [coverage-image]: https://codecov.io/gh/yviscool/egg-pig/branch/master/graph/badge.svg
 
-[![codecov]()]()
 ## Install 
 ```bash
 $ npm i egg-pig --save
@@ -75,8 +74,8 @@ export default class CatsController extends BaseContextClass{
     return 'zjl'; // this.ctx.body = 'zjl;
   }
   
-  @Get('bar')
-  async foo(){  // router.get('/cats/foo', foo)
+  @Get('bar')    // router.get('/cats/foo', foo)
+  async foo(){  
     return await this.service.xxx.yyy(); // this.ctx.body = '';
   }
 }
@@ -163,6 +162,49 @@ Use route name `@Resources('cats', '/cats')`
 You can also use `@Restful()` Decorator, the same as Resources;
 
 ### multiple middleware
+
+```js
+import { Application } from 'egg';
+import { MiddlewareConsumer } from 'egg-pig';
+
+
+export default (app: Application) => {
+
+  const { router,controller, middleware} = app;
+
+  MiddlewareConsumer
+
+    .setRouter(router)
+    
+    .apply(middleware.log())
+
+    // router.all('xxx/foo', log)
+    // router.all('xxx/bar', log)
+    .forRoutes(
+      'xxx/foo',
+      'xxx/bar',
+    )  
+
+    .apply(middleware.log(), middleware.logXX())
+
+    // router.all('foo/xxMethod', log, logXX)
+    // router.all('foo/yyMethod', log, logXX)
+    .forRoutes(controller.foo)
+
+    .apply(...)
+    .forRoutes(
+      'xxx/foo',
+      'xxx/bar',
+      controller.foo,
+      controller.bar,
+    )
+
+    ..
+}
+
+```
+
+another way
 
 ```js
 // router.ts

@@ -357,4 +357,32 @@ describe('test/pig.test.js', () => {
         .expect('/user/test');
     });
   });
+
+
+  describe('test/middleware.js', () => {
+    it('should GET middleware_a/foo', () => {
+      return app.httpRequest()
+        .get('/middleware_a/foo')
+        .expect(200)
+        .expect('foo');
+    });
+    it('should GET middleware_a/bar', () => {
+      return app.httpRequest()
+        .get('/middleware_a/bar')
+        .expect(200)
+        .expect('bar');
+    });
+    it('should GET middleware_b/foo', () => {
+      return app.httpRequest()
+        .get('/middleware_b/foo')
+        .expect(200)
+        .expect('foo');
+    });
+    it('should GET middleware_b/bar', () => {
+      return app.httpRequest()
+        .get('/middleware_b/bar')
+        .expect(200)
+        .expect('bar');
+    });
+  });
 });
