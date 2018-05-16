@@ -327,6 +327,109 @@ export default class HomeController extends Controller {
 }
 ```
 
+### filter 
+
+```js
+
+import { BaseContextClass } from 'egg';
+import {
+  Controller,
+  Get,
+} from 'egg-pig';
+
+
+@Controller('cats')
+export default class CatsController extends BaseContextClass {
+
+  @Get()
+  async foo(){
+    throw new Error('some ..')
+  }  
+}
+```
+in this case eggjs will hanlde ;
+
+```js
+import {
+  Controller,
+  Get,
+  HttpException,
+  HttpStatus,
+} from 'egg-pig';
+
+@Controller('cats')
+export default class CatsController extends BaseContextClass {
+  @Get()
+  async foo(){
+     throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
+  }  
+}
+```
+When the client calls this endpoint, the response would look like this:
+```json
+{
+  "statusCode": 403,
+  "message": "Forbidden"
+}
+```
+
+another way
+
+```js
+  async foo(){
+    throw new HttpException({
+     status: HttpStatus.FORBIDDEN,
+      error: 'This is a custom message',
+    }, 403);
+  }  
+```
+
+```js
+class ForbiddenException extends HttpException {
+  constructor() {
+    super('Forbidden', HttpStatus.FORBIDDEN);
+  }
+}
+
+  async foo(){
+    throw new ForbiddenException()
+  }  
+```
+
+##UseFilters##
+
+```js
+import { Controller, Get, HttpException, HttpStatus, ExceptionFilter, UseFilters, Catch } from 'egg-pig';
+
+@Catch(HttpException)
+class HttpExceptionFilter extends ExceptionFilter {
+  catch(exception , ctx) {
+    ctx.status = HttpStatus.FORBIDDEN;
+    ctx.body = {
+      statusCode: exception.getStatus(),
+      timestamp: new Date().toISOString(),
+      path: ctx.req.url
+    }
+  }
+}
+
+class ForbiddenException extends HttpException {
+  constructor() {
+    super('Forbidden', HttpStatus.FORBIDDEN);
+  }
+}
+
+
+@Controller('cats')
+@UseFilters(HttpExceptionFilter)
+export default class CatsController extends BaseContextClass {
+  @Get()
+  async foo(){
+    throw new ForbiddenException();
+  }  
+}
+```
+
 ### tips
 CanActivate, EgggInterceptor, PipeTransform are all abstract class which extends `egg/BaseContextClass`, it means you can use this on methods . such as 
 
