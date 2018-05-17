@@ -385,4 +385,31 @@ describe('test/pig.test.js', () => {
         .expect('bar');
     });
   });
+
+  describe('test/filter.js', () => {
+    it('should GET filter/common', () => {
+      return app.httpRequest()
+        .get('/filter/common')
+        .expect(500)
+        .expect('{"error":"error"}');
+    });
+    it('should GET filter/httpexception', () => {
+      return app.httpRequest()
+        .get('/filter/httpexception')
+        .expect(403)
+        .expect('{"statusCode":403,"message":"Forbidden"}');
+    });
+    it('should GET filter/another', () => {
+      return app.httpRequest()
+        .get('/filter/another')
+        .expect(403)
+        .expect('{"statusCode":403,"path":"/filter/another"}');
+    });
+    it('should GET filter/forbiden', () => {
+      return app.httpRequest()
+        .get('/filter/forbiden')
+        .expect(403)
+        .expect('{"statusCode":403,"message":"Forbidden"}');
+    });
+  });
 });

@@ -396,7 +396,7 @@ class ForbiddenException extends HttpException {
   }  
 ```
 
-##UseFilters##
+**UseFilters**
 
 ```js
 import { Controller, Get, HttpException, HttpStatus, ExceptionFilter, UseFilters, Catch } from 'egg-pig';
