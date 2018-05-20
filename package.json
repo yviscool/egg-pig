@@ -26,7 +26,8 @@
         "koa-convert": "^1.2.0",
         "reflect-metadata": "^0.1.12",
         "globby": "^8.0.1",
-        "rxjs": "^5.5.10"
+        "rxjs": "^6.0.0",
+        "rxjs-compat": "^6.0.0"
     },
     "devDependencies": {
         "autod": "^3.0.1",

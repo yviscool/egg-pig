@@ -13,7 +13,7 @@ let AAPipe = class AAPipe extends egg_pig_1.PipeTransform {
     }
 };
 AAPipe = tslib_1.__decorate([
-    egg_pig_1.Pipe()
+    egg_pig_1.Injectable()
 ], AAPipe);
 let UserController = class UserController extends egg_1.BaseContextClass {
     async index(user) {

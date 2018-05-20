@@ -4,26 +4,26 @@ const tslib_1 = require("tslib");
 const egg_1 = require("egg");
 const egg_pig_1 = require("../../../../../../");
 let AGuard = class AGuard {
-    async canActivate(req, context) {
-        const { parent, handler } = context;
-        if (req.url === '/guard/forbiden')
+    async canActivate(context) {
+        const { getClass, getHandler } = context
+        if (this.ctx.req.url === '/guard/forbiden')
             return false;
-        return { parent, handler };
+        return { parent: getClass(), handler: getHandler() };
     }
 };
 AGuard = tslib_1.__decorate([
-    egg_pig_1.Guard()
+    egg_pig_1.Injectable()
 ], AGuard);
 let BGuard = class BGuard {
-    canActivate(req, context) {
-        const { parent, handler } = context;
-        if (/guard.*?/.test(req.url)){
-            return {parent, handler};
+    canActivate(context) {
+        const { getClass, getHandler } = context
+        if (/guard.*?/.test(this.ctx.req.url)){
+             return { parent: getClass(), handler: getHandler() };
         }
     }
 };
 BGuard = tslib_1.__decorate([
-    egg_pig_1.Guard()
+    egg_pig_1.Injectable()
 ], BGuard);
 let CGuard = class CGuard {
     xxxxxxxxxx(_, __) {
@@ -31,7 +31,7 @@ let CGuard = class CGuard {
     }
 };
 CGuard = tslib_1.__decorate([
-    egg_pig_1.Guard()
+    egg_pig_1.Injectable()
 ], CGuard);
 let GuardController = class GuardController extends egg_1.BaseContextClass {
     async index(query) {

@@ -11,7 +11,7 @@ module.exports = {
   MiddlewareConsumer,
   CanActivate: class { },
   PipeTransform: class { },
-  EgggInterceptor: class { },
+  EggInterceptor: class { },
   ExceptionFilter: class { },
 };
 

@@ -1,5 +1,5 @@
 # egg-pig
-Pipe, Interceptor, Guard Decorators for egg.js 
+nest.js int egg.
 
 [![NPM version][npm-image]][npm-url]
 [![build status][travis-image]][travis-url]
@@ -260,11 +260,13 @@ you can see [nest.js](https://docs.nestjs.com/).
 
 ```js
 import { BaseContextClass } from 'egg';
-import { Guard, UseGuards, CanActivate } from 'egg-pig';
+import { Injectable, CanActivate, ExecutionContext, UseGuards } from 'egg-pig';
+import { Observable } from 'rxjs/Observable';
 
-@Guard()
+@Injectable()
 class XXGuard extends CanActivate{
-  canActivate(req, context){
+  canActivate(context: ExecutionContext)
+  : boolean | Promise<boolean> | Observable<boolean> {
     return true;
   }
 }
@@ -282,11 +284,11 @@ export default class HomeController extends Controller {
 ### Pipe
 ```js
 import { BaseContextClass } from 'egg';
-import { Pipe, PipeTransform, UsePipes, Param, Query, Body } from 'egg-pig';
+import { PipeTransform, Injectable, ArgumentMetadata, UsePipes, Param, Query, Body  } from 'egg-pig';
 
-@Pipe()
+@Injectable()
 class XXPipe extends PipeTransform{
-  transform(value, metadata){
+  async transform(value: any, metadata: ArgumentMetadata) {
     return value;
   }
 }
@@ -294,7 +296,7 @@ class XXPipe extends PipeTransform{
 @UsePipes(XXPipe)
 export default class HomeController extends Controller {
   // @UsePipes(XXPipe)
-  public async index(@Param('xx', XXPipe) param; @Body('xx', XXPipe) body, @Query(XXPipe) quey) {
+  async index(@Param('xx', XXPipe) param; @Body('xx', XXPipe) body, @Query(XXPipe) quey) {
     // some logic
   }
 }
@@ -303,24 +305,29 @@ export default class HomeController extends Controller {
 ### Interceptor
 
 ```js
-import { EgggInterceptor, UseInterceptors, Interceptor} from 'egg-pig';
+import { EggInterceptor, UseInterceptors, Interceptor} from 'egg-pig';
+import { Injectable, EggInterceptor, ExecutionContext } from 'egg-pig';
+import { Observable } from 'rxjs/Observable';
+import { tap } from 'rxjs/operators';
 
-@Interceptor()
-class XXInterceptor extends EgggInterceptor {
-  async intercept(req, context, stream$) {  
-    console.log('Before...', );
+@Injectable()
+class LoggingInterceptor extends EggInterceptor {
+  intercept(
+    context: ExecutionContext,
+    call$: Observable<any>,
+  ): Observable<any> {
+    console.log('Before...');
     const now = Date.now();
-
-    return stream$.do(
-      () => console.log(`After... ${Date.now() - now}ms`),
+    return call$.pipe(
+      tap(() => console.log(`After... ${Date.now() - now}ms`)),
     );
   }
 }
 
-@UseInterceptors(XXInterceptor)
+@UseInterceptors(LoggingInterceptor)
 export default class HomeController extends Controller {
 
-  //@UseInterceptors(XXInterceptor)
+  //@UseInterceptors(LoggingInterceptor)
   public async index() {
     // some login
   }
@@ -391,9 +398,9 @@ class ForbiddenException extends HttpException {
   }
 }
 
-  async foo(){
-    throw new ForbiddenException()
-  }  
+async foo(){
+    hrow new ForbiddenException()
+}  
 ```
 
 **UseFilters**
@@ -403,9 +410,9 @@ import { Controller, Get, HttpException, HttpStatus, ExceptionFilter, UseFilters
 
 @Catch(HttpException)
 class HttpExceptionFilter extends ExceptionFilter {
-  catch(exception , ctx) {
-    ctx.status = HttpStatus.FORBIDDEN;
-    ctx.body = {
+  catch(exception) {
+    this.ctx.status = HttpStatus.FORBIDDEN;
+    this.ctx.body = {
       statusCode: exception.getStatus(),
       timestamp: new Date().toISOString(),
       path: ctx.req.url
@@ -431,7 +438,7 @@ export default class CatsController extends BaseContextClass {
 ```
 
 ### tips
-CanActivate, EgggInterceptor, PipeTransform are all abstract class which extends `egg/BaseContextClass`, it means you can use this on methods . such as 
+CanActivate, EgggInterceptor, PipeTransform,  ExceptionFilter are all abstract class which extends `egg/BaseContextClass`, it means you can use this on methods . such as 
 
 ```js 
 class XXPipe extends PipeTransform{

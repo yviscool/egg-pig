@@ -3,45 +3,45 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
 const egg_1 = require("egg");
 const egg_pig_1 = require("../../../../../../");
-require("rxjs/add/operator/do");
+const tap = require("rxjs/operators").tap;
 let AInterceptor = class AInterceptor {
-    async intercept(req, context, stream$) {
-        const { parent, handler } = context;
-        req.query = { id: 1 };
-        return stream$.do(() => { console.log(parent, handler); });
+    async intercept(context, stream$) {
+        const { getClass, getHandler } = context
+        this.ctx.req.query = { id: 1 };
+        return stream$.pipe(tap(() => { console.log(getClass(), getHandler()) }));
     }
 };
 AInterceptor = tslib_1.__decorate([
-    egg_pig_1.Interceptor()
+    egg_pig_1.Injectable()
 ], AInterceptor);
 let BInterceptor = class BInterceptor {
-    async intercept(req, _, stream$) {
-        req.path = '/';
-        return stream$.do(() => { });
+    async intercept( _, stream$) {
+        this.ctx.req.path = '/';
+        return stream$.pipe(tap(() => { }));
     }
 };
 BInterceptor = tslib_1.__decorate([
-    egg_pig_1.Interceptor()
+    egg_pig_1.Injectable()
 ], BInterceptor);
 let CInterceptor = class CInterceptor {
     async xxxxxxxxxxx() {
     }
 };
 CInterceptor = tslib_1.__decorate([
-    egg_pig_1.Interceptor()
+    egg_pig_1.Injectable()
 ], CInterceptor);
 let InterceptorController = class InterceptorController extends egg_1.BaseContextClass {
     async index() {
         this.ctx.body = {
-            query: this.ctx.request.query,
-            path: this.ctx.request.path
+            query: this.ctx.req.query,
+            path: this.ctx.req.path
         };
     }
     async body() {
-        this.ctx.body = this.ctx.request.query;
+        this.ctx.body = this.ctx.req.query;
     }
     async bar() {
-        this.ctx.body = this.ctx.request.path;
+        this.ctx.body = this.ctx.req.path;
     }
 };
 tslib_1.__decorate([

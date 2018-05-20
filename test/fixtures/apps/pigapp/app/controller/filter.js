@@ -5,11 +5,11 @@ const egg_1 = require("egg");
 const egg_pig_1 = require("../../../../../../");
 const egg_pig_2 = require("../../../../../../");
 let AExceptionFilter = class AExceptionFilter extends egg_pig_2.ExceptionFilter {
-    catch(exception, ctx) {
-        ctx.status = egg_pig_1.HttpStatus.FORBIDDEN;
-        ctx.body = {
+    catch(exception) {
+        this.ctx.status = egg_pig_1.HttpStatus.FORBIDDEN;
+        this.ctx.body = {
             statusCode: exception.getStatus(),
-            path: ctx.req.url
+            path: this.ctx.req.url
         };
     }
 };

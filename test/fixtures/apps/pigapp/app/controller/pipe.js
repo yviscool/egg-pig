@@ -9,7 +9,7 @@ let APipe = class APipe {
     }
 };
 APipe = tslib_1.__decorate([
-    egg_pig_1.Pipe()
+    egg_pig_1.Injectable()
 ], APipe);
 let BPipe = class BPipe {
     transform(_, __) {
@@ -17,7 +17,7 @@ let BPipe = class BPipe {
     }
 };
 BPipe = tslib_1.__decorate([
-    egg_pig_1.Pipe()
+    egg_pig_1.Injectable()
 ], BPipe);
 let CPipe = class CPipe {
     xxxxxxxxxxxxx(_, __) {
@@ -25,7 +25,7 @@ let CPipe = class CPipe {
     }
 };
 CPipe = tslib_1.__decorate([
-    egg_pig_1.Pipe()
+    egg_pig_1.Injectable()
 ], CPipe);
 let PipeController = class PipeController extends egg_1.BaseContextClass {
     async index(query) {

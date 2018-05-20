@@ -225,8 +225,7 @@ describe('test/pig.test.js', () => {
     it('should GET pipe interceptor/foo', () => {
       return app.httpRequest()
         .get('/interceptor/foo')
-        .expect(200)
-        .expect('/interceptor/foo');
+        .expect(204);
     });
   });
 

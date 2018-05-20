@@ -1,97 +1,5 @@
-import { BaseContextClass, Request } from 'egg';
+import { BaseContextClass, Context as CTX, Router, Request } from 'egg';
 import { Observable } from 'rxjs';
-
-type ParamData = object | string | number;
-
-type Paramtype = 'BODY' | 'QUERY' | 'PARAM' | 'CUSTOM';
-
-export function Guard(): any;
-export function Pipe(): any;
-export function Interceptor(): any;
-
-export function Context(): any;
-export function Ctx(): any;
-export function Request(): any;
-export function Response(): any;
-export function Req(): any;
-export function Res(): any;
-export function Param(data?: ParamData, ...pipes): any;
-export function Query(data?: ParamData, ...pipes): any;
-export function Body(data?: ParamData, ...pipes): any;
-export function Headers(data?: ParamData): any;
-export function Session(): any;
-export function UploadedFile(): any;
-export function UploadedFiles(opt?): any;
-
-export function Head(name?: string, path?: string): any;
-export function Get(name?: string, path?: string): any;
-export function All(name?: string, path?: string): any;
-export function Post(name?: string, path?: string): any;
-export function Delete(name?: string, path?: string): any;
-export function Options(name?: string, path?: string): any;
-export function Put(name?: string, path?: string): any;
-export function Patch(name?: string, path?: string): any;
-
-export function Render(template: string): any;
-export function Header(name: string, value: string): any;
-
-export function UsePipes(...pipes): any;
-export function UseGuards(...guards): any;
-export function UseInterceptors(...interceptors): any;
-export function UseFilters(...filters): any;
-
-export function Controller(path?: string): any;
-export function Resources(path: string): any;
-export function Resources(name: string, path: string): any;
-export function Restful(path: string): any;
-export function Restful(name: string, path: string): any;
-
-
-interface ArgumentMetadata {
-  readonly type: Paramtype;
-  readonly metatype?: new (...args) => any | undefined;
-  readonly data?: string | undefined;
-}
-
-export abstract class CanActivate extends BaseContextClass {
-  abstract canActivate(
-    req: Request,
-    context: any,
-  ): boolean | Promise<boolean>;
-}
-
-export abstract class EgggInterceptor extends BaseContextClass {
-  abstract intercept(
-    req: Request,
-    context: any,
-    call$: any,
-  ): Observable | Promise<Observable>;
-}
-
-export abstract class PipeTransform extends BaseContextClass {
-  abstract transform(value: any, metadata: ArgumentMetadata): any;
-}
-
-export abstract class ExceptionFilter extends BaseContextClass {
-  abstract catch(exception, host): any;
-}
-
-export function Catch(...exceptions): any;
-
-export function createParamDecorator(factory: (data, req) => any): (data?: any, ...pipes) => any;
-
-
-interface IMiddleware {
-  apply(...middleware: any | any[]): this;
-  forRoutes(...routes: Array<string | any>): this;
-}
-
-export class MiddlewareConsumer {
-  static setRouter(router): IMiddleware;
-  static apply(middleware: any | any[]): IMiddleware;
-}
-
-export function ReflectMetadata(metadataKey, metadataValue): (target, key?, descriptor?) => any;
 
 export enum HttpStatus {
   CONTINUE = 100,
@@ -139,6 +47,103 @@ export enum HttpStatus {
   GATEWAY_TIMEOUT = 504,
   HTTP_VERSION_NOT_SUPPORTED = 505,
 }
+
+
+type ParamData = object | string | number;
+
+type Paramtype = 'BODY' | 'QUERY' | 'PARAM' | 'CUSTOM';
+
+export function Injectable(): any;
+
+export function Context(): any;
+export function Ctx(): any;
+export function Request(): any;
+export function Response(): any;
+export function Req(): any;
+export function Res(): any;
+export function Param(data?: ParamData, ...pipes): any;
+export function Query(data?: ParamData, ...pipes): any;
+export function Body(data?: ParamData, ...pipes): any;
+export function Headers(data?: ParamData): any;
+export function Session(): any;
+export function UploadedFile(): any;
+export function UploadedFiles(opt?): any;
+
+export function Head(name?: string, path?: string): any;
+export function Get(name?: string, path?: string): any;
+export function All(name?: string, path?: string): any;
+export function Post(name?: string, path?: string): any;
+export function Delete(name?: string, path?: string): any;
+export function Options(name?: string, path?: string): any;
+export function Put(name?: string, path?: string): any;
+export function Patch(name?: string, path?: string): any;
+
+export function Render(template: string): any;
+export function Header(name: string, value: string): any;
+
+export function UsePipes(...pipes): any;
+export function UseGuards(...guards): any;
+export function UseInterceptors(...interceptors): any;
+export function UseFilters(...filters): any;
+
+export function Controller(path?: string): any;
+export function Resources(path: string): any;
+export function Resources(name: string, path: string): any;
+export function Restful(path: string): any;
+export function Restful(name: string, path: string): any;
+
+
+interface ArgumentMetadata {
+  readonly type: Paramtype;
+  readonly metatype?: new (...args) => any | undefined;
+  readonly data?: string | undefined;
+}
+interface Type<T> extends Function {
+  new(...args: any[]): T;
+}
+
+interface ExecutionContext {
+  getClass<T = any>(): Type<T>;  // user for class 
+  getHandler(): Function;    // classMethod 
+}
+
+interface IMiddleware {
+  apply(...middleware: Function | Function[]): this;
+  forRoutes(...routes: (string | any)[]): this;
+}
+
+export abstract class CanActivate extends BaseContextClass {
+  abstract canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean>;
+}
+
+export abstract class EggInterceptor<T=any, R=any> extends BaseContextClass {
+  abstract intercept(
+    context: ExecutionContext,
+    call$: Observable<T>,
+  ): Observable<R> | Promise<Observable<R>>;
+}
+
+export abstract class PipeTransform<T = any, R = any> extends BaseContextClass {
+  abstract transform(value: T, metadata: ArgumentMetadata): R;
+}
+
+export abstract class ExceptionFilter extends BaseContextClass {
+  abstract catch(exception): any;
+}
+
+export function Catch(...exceptions): any;
+
+export function createParamDecorator(factory: (data, req) => any): (data?: any, ...pipes) => any;
+
+
+export class MiddlewareConsumer {
+  static setRouter(router: Router): IMiddleware;
+  static apply(middleware: Function | Function[]): IMiddleware;
+}
+
+export function ReflectMetadata(metadataKey, metadataValue): (target, key?, descriptor?) => any;
+
+
 
 export class HttpException extends Error {
 

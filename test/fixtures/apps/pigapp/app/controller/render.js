@@ -9,7 +9,7 @@ let APipes = class APipes extends egg_pig_1.PipeTransform {
     }
 };
 APipes = tslib_1.__decorate([
-    egg_pig_1.Pipe()
+    egg_pig_1.Injectable()
 ], APipes);
 let HomeController = class HomeController extends egg_1.BaseContextClass {
     async index(query) {
