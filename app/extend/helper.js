@@ -5,14 +5,14 @@ const REFLECTOR = Symbol('helper#reflector');
 
 
 module.exports = {
-  get reflector(){
+  get reflector() {
     if (!this[REFLECTOR]) {
       this[REFLECTOR] = {
         get(metadataKey, target) {
           return Reflect.getMetadata(metadataKey, target);
-        }
-      }
+        },
+      };
     }
     return this[REFLECTOR];
-  }
+  },
 };
