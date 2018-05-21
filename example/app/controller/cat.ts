@@ -29,12 +29,12 @@ export default class CatsController extends BaseContextClass {
 
   @Post('post')
   @Roles('admin')
+  @UseFilters(HttpExceptionFilter)
   async create(@Body() createCat) {
     return createCat;
   }
 
   @Get('some/throw')
-  @UseFilters(HttpExceptionFilter)
   async foo() {
     throw new HttpException('方法不允许', HttpStatus.METHOD_NOT_ALLOWED);
   }

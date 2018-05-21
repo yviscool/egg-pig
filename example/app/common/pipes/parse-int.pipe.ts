@@ -1,11 +1,12 @@
-import { Pipe,PipeTransform, HttpException, HttpStatus } from 'egg-pig';
+import { Injectable, PipeTransform,  ArgumentMetadata, BadRequestException } from 'egg-pig';
 
-@Pipe()
+@Injectable()
 export class ParseIntPipe extends PipeTransform {
-  async transform(value, _) {
+  async transform(value: string, metadata: ArgumentMetadata) {
+    metadata;
     const val = parseInt(value, 10);
-    if (!val) {
-      throw new HttpException('Validation failed', HttpStatus.BAD_REQUEST);
+    if (isNaN(val)) {
+      throw new BadRequestException('Validation failed');
     }
     return val;
   }

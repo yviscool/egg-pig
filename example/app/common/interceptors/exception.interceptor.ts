@@ -1,18 +1,15 @@
-import { Interceptor, EgggInterceptor, HttpException, HttpStatus } from 'egg-pig';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/throw';
+import { Injectable, EggInterceptor, HttpException, HttpStatus, ExecutionContext } from 'egg-pig';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
-@Interceptor()
-export class TransformInterceptor extends EgggInterceptor {
-    intercept(_, __, stream$) {
-        return stream$.catch(_=>
-            Observable.throw(
-                new HttpException(
-                    'Exception interceptor message',
-                    HttpStatus.BAD_GATEWAY,
-                ),
+@Injectable()
+export class TransformInterceptor extends EggInterceptor {
+    intercept(context: ExecutionContext, stream$: Observable<any>) {
+        context ;
+        return stream$.pipe(
+            catchError(err =>
+              throwError(new HttpException('Message', HttpStatus.BAD_GATEWAY)),
             ),
-        );
+          );
     }
 }

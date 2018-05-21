@@ -1,14 +1,19 @@
-import { Interceptor, EgggInterceptor} from 'egg-pig';
-import 'rxjs/add/operator/do';
-
+import { Injectable, EggInterceptor, ExecutionContext} from 'egg-pig';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 // console.log(Observable.prototype);
 
-@Interceptor()
-export class LoggingInterceptor extends EgggInterceptor {
-  intercept(_, __ , stream$) {
-    console.log('Before...');
-    const now = Date.now();
+@Injectable()
+export class LoggingInterceptor extends EggInterceptor {
+  intercept(
+    context: ExecutionContext,
+    call$: Observable<any>,
+  ): Observable<any> {
 
-    return stream$.do(() => console.log(`After... ${Date.now() - now}ms`));
+    console.log('Before...');
+    console.log(context);
+
+    const now = Date.now();
+    return call$.pipe(tap(() => console.log(`After... ${Date.now() - now}ms`)));
   }
 }

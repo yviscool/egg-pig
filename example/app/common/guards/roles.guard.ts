@@ -1,16 +1,16 @@
-import { Guard, CanActivate} from 'egg-pig';
+import { Injectable, CanActivate, ExecutionContext } from 'egg-pig';
 
 
-@Guard()
+@Injectable()
 export class RolesGuard extends CanActivate {
 
-  canActivate(req, context){
-    const { handler } = context;
+  canActivate(context: ExecutionContext): boolean {
+    const handler = context.getHandler();
     const roles = this.ctx.helper['reflector'].get('roles', handler);
     if (!roles) {
       return true;
     }
-    const user = req.user;
+    const user = this.ctx.req['user'];
     const hasRole = user.roles.some((role) => !!roles.find((item) => item === role));
     return user && user.roles && hasRole();
   }

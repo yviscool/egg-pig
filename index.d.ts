@@ -81,10 +81,10 @@ export function Patch(name?: string, path?: string): any;
 export function Render(template: string): any;
 export function Header(name: string, value: string): any;
 
-export function UsePipes(...pipes): any;
-export function UseGuards(...guards): any;
-export function UseInterceptors(...interceptors): any;
-export function UseFilters(...filters): any;
+export function UsePipes(...pipes: (PipeTransform | Function)[]): any;
+export function UseGuards(...guards: (CanActivate | Function)[]): any;
+export function UseInterceptors(...interceptors: (EggInterceptor | Function)[]): any;
+export function UseFilters(...filters: (ExceptionFilter | Function)[]): any;
 
 export function Controller(path?: string): any;
 export function Resources(path: string): any;
@@ -108,7 +108,7 @@ interface ExecutionContext {
 }
 
 interface IMiddleware {
-  apply(...middleware: Function | Function[]): this;
+  apply(...middleware: (Function | any)[]): this;
   forRoutes(...routes: (string | any)[]): this;
 }
 

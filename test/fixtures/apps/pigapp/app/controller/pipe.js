@@ -19,14 +19,6 @@ let BPipe = class BPipe {
 BPipe = tslib_1.__decorate([
     egg_pig_1.Injectable()
 ], BPipe);
-let CPipe = class CPipe {
-    xxxxxxxxxxxxx(_, __) {
-        return 1;
-    }
-};
-CPipe = tslib_1.__decorate([
-    egg_pig_1.Injectable()
-], CPipe);
 let PipeController = class PipeController extends egg_1.BaseContextClass {
     async index(query) {
         this.ctx.body = query;
@@ -55,7 +47,6 @@ tslib_1.__decorate([
 ], PipeController.prototype, "param", null);
 tslib_1.__decorate([
     egg_pig_1.Post('/'),
-    egg_pig_1.UsePipes(CPipe),
     tslib_1.__param(0, egg_pig_1.Body()),
     tslib_1.__metadata("design:type", Function),
     tslib_1.__metadata("design:paramtypes", [Object]),

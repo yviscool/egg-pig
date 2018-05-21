@@ -1,9 +1,14 @@
-import { Interceptor, EgggInterceptor } from 'egg-pig';
-import 'rxjs/add/operator/map';
+import { Injectable, EggInterceptor, ExecutionContext } from 'egg-pig';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
-@Interceptor()
-export class TransformInterceptor extends EgggInterceptor {
-  intercept(_, __, stream$) {
-    return stream$.map(data => ({ data }));
+@Injectable()
+export class TransformInterceptor extends EggInterceptor {
+  intercept(
+    context: ExecutionContext,
+    call$: Observable<any>,
+  ): Observable<any> {
+    context;
+    return call$.pipe(map(data => ({ data })));
   }
 }

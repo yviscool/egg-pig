@@ -2,7 +2,8 @@ import { ExceptionFilter, Catch, HttpException } from 'egg-pig';
 
 @Catch(HttpException)
 export class HttpExceptionFilter extends ExceptionFilter {
-    catch(exception: HttpException, ctx) {
+    catch(exception: HttpException) {
+        const { ctx } = this;
         const status = exception.getStatus();
         ctx.status = status;
         ctx.body = {

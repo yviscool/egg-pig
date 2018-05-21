@@ -25,14 +25,6 @@ let BGuard = class BGuard {
 BGuard = tslib_1.__decorate([
     egg_pig_1.Injectable()
 ], BGuard);
-let CGuard = class CGuard {
-    xxxxxxxxxx(_, __) {
-        return false;
-    }
-};
-CGuard = tslib_1.__decorate([
-    egg_pig_1.Injectable()
-], CGuard);
 let GuardController = class GuardController extends egg_1.BaseContextClass {
     async index(query) {
         this.ctx.body = query;
@@ -59,7 +51,6 @@ tslib_1.__decorate([
     tslib_1.__metadata("design:returntype", Promise)
 ], GuardController.prototype, "body", null);
 tslib_1.__decorate([
-    egg_pig_1.UseGuards(CGuard),
     egg_pig_1.Get('/nothing'),
     tslib_1.__metadata("design:type", Function),
     tslib_1.__metadata("design:paramtypes", []),

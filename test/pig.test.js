@@ -411,4 +411,113 @@ describe('test/pig.test.js', () => {
         .expect('{"statusCode":403,"message":"Forbidden"}');
     });
   });
+
+
+  describe('test/helper.js', () => {
+    it('should GET helper/forbiden', () => {
+      return app.httpRequest()
+        .get('/helper')
+        .expect(200)
+        .expect('admin');
+    });
+  });
+
+  describe('test/exception.js', () => {
+    it('should GET exception/forbiden', () => {
+      return app.httpRequest()
+        .get('/exception/forbiden')
+        .expect(403)
+        .expect('{"statusCode":403,"error":"Forbidden"}');
+    });
+    it('should GET exception/badrequest', () => {
+      return app.httpRequest()
+        .get('/exception/badrequest')
+        .expect(400)
+        .expect('{"statusCode":400,"error":"Bad Request"}');
+    });
+    it('should GET exception/unauthorized', () => {
+      return app.httpRequest()
+        .get('/exception/unauthorized')
+        .expect(401)
+        .expect('{"statusCode":401,"error":"Unauthorized"}');
+    });
+    it('should GET exception/notfound', () => {
+      return app.httpRequest()
+        .get('/exception/notfound')
+        .expect(404)
+        .expect('{"statusCode":404,"error":"Not Found"}');
+    });
+    it('should GET exception/notacceptable', () => {
+      return app.httpRequest()
+        .get('/exception/notacceptable')
+        .expect(406)
+        .expect('{"statusCode":406,"error":"Not Acceptable"}');
+    });
+    it('should GET exception/timeout', () => {
+      return app.httpRequest()
+        .get('/exception/timeout')
+        .expect(408)
+        .expect('{"statusCode":408,"error":"Request Timeout"}');
+    });
+    it('should GET exception/conflict', () => {
+      return app.httpRequest()
+        .get('/exception/conflict')
+        .expect(409)
+        .expect('{"statusCode":409,"error":"Conflict"}');
+    });
+    it('should GET exception/gone', () => {
+      return app.httpRequest()
+        .get('/exception/gone')
+        .expect(410)
+        .expect('{"statusCode":410,"error":"Gone"}');
+    });
+    it('should GET exception/payload', () => {
+      return app.httpRequest()
+        .get('/exception/payload')
+        .expect(413)
+        .expect('{"statusCode":413,"error":"Payload Too Large"}');
+    });
+    it('should GET exception/unsupport', () => {
+      return app.httpRequest()
+        .get('/exception/unsupport')
+        .expect(415)
+        .expect('{"statusCode":415,"error":"Unsupported Media Type"}');
+    });
+    it('should GET exception/unprocess', () => {
+      return app.httpRequest()
+        .get('/exception/unprocess')
+        .expect(422)
+        .expect('{"statusCode":422,"error":"Unprocessable Entity"}');
+    });
+    it('should GET exception/internal', () => {
+      return app.httpRequest()
+        .get('/exception/internal')
+        .expect(500)
+        .expect('{"statusCode":500,"error":"Internal Server Error"}');
+    });
+    it('should GET exception/notimplement', () => {
+      return app.httpRequest()
+        .get('/exception/notimplement')
+        .expect(501)
+        .expect('{"statusCode":501,"error":"Not Implemented"}');
+    });
+    it('should GET exception/service', () => {
+      return app.httpRequest()
+        .get('/exception/service')
+        .expect(503)
+        .expect('{"statusCode":503,"error":"Service Unavailable"}');
+    });
+    it('should GET exception/badgateway', () => {
+      return app.httpRequest()
+        .get('/exception/badgateway')
+        .expect(502)
+        .expect('{"statusCode":502,"error":"Bad Gateway"}');
+    });
+    it('should GET exception/gatewaytimeout', () => {
+      return app.httpRequest()
+        .get('/exception/gatewaytimeout')
+        .expect(504)
+        .expect( '{"statusCode":504,"error":"Gateway Timeout"}');
+    });
+  });
 });

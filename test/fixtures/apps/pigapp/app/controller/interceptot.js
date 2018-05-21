@@ -23,13 +23,6 @@ let BInterceptor = class BInterceptor {
 BInterceptor = tslib_1.__decorate([
     egg_pig_1.Injectable()
 ], BInterceptor);
-let CInterceptor = class CInterceptor {
-    async xxxxxxxxxxx() {
-    }
-};
-CInterceptor = tslib_1.__decorate([
-    egg_pig_1.Injectable()
-], CInterceptor);
 let InterceptorController = class InterceptorController extends egg_1.BaseContextClass {
     async index() {
         this.ctx.body = {
@@ -59,7 +52,6 @@ tslib_1.__decorate([
 ], InterceptorController.prototype, "body", null);
 tslib_1.__decorate([
     egg_pig_1.Get('/foo'),
-    egg_pig_1.UseInterceptors(CInterceptor),
     tslib_1.__metadata("design:type", Function),
     tslib_1.__metadata("design:paramtypes", []),
     tslib_1.__metadata("design:returntype", Promise)
