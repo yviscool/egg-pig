@@ -53,7 +53,7 @@
         "test": "egg-bin test",
         "cov": "egg-bin cov",
         "lint": "eslint .",
-        "ci": "npm run lint && npm run cov",
+        "ci": "npm run lint -- --fix && npm run cov",
         "autod": "autod"
     },
     "version": "0.2.1"

@@ -517,7 +517,7 @@ describe('test/pig.test.js', () => {
       return app.httpRequest()
         .get('/exception/gatewaytimeout')
         .expect(504)
-        .expect( '{"statusCode":504,"error":"Gateway Timeout"}');
+        .expect('{"statusCode":504,"error":"Gateway Timeout"}');
     });
   });
 });
