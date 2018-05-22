@@ -138,7 +138,7 @@ export function createParamDecorator(factory: (data, req) => any): (data?: any, 
 
 export class MiddlewareConsumer {
   static setRouter(router: Router): IMiddleware;
-  static apply(middleware: Function | Function[]): IMiddleware;
+  static apply(...middleware: (Function | any)[]): IMiddleware;
 }
 
 export function ReflectMetadata(metadataKey, metadataValue): (target, key?, descriptor?) => any;
