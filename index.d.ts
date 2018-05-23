@@ -98,8 +98,13 @@ interface ArgumentMetadata {
   readonly metatype?: new (...args) => any | undefined;
   readonly data?: string | undefined;
 }
+
 interface Type<T> extends Function {
   new(...args: any[]): T;
+}
+
+interface PathType {
+  readonly path: string;
 }
 
 interface ExecutionContext {
@@ -109,7 +114,7 @@ interface ExecutionContext {
 
 interface IMiddleware {
   apply(...middleware: (Function | any)[]): this;
-  forRoutes(...routes: (string | any)[]): this;
+  forRoutes(...routes: (string | PathType | Function)[]): this;
 }
 
 export abstract class CanActivate extends BaseContextClass {

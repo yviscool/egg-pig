@@ -197,6 +197,7 @@ export default (app: Application) => {
       'xxx/bar',
       controller.foo,
       controller.bar,
+      {path:'xxx/yyy'}
     )
 
     ..
