@@ -114,7 +114,7 @@ interface ExecutionContext {
 
 interface IMiddleware {
   apply(...middleware: (Function | any)[]): this;
-  forRoutes(...routes: (string | PathType | Function)[]): this;
+  forRoutes(...routes: (string | PathType | object)[]): this;
 }
 
 export abstract class CanActivate extends BaseContextClass {

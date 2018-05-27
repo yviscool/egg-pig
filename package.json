@@ -1,6 +1,6 @@
 {
     "name": "egg-pig",
-    "description": "Pipe, Interceptor, Guard Decorators",
+    "description": "Nest.js in egg",
     "keywords": [
         "egg",
         "eggPlugin",
@@ -56,5 +56,5 @@
         "ci": "npm run lint -- --fix && npm run cov",
         "autod": "autod"
     },
-    "version": "0.2.2"
+    "version": "0.2.3"
 }

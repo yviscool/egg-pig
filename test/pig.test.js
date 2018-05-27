@@ -520,4 +520,34 @@ describe('test/pig.test.js', () => {
         .expect('{"statusCode":504,"error":"Gateway Timeout"}');
     });
   });
+
+  describe('test/other.js', () => {
+    it('should GET other', () => {
+      return app.httpRequest()
+        .get('/other')
+        .expect(200)
+        .expect('');
+    });
+    it('should GET other/post', () => {
+      return app.httpRequest()
+        .post('/other/body')
+        .type('form')
+        .send({
+          id: '1',
+        })
+        .expect('1');
+    });
+    it('should GET other/query', () => {
+      return app.httpRequest()
+        .get('/other/query?id=1')
+        .expect(200)
+        .expect('1');
+    });
+    it('should GET other/head', () => {
+      return app.httpRequest()
+        .get('/other/head')
+        .expect(200)
+        .expect('head');
+    });
+  });
 });
