@@ -170,13 +170,13 @@ import { MiddlewareConsumer } from 'egg-pig';
 
 export default (app: Application) => {
 
-  const { router,controller, middleware} = app;
+  const { router,controller, middleware, config} = app;
 
   MiddlewareConsumer
 
     .setRouter(router)
     
-    .apply(middleware.log())
+    .apply(middleware.log(config.xxx))
 
     // router.all('xxx/foo', log)
     // router.all('xxx/bar', log)
@@ -185,19 +185,19 @@ export default (app: Application) => {
       'xxx/bar',
     )  
 
-    .apply(middleware.log(), middleware.logXX())
+    .apply(middleware.log(), middleware.logXX(confix.yyy))
 
     // router.all('foo/xxMethod', log, logXX)
     // router.all('foo/yyMethod', log, logXX)
     .forRoutes(controller.foo)
 
-    .apply(...)
+    .apply(middleware.log) 
     .forRoutes(
+      {path:'xxx/yyy'},
       'xxx/foo',
       'xxx/bar',
       controller.foo,
       controller.bar,
-      {path:'xxx/yyy'}
     )
 
     ..
