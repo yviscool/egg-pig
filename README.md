@@ -1,5 +1,5 @@
 # egg-pig
-nest.js int egg.
+nest.js in egg.
 
 [![NPM version][npm-image]][npm-url]
 [![build status][travis-image]][travis-url]
@@ -22,10 +22,10 @@ $ npm i egg-pig --save
 configure `xxx/config/plugin.js` to enable:
 
 ```js
-  eggpig: {
-    enable: true,
-    package: 'egg-pig'
-  }
+eggpig: {
+  enable: true,
+  package: 'egg-pig'
+}
 ```
 
 ### Param Decorators
@@ -192,6 +192,7 @@ export default (app: Application) => {
     .forRoutes(controller.foo)
 
     .apply(middleware.log) 
+
     .forRoutes(
       {path:'xxx/yyy'},
       'xxx/foo',
@@ -210,12 +211,14 @@ another way
 ```js
 // router.ts
 export default (app:Application) => {
+
   const { router } = app;
 
   router.get('/cats/add', async (_,next) => {
     console.log('this is middleware');
     return next();
   });
+
 };
 
 
@@ -355,7 +358,7 @@ export default class CatsController extends BaseContextClass {
   }  
 }
 ```
-in this case eggjs will hanlde ;
+When the client calls this endpoint,the eggjs will hanlde.
 
 ```js
 import {
