@@ -53,44 +53,48 @@ type ParamData = object | string | number;
 
 type Paramtype = 'BODY' | 'QUERY' | 'PARAM' | 'CUSTOM';
 
+interface HeadInterface {
+
+}
 export function Injectable(): any;
 
-export function Context(): any;
-export function Ctx(): any;
-export function Request(): any;
-export function Response(): any;
-export function Req(): any;
-export function Res(): any;
-export function Param(data?: ParamData, ...pipes): any;
-export function Query(data?: ParamData, ...pipes): any;
-export function Body(data?: ParamData, ...pipes): any;
-export function Headers(data?: ParamData): any;
-export function Session(): any;
-export function UploadedFile(): any;
-export function UploadedFiles(opt?): any;
+export function Context(): (target, key, index: number) => any;
+export function Ctx(): (target, key, index: number) => any;
+export function Request(): (target, key, index: number) => any;
+export function Response(): (target, key, index: number) => any;
+export function Req(): (target, key, index: number) => any;
+export function Res(): (target, key, index: number) => any;
+export function Param(data?: ParamData, ...pipes): (target, key, index: number) => any;
+export function Query(data?: ParamData, ...pipes): (target, key, index: number) => any;
+export function Body(data?: ParamData, ...pipes): (target, key, index: number) => any;
+export function Headers(data?: ParamData): (target, key, index: number) => any;
+export function Session(): (target, key, index: number) => any;
+export function UploadedFile(): (target, key, index: number) => any;
+export function UploadedFiles(opt?): (target, key, index: number) => any;
 
-export function Head(name?: string, path?: string): any;
-export function Get(name?: string, path?: string): any;
-export function All(name?: string, path?: string): any;
-export function Post(name?: string, path?: string): any;
-export function Delete(name?: string, path?: string): any;
-export function Options(name?: string, path?: string): any;
-export function Put(name?: string, path?: string): any;
-export function Patch(name?: string, path?: string): any;
+export function Head(name?: string, path?: string): (target, key, descriptor: PropertyDescriptor) => any;
+export function Get(name?: string, path?: string): (target, key, descriptor: PropertyDescriptor) => any;
+export function All(name?: string, path?: string): (target, key, descriptor: PropertyDescriptor) => any;
+export function Post(name?: string, path?: string): (target, key, descriptor: PropertyDescriptor) => any;
+export function Delete(name?: string, path?: string): (target, key, descriptor: PropertyDescriptor) => any;
+export function Options(name?: string, path?: string): (target, key, descriptor: PropertyDescriptor) => any;
+export function Put(name?: string, path?: string): (target, key, descriptor: PropertyDescriptor) => any;
+export function Patch(name?: string, path?: string): (target, key, descriptor: PropertyDescriptor) => any;
 
-export function Render(template: string): any;
-export function Header(name: string, value: string): any;
+export function Render(template: string): (target, key, descriptor: PropertyDescriptor) => any;
+export function Header(name: string, value: string): (target, key, descriptor: PropertyDescriptor) => any;
+export function Header(obj: object): (target, key, descriptor: PropertyDescriptor) => any;
 
 export function UsePipes(...pipes: (PipeTransform | Function)[]): any;
 export function UseGuards(...guards: (CanActivate | Function)[]): any;
 export function UseInterceptors(...interceptors: (EggInterceptor | Function)[]): any;
 export function UseFilters(...filters: (ExceptionFilter | Function)[]): any;
 
-export function Controller(path?: string): any;
-export function Resources(path: string): any;
-export function Resources(name: string, path: string): any;
-export function Restful(path: string): any;
-export function Restful(name: string, path: string): any;
+export function Controller(path?: string): (target: object) => any;
+export function Resources(path: string): (target: object) => any;
+export function Resources(name: string, path: string): (target: object) => any;
+export function Restful(path: string): (target: object) => any;
+export function Restful(name: string, path: string): (target: object) => any;
 
 
 interface ArgumentMetadata {

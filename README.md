@@ -234,18 +234,18 @@ export default class CatsController extends BaseContextClass{
 
 ```
 
-### render 
+### render, header
 
 ```js
 import { BaseContextClass} from 'egg';
-import { Render,Controller, Get } from 'egg-pig';
+import { Render,Controller, Get, Header } from 'egg-pig';
 
 @Controller('home')
 export default class HomeController extends BaseContextClass{
 
   @Get()   // /home
   @Render('list.tpl')
-  public async index() {
+  async index() {
     const dataList = {
       list: [
         { id: 1, title: 'this is news 1', url: '/news/1' },
@@ -253,6 +253,21 @@ export default class HomeController extends BaseContextClass{
       ]
     };
     return dataList;
+  }
+
+  @Header('ETag','123')
+  @Get('etag')
+  async foo() {
+    ...
+  }
+
+  @Header({
+      'Etag': '1234',
+      'Last-Modified': new Date(),
+  })
+  @Get('other')
+  async bar() {
+      ...
   }
 }
 ```

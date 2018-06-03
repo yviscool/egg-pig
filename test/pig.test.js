@@ -550,4 +550,21 @@ describe('test/pig.test.js', () => {
         .expect('head');
     });
   });
+
+  describe('test/header.js', () => {
+    it('should GET header', () => {
+      return app.httpRequest()
+        .get('/header/etag')
+        .expect('ETag', '123')
+        .expect(200)
+        .expect('ok');
+    });
+    it('should GET header/other', () => {
+      return app.httpRequest()
+        .get('/header/other')
+        .expect('Etag', '1234')
+        .expect('Last-Modified', '2018-9-1')
+        .expect('ok');
+    });
+  });
 });
