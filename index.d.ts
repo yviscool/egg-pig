@@ -122,10 +122,12 @@ interface IMiddleware {
 }
 
 export abstract class CanActivate extends BaseContextClass {
+  constructor(...args: any[]): any;
   abstract canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean>;
 }
 
 export abstract class EggInterceptor<T=any, R=any> extends BaseContextClass {
+  constructor(...args: any[]): any;
   abstract intercept(
     context: ExecutionContext,
     call$: Observable<T>,
@@ -133,10 +135,12 @@ export abstract class EggInterceptor<T=any, R=any> extends BaseContextClass {
 }
 
 export abstract class PipeTransform<T = any, R = any> extends BaseContextClass {
+  constructor(...args: any[]): any;
   abstract transform(value: T, metadata: ArgumentMetadata): R;
 }
 
 export abstract class ExceptionFilter extends BaseContextClass {
+  constructor(...args: any[]): any;
   abstract catch(exception): any;
 }
 
@@ -151,8 +155,6 @@ export class MiddlewareConsumer {
 }
 
 export function ReflectMetadata(metadataKey, metadataValue): (target, key?, descriptor?) => any;
-
-
 
 export class HttpException extends Error {
 

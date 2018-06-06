@@ -7,11 +7,16 @@ const RoutesResolver = require('./lib/routes_resolver');
 module.exports = app => {
 
   if (app.config.eggpig.pig) {
-    new FileLoader(app).load(routers => {
-      PigConsumer.createMethodsProxy(routers, modules => {
-        RoutesResolver.resolveRouters(modules, app);
-      });
-    });
+
+    const loader = new FileLoader(app);
+
+    PigConsumer.setRouters(loader.getRouters());
+    PigConsumer.setConfig(loader.getConfig());
+    PigConsumer.createMethodsProxy();
+
+    RoutesResolver.setModules(PigConsumer.getModules());
+    RoutesResolver.resolveRouters(app);
+
   }
 
 };

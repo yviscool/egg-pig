@@ -12,23 +12,44 @@ nest.js in egg.
 [coverage-url]: https://codecov.io/gh/yviscool/egg-pig
 [coverage-image]: https://codecov.io/gh/yviscool/egg-pig/branch/master/graph/badge.svg
 
-## Install 
+* [Installation](#installation)
+    - [Config](#Config)
+* [Usage](#usage)
+  + [Param Decorators](#Param-Decorators)
+  + [Return value](#return-value)
+  + [Controller](#Controller)
+  + [Route name](#route-name)
+  + [Restful](#restful)
+  + [Conditional validation](#conditional-validation)
+  + [Multiple Middleware](#multiple-middleware)
+  + [Render Header](#render-header)
+* [Guard](#Guard)
+* [Pipe](#Pipe)
+* [Interceptor](#Interceptor)
+* [Filter](#Filter)
+* [tips](#tips)
+* [global](#global)
+* [Custom Decorators](#Custom-Decorators)
+
+## Installation 
+
 ```bash
 $ npm i egg-pig --save
 ```
 
-## Configuation
-
-configure `xxx/config/plugin.js` to enable:
+#### Config
 
 ```js
+// app/config/plugin.js
 eggpig: {
   enable: true,
   package: 'egg-pig'
 }
 ```
 
-### Param Decorators
+## Usage 
+
+### Param-Decorators
 ```js
 import { Controller } from 'egg';
 import { Context, Request, Response, Param, Query, Body, Session, Headers, Res, Req, UploadedFile, UploadedFiles } from 'egg-pig';
@@ -63,7 +84,7 @@ export default class HomeController extends Controller {
 }
 ```
 
-### return value
+### return-value
 
 ```js
 @Controller('cats')
@@ -114,7 +135,7 @@ export default class CatsController extends BaseContextClass{
 
 ```
 
-### route name
+### route-name
 
 ```js
 import { BaseContextClass } from 'egg';
@@ -161,7 +182,7 @@ export default class CatsController extends BaseContextClass{
 Use route name `@Resources('cats', '/cats')`
 You can also use `@Restful()` Decorator, the same as Resources;
 
-### multiple middleware
+### multiple-middleware
 
 ```js
 import { Application } from 'egg';
@@ -234,7 +255,7 @@ export default class CatsController extends BaseContextClass{
 
 ```
 
-### render, header
+### render-header
 
 ```js
 import { BaseContextClass} from 'egg';
@@ -473,8 +494,25 @@ class XXPipe extends PipeTransform{
 }
 ```
 
+### global
+```js
+// config.defalut.js
+export default (appInfo: EggAppConfig) => {
 
-### Custom Decorators
+  config.globalGuards = [new FooGuard(), FooGuard];
+
+  config.globalPipes = [new FooPipe(), FooPipe];
+
+  config.globalInterceptors = [new FooIn(), FooIn];
+
+  config.globalFilters = [new FooFilter(), FooFilter]
+
+  return config;
+};
+
+``` 
+
+### Custom-Decorators
 
 ```js 
 import { BaseContextClass } from 'egg';

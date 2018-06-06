@@ -567,4 +567,31 @@ describe('test/pig.test.js', () => {
         .expect('ok');
     });
   });
+
+  describe('test/global.js', () => {
+    it('should GET guard', () => {
+      return app.httpRequest()
+        .get('/global/guard')
+        .expect(403)
+        .expect('{"statusCode":403,"message":"Forbidden resource"}');
+    });
+    it('should GET pipe', () => {
+      return app.httpRequest()
+        .get('/global/pipe')
+        .expect(200)
+        .expect('2');
+    });
+    it('should GET interceptor', () => {
+      return app.httpRequest()
+        .get('/global/interceptor')
+        .expect(200)
+        .expect('{"global":"global"}');
+    });
+    it('should GET guard', () => {
+      return app.httpRequest()
+        .get('/global/filter')
+        .expect(400)
+        .expect('{"statusCode":400,"message":"exception"}');
+    });
+  });
 });
