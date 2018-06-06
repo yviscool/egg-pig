@@ -15,21 +15,20 @@ nest.js in egg.
 * [Installation](#installation)
     - [Config](#Config)
 * [Usage](#usage)
-  + [Param Decorators](#Param-Decorators)
+  + [Param Decorators](#param-decorators)
   + [Return value](#return-value)
-  + [Controller](#Controller)
+  + [Controller](#controller)
   + [Route name](#route-name)
   + [Restful](#restful)
-  + [Conditional validation](#conditional-validation)
   + [Multiple Middleware](#multiple-middleware)
   + [Render Header](#render-header)
-* [Guard](#Guard)
-* [Pipe](#Pipe)
-* [Interceptor](#Interceptor)
-* [Filter](#Filter)
+* [Guard](#guard)
+* [Pipe](#pipe)
+* [Interceptor](#interceptor)
+* [Filter](#filter)
 * [tips](#tips)
 * [global](#global)
-* [Custom Decorators](#Custom-Decorators)
+* [Custom Decorators](#custom-decorators)
 
 ## Installation 
 
@@ -37,7 +36,7 @@ nest.js in egg.
 $ npm i egg-pig --save
 ```
 
-#### Config
+### Config
 
 ```js
 // app/config/plugin.js
@@ -49,7 +48,7 @@ eggpig: {
 
 ## Usage 
 
-### Param-Decorators
+### Param Decorators
 ```js
 import { Controller } from 'egg';
 import { Context, Request, Response, Param, Query, Body, Session, Headers, Res, Req, UploadedFile, UploadedFiles } from 'egg-pig';
@@ -84,7 +83,7 @@ export default class HomeController extends Controller {
 }
 ```
 
-### return-value
+### return value
 
 ```js
 @Controller('cats')
@@ -135,7 +134,7 @@ export default class CatsController extends BaseContextClass{
 
 ```
 
-### route-name
+### route name
 
 ```js
 import { BaseContextClass } from 'egg';
@@ -159,7 +158,7 @@ if you open `/cats/12` then `ctx.body = 12`
 import { BaseContextClass } from 'egg';
 import {  Resources, Get } from 'egg-pig';
 
-@Resources('cats')    // => router.resources(''cats', /cats', CastController)
+@Resources('cats')    // => router.resources(''cats', /cats', CastController)
 // or @Restful('cats')
 export default class CatsController extends BaseContextClass{
 
@@ -171,8 +170,8 @@ export default class CatsController extends BaseContextClass{
     return 'new';
   }
 
-  @Get('/add')    //  router.get('/cats/add', add)
-  async add(){
+  @Get('/add')    //  router.get('/cats/add', add)
+  async add(){
     return 'add';
   }
 
@@ -512,7 +511,7 @@ export default (appInfo: EggAppConfig) => {
 
 ``` 
 
-### Custom-Decorators
+### Custom Decorators
 
 ```js 
 import { BaseContextClass } from 'egg';
@@ -542,4 +541,3 @@ export default class HomeController extends BaseContextClass {
 }
 
 ```
-
