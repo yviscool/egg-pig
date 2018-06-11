@@ -14,7 +14,7 @@ module.exports = app => {
     PigConsumer.setConfig(loader.getConfig());
     PigConsumer.createMethodsProxy();
 
-    RoutesResolver.setModules(PigConsumer.getModules());
+    RoutesResolver.setRouters(PigConsumer.getRouters());
     RoutesResolver.resolveRouters(app);
 
   }
