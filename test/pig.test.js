@@ -573,7 +573,7 @@ describe('test/pig.test.js', () => {
       return app.httpRequest()
         .get('/global/guard')
         .expect(403)
-        .expect('{"statusCode":403,"message":"Forbidden resource"}');
+        .expect('{"statusCode":403,"error":"Forbidden","message":"Forbidden resource"}');
     });
     it('should GET pipe', () => {
       return app.httpRequest()
