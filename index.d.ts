@@ -53,9 +53,6 @@ type ParamData = object | string | number;
 
 type Paramtype = 'BODY' | 'QUERY' | 'PARAM' | 'CUSTOM';
 
-interface HeadInterface {
-
-}
 export function Injectable(): any;
 
 export function Context(): (target, key, index: number) => any;
@@ -64,13 +61,23 @@ export function Request(): (target, key, index: number) => any;
 export function Response(): (target, key, index: number) => any;
 export function Req(): (target, key, index: number) => any;
 export function Res(): (target, key, index: number) => any;
-export function Param(data?: ParamData, ...pipes): (target, key, index: number) => any;
-export function Query(data?: ParamData, ...pipes): (target, key, index: number) => any;
-export function Body(data?: ParamData, ...pipes): (target, key, index: number) => any;
-export function Headers(data?: ParamData): (target, key, index: number) => any;
+export function Headers(property?: string): (target, key, index: number) => any;
 export function Session(): (target, key, index: number) => any;
 export function UploadedFile(): (target, key, index: number) => any;
 export function UploadedFiles(opt?): (target, key, index: number) => any;
+
+export function Param(): (target, key, index: number) => any;
+export function Param(...pipes: (Type<PipeTransform> | PipeTransform)[]): (target, key, index: number) => any;
+export function Param(property: string, ...pipes: (Type<PipeTransform> | PipeTransform)[]): (target, key, index: number) => any;
+
+export function Query(): (target, key, index: number) => any;
+export function Query(...pipes: (Type<PipeTransform> | PipeTransform)[]): (target, key, index: number) => any;
+export function Query(property: string, ...pipes: (Type<PipeTransform> | PipeTransform)[]): (target, key, index: number) => any;
+
+export function Body(): (target, key, index: number) => any;
+export function Body(...pipes: (Type<PipeTransform> | PipeTransform)[]): (target, key, index: number) => any;
+export function Body(property: string, ...pipes: (Type<PipeTransform> | PipeTransform)[]): (target, key, index: number) => any;
+
 
 export function Head(name?: string, path?: string): (target, key, descriptor: PropertyDescriptor) => any;
 export function Get(name?: string, path?: string): (target, key, descriptor: PropertyDescriptor) => any;
