@@ -1,13 +1,15 @@
 'use strict';
+const common = require('./lib/common');
 const decorator = require('./lib/decorator');
 const MiddlewareConsumer = require('./lib/middleware');
-const HttpException = require('./lib/exceptions/exception');
 const HttpStatus = require('./lib/exceptions/constant');
+const HttpException = require('./lib/exceptions/exception');
 
 module.exports = {
+  ...common,
   ...decorator,
-  ...HttpException,
   ...HttpStatus,
+  ...HttpException,
   MiddlewareConsumer,
   CanActivate: class { },
   PipeTransform: class { },

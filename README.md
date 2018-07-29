@@ -438,7 +438,7 @@ class ForbiddenException extends HttpException {
 }
 
 async foo(){
-    hrow new ForbiddenException()
+    throw new ForbiddenException()
 }  
 ```
 

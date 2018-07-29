@@ -594,4 +594,66 @@ describe('test/pig.test.js', () => {
         .expect('{"statusCode":400,"message":"exception"}');
     });
   });
+
+  describe('test/httpcode.js', () => {
+    it('should GET httpcode/get', () => {
+      return app.httpRequest()
+        .get('/httpcode/get')
+        .expect(404)
+        .expect('ok');
+    });
+    it('should GET httpcode/post', () => {
+      return app.httpRequest()
+        .post('/httpcode/post')
+        .type('form')
+        .send({ foo: 'bar' })
+        .expect(400)
+        .expect('ok');
+    });
+  });
+
+  describe('test/pipetest.js', () => {
+    it('should GET pipetest/parseint', () => {
+      return app.httpRequest()
+        .get('/pipetest/parseint?id=12')
+        .expect(200)
+        .expect('12');
+    });
+    it('should GET bad pipetest/parseint', () => {
+      return app.httpRequest()
+        .get('/pipetest/parseint?id=zjl')
+        .expect(400)
+        .expect('{"statusCode":400,"error":"Bad Request","message":"Validation failed (numeric string is expected)"}');
+    });
+    it('should POST pipetest/validation', () => {
+      return app.httpRequest()
+        .post('/pipetest/validation')
+        .type('json')
+        .send({
+          age: 12,
+          firstName: 'jay',
+          lastName: 'chou',
+        })
+        .expect(201)
+        .expect('jay chou');
+    });
+    it('should POST bad pipetest/validation', () => {
+      return app.httpRequest()
+        .post('/pipetest/validation')
+        .type('json')
+        .send({
+          age: 12,
+          firstName: 'y',
+          lastName: 'chou',
+        })
+        .expect(400)
+        .expect('{"statusCode":400,"error":"Bad Request","message":[{"target":{"age":12,"firstName":"y","lastName":"chou"},"value":"y","property":"firstName","children":[],"constraints":{"length":"firstName must be longer than or equal to 2 characters"}}]}');
+    });
+    it('should get pipetest/other', () => {
+      return app.httpRequest()
+        .get('/pipetest/other?id=12')
+        .expect(200)
+        .expect('12');
+    });
+  });
 });

@@ -1,5 +1,6 @@
-import { BaseContextClass, Context as CTX, Router, Request } from 'egg';
+import { BaseContextClass, Router } from 'egg';
 import { Observable } from 'rxjs';
+
 
 export enum HttpStatus {
   CONTINUE = 100,
@@ -91,6 +92,7 @@ export function Patch(name?: string, path?: string): (target, key, descriptor: P
 export function Render(template: string): (target, key, descriptor: PropertyDescriptor) => any;
 export function Header(name: string, value: string): (target, key, descriptor: PropertyDescriptor) => any;
 export function Header(obj: object): (target, key, descriptor: PropertyDescriptor) => any;
+export function HttpCode(statusCode: number): (target, key, descriptor: PropertyDescriptor) => any;
 
 export function UsePipes(...pipes: (PipeTransform | Function)[]): any;
 export function UseGuards(...guards: (CanActivate | Function)[]): any;
@@ -119,7 +121,7 @@ interface PathType {
 }
 
 interface ExecutionContext {
-  getClass<T = any>(): Type<T>;  // user for class 
+  getClass<T = any>(): Type<T>;  // use for class 
   getHandler(): Function;    // classMethod 
 }
 
@@ -232,4 +234,34 @@ export class ServiceUnavailableException extends HttpException {
 
 export class GatewayTimeoutException extends HttpException {
   constructor(message?: string | object | any, error = 'Gateway Timeout');
+}
+
+
+interface ValidatorOptions {
+  skipMissingProperties?: boolean;
+  whitelist?: boolean;
+  forbidNonWhitelisted?: boolean;
+  groups?: string[];
+  dismissDefaultMessages?: boolean;
+  validationError?: {
+    target?: boolean;
+    value?: boolean;
+  };
+  forbidUnknownValues?: boolean;
+}
+
+interface ValidationPipeOptions extends ValidatorOptions {
+  transform?: boolean;
+  disableErrorMessages?: boolean;
+}
+
+export class ParseIntPipe extends PipeTransform {
+  async transform(value: string, metadata: ArgumentMetadata): Promise<number>;
+}
+
+export class ValidationPipe extends PipeTransform {
+  constructor(options?: ValidationPipeOptions);
+  public async transform(value, metadata: ArgumentMetadata): any;
+  private toValidate(metadata: ArgumentMetadata): boolean;
+  toEmptyIfNil<T=any, R=any>(value: T): R | {};
 }
