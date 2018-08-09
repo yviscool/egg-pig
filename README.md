@@ -29,6 +29,7 @@ nest.js in egg.
 * [tips](#tips)
 * [global](#global)
 * [Custom Decorators](#custom-decorators)
+* [Build-in ValidationPipe](#custom-decorators)
 
 ## Installation 
 
@@ -185,7 +186,7 @@ You can also use `@Restful()` Decorator, the same as Resources;
 
 ```js
 import { Application } from 'egg';
-import { MiddlewareConsumer } from 'egg-pig';
+import { MiddlewareConsumer, RequestMethod } from 'egg-pig';
 
 
 export default (app: Application) => {
@@ -198,24 +199,25 @@ export default (app: Application) => {
     
     .apply(middleware.log(config.xxx))
 
-    // router.all('xxx/foo', log)
-    // router.all('xxx/bar', log)
+    // router.all('foo/bar', log)
+    // router.all('foo/xxx', log)
     .forRoutes(
-      'xxx/foo',
-      'xxx/bar',
+      'foo/bar',
+      'foo/xxx',
     )  
 
     .apply(middleware.log(), middleware.logXX(confix.yyy))
 
-    // router.all('foo/xxMethod', log, logXX)
-    // router.all('foo/yyMethod', log, logXX)
+    // router.xxx('controllerFoo/xxMethod', log, logXX)
+    // router.xxx('controllerFoo/yyMethod', log, logXX)
     .forRoutes(controller.foo)
 
     .apply(middleware.log) 
 
+
     .forRoutes(
-      {path:'xxx/yyy'},
-      'xxx/foo',
+      { path:'xxx/yyy', method: RequestMethod.GET},
+      { path:'xxx/zzz', method: RequestMethod.POST},
       'xxx/bar',
       controller.foo,
       controller.bar,
@@ -224,6 +226,19 @@ export default (app: Application) => {
     ..
 }
 
+```
+Whilst class is used, quite often we might want to exclude certain routes. That is very intuitive due to the exclude() method.
+```js
+  ...
+   MiddlewareConsumer
+      .setRouter(router)
+      .apply(middleware.bar)
+      .exclude(
+        { path: 'cats', method: RequestMethod.GET },
+        { path: 'cats', method: RequestMethod.POST },
+      )
+      .forRoutes(controller.foo);
+  ...
 ```
 
 another way
@@ -510,6 +525,50 @@ export default (appInfo: EggAppConfig) => {
 };
 
 ``` 
+
+### Build-in ValidationPipe
+
+```js
+import { ... ParseIntPipe, ValidationPipe } from 'egg-pig';
+import { IsInt, IsString, Length } from "class-validator";
+
+class User {
+
+    @IsInt()
+    age: number;
+
+    @Length(2, 10)
+    firstName: string;
+
+    @IsString()
+    lastName: string;
+
+    getName() {
+        return this.firstName + ' ' + this.lastName;
+    }
+
+}
+
+@Controller('pipetest')
+export default class PipetestController extends BaseContextClass {
+
+    @Get('parseint')
+    async foo(@Query('id', ParseIntPipe) id) {
+        return id;
+    }
+
+    @Post('validation')
+    async bar(@Body(new ValidationPipe({ transform: true })) user: User) {
+        return user.getName();
+    }
+
+}
+```
+
+Notice You may find more information about the 
+  [class-validator](https://github.com/yviscool/understanding-nest/blob/master/book/3.1%20class-validator%20%E8%A7%A3%E6%9E%90%E4%BB%A5%E5%8F%8A%20validaiton.pipe%20%E4%BD%BF%E7%94%A8.md)/
+  [class-transformer](https://github.com/yviscool/understanding-nest/blob/master/book/3.2%20class-transformer%20%E8%A7%A3%E6%9E%90.md)
+
 
 ### Custom Decorators
 

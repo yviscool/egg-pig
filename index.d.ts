@@ -49,6 +49,18 @@ export enum HttpStatus {
   HTTP_VERSION_NOT_SUPPORTED = 505,
 }
 
+export enum RequestMethod {
+  GET =  '0',
+  POST = '1',
+  PUT = '2',
+  DELETE ='3',
+  PATCH ='4',
+  ALL ='5',
+  OPTIONS ='6',
+  HEAD ='7',
+};
+
+
 
 type ParamData = object | string | number;
 
@@ -116,8 +128,9 @@ interface Type<T> extends Function {
   new(...args: any[]): T;
 }
 
-interface PathType {
+interface RouteInfo {
   readonly path: string;
+  readonly method: RequestMethod;
 }
 
 interface ExecutionContext {
@@ -127,7 +140,8 @@ interface ExecutionContext {
 
 interface IMiddleware {
   apply(...middleware: (Function | any)[]): this;
-  forRoutes(...routes: (string | PathType | object)[]): this;
+  forRoutes(...routes: Array(string | RouteInfo | object)): this;
+  exclude(...routes:Array<string | RouteInfo>): this;
 }
 
 export abstract class CanActivate extends BaseContextClass {

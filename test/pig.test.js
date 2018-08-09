@@ -656,4 +656,19 @@ describe('test/pig.test.js', () => {
         .expect('12');
     });
   });
+
+  describe('test/middleware_rest.js', () => {
+    it('should GET /middleware_rest', () => {
+      return app.httpRequest()
+        .get('/middleware_rest')
+        .expect(200)
+        .expect('index');
+    });
+    it('should GET /cats/dectory', () => {
+      return app.httpRequest()
+        .put('/middleware_rest/12')
+        .expect(200)
+        .expect('update');
+    });
+  });
 });
