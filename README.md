@@ -28,8 +28,9 @@ nest.js in egg.
 * [Filter](#filter)
 * [tips](#tips)
 * [global](#global)
+* [Build-in ValidationPipe](#Build-in-ValidationPipe)
 * [Custom Decorators](#custom-decorators)
-* [Build-in ValidationPipe](#custom-decorators)
+
 
 ## Installation 
 
@@ -526,7 +527,7 @@ export default (appInfo: EggAppConfig) => {
 
 ``` 
 
-### Build-in ValidationPipe
+### Build-in-ValidationPipe
 
 ```js
 import { ... ParseIntPipe, ValidationPipe } from 'egg-pig';
