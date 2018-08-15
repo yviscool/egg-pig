@@ -28,7 +28,7 @@ nest.js in egg.
 * [Filter](#filter)
 * [tips](#tips)
 * [global](#global)
-* [Build-in ValidationPipe](#Build-in-ValidationPipe)
+* [Build-in ValidationPipe](#build-in-balidationpipe)
 * [Custom Decorators](#custom-decorators)
 
 ## Installation 
