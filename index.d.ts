@@ -140,7 +140,7 @@ interface ExecutionContext {
 
 interface IMiddleware {
   apply(...middleware: (Function | any)[]): this;
-  forRoutes(...routes: Array(string | RouteInfo | object)): this;
+  forRoutes(...routes: (string | RouteInfo | object)[]): this;
   exclude(...routes:Array<string | RouteInfo>): this;
 }
 

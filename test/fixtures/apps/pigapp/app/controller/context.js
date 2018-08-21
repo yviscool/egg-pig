@@ -25,7 +25,7 @@ let ContextController = class ContextController extends egg_1.BaseContextClass {
     async context(ctx) {
         ctx.body = 'ok';
     }
-    async ctx(ctx) {
+    async ctx2(ctx) {
         ctx.body = 'ok';
     }
     async body(body) {
@@ -87,7 +87,7 @@ tslib_1.__decorate([
     tslib_1.__metadata("design:type", Function),
     tslib_1.__metadata("design:paramtypes", [Object]),
     tslib_1.__metadata("design:returntype", Promise)
-], ContextController.prototype, "ctx", null);
+], ContextController.prototype, "ctx2", null);
 tslib_1.__decorate([
     egg_pig_1.Post('/body'),
     tslib_1.__param(0, egg_pig_1.Body()),

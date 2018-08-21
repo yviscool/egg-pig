@@ -671,4 +671,15 @@ describe('test/pig.test.js', () => {
         .expect('update');
     });
   });
+
+
+  describe('test/parent_controller.js', () => {
+    it('should GET /parent_controller/test', () => {
+      return app.httpRequest()
+        .get('/parent_controller/test')
+        .expect(200)
+        .expect('1');
+    });
+  });
+
 });
