@@ -682,4 +682,15 @@ describe('test/pig.test.js', () => {
     });
   });
 
+
+  describe('test/parent_rest_controller.js', () => {
+    it('should GET /parent_rest_controller', () => {
+      return app.httpRequest()
+        .get('/parent_rest_controller')
+        .expect(200)
+        .expect('2');
+    });
+  });
+
+
 });
