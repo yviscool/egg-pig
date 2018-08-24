@@ -27,8 +27,8 @@ nest.js in egg.
   + [Build-in ValidationPipe](#build-in-balidationpipe)
 * [Interceptor](#interceptor)
 * [Filter](#filter)
-* [tips](#tips)
-* [global](#global)
+* [Tips](#tips)
+* [Global](#global)
 * [Custom Decorators](#custom-decorators)
 
 ## Installation 
@@ -356,6 +356,50 @@ export default class HomeController extends Controller {
 }
 ```
 
+#### Build-in ValidationPipe
+
+```js
+import { ... ParseIntPipe, ValidationPipe } from 'egg-pig';
+import { IsInt, IsString, Length } from "class-validator";
+
+class User {
+
+    @IsInt()
+    age: number;
+
+    @Length(2, 10)
+    firstName: string;
+
+    @IsString()
+    lastName: string;
+
+    getName() {
+        return this.firstName + ' ' + this.lastName;
+    }
+
+}
+
+@Controller('pipetest')
+export default class PipetestController extends BaseContextClass {
+
+    @Get('parseint')
+    async foo(@Query('id', ParseIntPipe) id) {
+        return id;
+    }
+
+    @Post('validation')
+    async bar(@Body(new ValidationPipe({ transform: true })) user: User) {
+        return user.getName();
+    }
+
+}
+```
+
+Notice You may find more information about the 
+  [class-validator](https://github.com/yviscool/understanding-nest/blob/master/book/3.1%20class-validator%20%E8%A7%A3%E6%9E%90%E4%BB%A5%E5%8F%8A%20validaiton.pipe%20%E4%BD%BF%E7%94%A8.md)/
+  [class-transformer](https://github.com/yviscool/understanding-nest/blob/master/book/3.2%20class-transformer%20%E8%A7%A3%E6%9E%90.md)
+
+
 ### Interceptor
 
 ```js
@@ -524,51 +568,7 @@ export default (appInfo: EggAppConfig) => {
   return config;
 };
 
-``` 
-
-### Build-in ValidationPipe
-
-```js
-import { ... ParseIntPipe, ValidationPipe } from 'egg-pig';
-import { IsInt, IsString, Length } from "class-validator";
-
-class User {
-
-    @IsInt()
-    age: number;
-
-    @Length(2, 10)
-    firstName: string;
-
-    @IsString()
-    lastName: string;
-
-    getName() {
-        return this.firstName + ' ' + this.lastName;
-    }
-
-}
-
-@Controller('pipetest')
-export default class PipetestController extends BaseContextClass {
-
-    @Get('parseint')
-    async foo(@Query('id', ParseIntPipe) id) {
-        return id;
-    }
-
-    @Post('validation')
-    async bar(@Body(new ValidationPipe({ transform: true })) user: User) {
-        return user.getName();
-    }
-
-}
 ```
-
-Notice You may find more information about the 
-  [class-validator](https://github.com/yviscool/understanding-nest/blob/master/book/3.1%20class-validator%20%E8%A7%A3%E6%9E%90%E4%BB%A5%E5%8F%8A%20validaiton.pipe%20%E4%BD%BF%E7%94%A8.md)/
-  [class-transformer](https://github.com/yviscool/understanding-nest/blob/master/book/3.2%20class-transformer%20%E8%A7%A3%E6%9E%90.md)
-
 
 ### Custom Decorators
 
