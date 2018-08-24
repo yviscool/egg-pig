@@ -385,6 +385,22 @@ describe('test/pig.test.js', () => {
     });
   });
 
+  describe('test/middleware_resource.js', () => {
+    it('should GET /middleware_resource', () => {
+      return app.httpRequest()
+        .get('/middleware_resource')
+        .expect(200)
+        .expect('ok');
+    });
+    it('should GET /middleware_resource', () => {
+      return app.httpRequest()
+        .put('/middleware_resource/12')
+        .expect(200)
+        .expect('ok');
+    });
+  });
+
+
   describe('test/filter.js', () => {
     it('should GET filter/common', () => {
       return app.httpRequest()

@@ -57,5 +57,5 @@
     "ci": "npm run lint -- --fix && npm run cov",
     "autod": "autod"
   },
-  "version": "0.3.1"
+  "version": "0.3.2"
 }
