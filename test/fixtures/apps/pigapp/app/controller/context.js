@@ -13,6 +13,9 @@ let ContextController = class ContextController extends egg_1.BaseContextClass {
     async headers(headers) {
         this.ctx.body = headers.host.substring(0,3);
     }
+    async headersTwo(host) {
+        this.ctx.body = host.substring(0,3);
+    }
     async request(req) {
         this.ctx.body = req.method;
     }
@@ -53,6 +56,13 @@ tslib_1.__decorate([
     tslib_1.__metadata("design:paramtypes", [Object]),
     tslib_1.__metadata("design:returntype", Promise)
 ], ContextController.prototype, "headers", null);
+tslib_1.__decorate([
+    egg_pig_1.Get('/headers_two'),
+    tslib_1.__param(0, egg_pig_1.Headers('host')),
+    tslib_1.__metadata("design:type", Function),
+    tslib_1.__metadata("design:paramtypes", [Object]),
+    tslib_1.__metadata("design:returntype", Promise)
+], ContextController.prototype, "headersTwo", null);
 tslib_1.__decorate([
     egg_pig_1.Get('/request'),
     tslib_1.__param(0, egg_pig_1.Request()),

@@ -61,7 +61,8 @@ describe('test/pig.test.js', () => {
     it('should GET verb/options', () => {
       return app.httpRequest()
         .options('/verb/options')
-        .expect(405);
+        .expect(200)
+        .expect('options');
     });
   });
 
@@ -94,6 +95,12 @@ describe('test/pig.test.js', () => {
     it('should GET context/headers', () => {
       return app.httpRequest()
         .get('/context/headers')
+        .expect(200)
+        .expect('127');
+    });
+    it('should GET context/headers_two', () => {
+      return app.httpRequest()
+        .get('/context/headers_two')
         .expect(200)
         .expect('127');
     });
