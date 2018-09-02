@@ -128,7 +128,7 @@ export default class CatsController extends BaseContextClass{
   @Post('/add')   // => router.post('/cats/add', add)
   async add(@Body() body){
     return body;
-     // or this.ctx.body = body;
+    // or this.ctx.body = body;
   }
   
 }
@@ -553,9 +553,14 @@ class XXPipe extends PipeTransform{
 ```
 
 ### global
+
+global prefix/guards/pipes/interceptors/filters
+
 ```js
 // config.defalut.js
 export default (appInfo: EggAppConfig) => {
+
+  config.globalPrefix = '/api/v1';
 
   config.globalGuards = [new FooGuard(), FooGuard];
 

@@ -24,7 +24,7 @@ exports.default = (appInfo) => {
             '.tpl': 'nunjucks',
         },
     };
-
+    // config.globalPrefix = 'api/v1'
     class Guard {
         canActivate(context) {
             if (this['ctx'].url === '/global/guard') {
