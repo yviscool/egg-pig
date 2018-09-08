@@ -716,4 +716,14 @@ describe('test/pig.test.js', () => {
   });
 
 
+  describe('test/serializer.js', () => {
+    it('should GET /serializer', () => {
+      return app.httpRequest()
+        .get('/serializer')
+        .expect(200)
+        .expect('[{"id":1,"firstName":"jay","lastName":"chou","role":"admin","fullName":"jay chou"},{"id":2,"firstName":"kamic","lastName":"xxxla","role":"user01","fullName":"kamic xxxla"}]');
+    });
+  });
+
 });
+

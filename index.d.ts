@@ -269,6 +269,7 @@ interface ValidationPipeOptions extends ValidatorOptions {
   disableErrorMessages?: boolean;
 }
 
+
 export class ParseIntPipe extends PipeTransform {
   async transform(value: string, metadata: ArgumentMetadata): Promise<number>;
 }
@@ -278,4 +279,8 @@ export class ValidationPipe extends PipeTransform {
   public async transform(value, metadata: ArgumentMetadata): any;
   private toValidate(metadata: ArgumentMetadata): boolean;
   toEmptyIfNil<T=any, R=any>(value: T): R | {};
+}
+
+export class ClassSerializerInterceptor extends EggInterceptor {
+  public intercept(context: ExecutionContext, call$: Observable<any>): Observable<any>;
 }

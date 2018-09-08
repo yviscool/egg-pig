@@ -26,6 +26,7 @@ nest.js in egg.
 * [Pipe](#pipe)
   + [Build-in ValidationPipe](#build-in-balidationpipe)
 * [Interceptor](#interceptor)
+  + [Build-in interceptor](#build-in-interceptor)
 * [Filter](#filter)
 * [Tips](#tips)
 * [Global](#global)
@@ -429,6 +430,63 @@ export default class HomeController extends Controller {
   public async index() {
     // some login
   }
+}
+```
+
+#### Build-in interceptor 
+
+```
+import { UseInterceptors, ClassSerializerInterceptor } from 'egg-pig';
+
+class RoleEntity {
+    id: number;
+    name: string;
+    constructor(partial: Partial<RoleEntity>) {
+        Object.assign(this, partial);
+    }
+}
+
+class UserEntity {
+    id: number;
+    firstName: string;
+    lastName: string;
+
+    @Exclude()
+    password: string;
+
+    @Expose()
+    get fullName() {
+        return `${this.firstName} ${this.lastName}`
+    }
+    @Transform(role => role.name)
+    role: RoleEntity
+
+    constructor(partial: Partial<UserEntity>) {
+        Object.assign(this, partial);
+    }
+}
+
+
+@Controller('serializer')
+@UseInterceptors(new ClassSerializerInterceptor())
+export default class SerializerController extends BaseContextClass {
+
+    @Get()
+    async foo() {
+        return [new UserEntity({
+            id: 1,
+            firstName: 'jay',
+            lastName: 'chou',
+            password: '123456',
+            role: new RoleEntity({ id: 1, name: 'admin' })
+        }), new UserEntity({
+            id: 2,
+            firstName: 'kamic',
+            lastName: 'xxxla',
+            password: '45678',
+            role: new RoleEntity({ id: 2, name: 'user01' })
+        })]
+    }
 }
 ```
 
