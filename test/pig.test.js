@@ -130,7 +130,7 @@ describe('test/pig.test.js', () => {
           id: '1',
         })
         .expect({
-          id: 1,
+          id: '1',
         });
     });
   });
@@ -148,7 +148,7 @@ describe('test/pig.test.js', () => {
         .get('/innerdep/query?id=1')
         .expect(200)
         .expect({
-          id: 1,
+          id: '1',
         });
     });
 
@@ -160,7 +160,7 @@ describe('test/pig.test.js', () => {
         .get('/guard?id=1')
         .expect(200)
         .expect({
-          id: 1,
+          id: '1',
         });
     });
     it('should GET guard/forbiden', () => {
@@ -203,7 +203,7 @@ describe('test/pig.test.js', () => {
           id: 1,
         })
         .expect({
-          id: 1,
+          id: '1',
         });
     });
   });
@@ -214,11 +214,10 @@ describe('test/pig.test.js', () => {
         .get('/interceptor')
         .expect(200)
         .expect({
-          path: '/',
           query: {
-            id: '1',
+            id: 1,
           },
-
+          path: '/',
         });
     });
     it('should GET interceptor/body', () => {
