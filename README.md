@@ -435,7 +435,7 @@ export default class HomeController extends Controller {
 
 #### Build-in interceptor 
 
-```
+```js
 import { UseInterceptors, ClassSerializerInterceptor } from 'egg-pig';
 
 class RoleEntity {
