@@ -15,9 +15,9 @@ nest.js in egg.
 * [Installation](#installation)
     - [Config](#Config)
 * [Usage](#usage)
-  + [Param Decorators](#param-decorators)
-  + [Return value](#return-value)
   + [Controller](#controller)
+  + [Return value](#return-value)
+  + [Param Decorators](#param-decorators)
   + [Route name](#route-name)
   + [Restful](#restful)
   + [Multiple Middleware](#multiple-middleware)
@@ -50,38 +50,56 @@ eggpig: {
 
 ## Usage 
 
-### Param Decorators
-```js
-import { Controller } from 'egg';
-import { Context, Request, Response, Param, Query, Body, Session, Headers, Res, Req, UploadedFile, UploadedFiles } from 'egg-pig';
+### Controller
 
-export default class HomeController extends Controller {
-  public async index(
-    @Context() ctx,
-    @Ctx() ctx, // alias
-    @Request() req,
-    @Response() res,
-    @Req() req, // alias
-    @Res() res,// alias
-    @Param() param,
-    @Query() query,
-    @Body() body,
-    @Session() session,
-    @Headers() headers,
-    @UploadedFile() stream,
-    @UploadedFiles() parts,
-  ) {
-    // ctx = this.ctx;
-    // req=  this.ctx.request;
-    // res = this.ctx.response;
-    // param = this.ctx.params;
-    // query = this.ctx.query;
-    // body = this.ctx.request.body;
-    // session = this.ctx.session;
-    // headers = this.ctx.headers;
-    // stream = await this.ctx.getFileStream();
-    // parts = this.ctx.multipart();
-  }
+```js
+import { IService, EggAppConfig, Application, Context } from 'egg';
+import { Controller, Get, Post } from 'egg-pig';
+
+@Controller('cats') // => /cats
+export default class CatsController {
+    
+    constructor(
+        private ctx: Context,
+        private app: Application,
+        private config: EggAppConfig
+        private service: IService,
+    ) { }
+
+    @Get()  // => router.get('/cats', index)
+    async index() {
+        this.ctx.body = 'index';
+        // or return 'index'
+    }
+
+    @Get('get')   // => router.get('/cats/get', get)
+    async get() {
+        return 'add'
+        // or this.ctx.body = 'add'; 
+    }
+
+    @Post('/add')   // => router.post('/cats/add', add)
+    async add(@Body() body) {
+        return body;
+        // or this.ctx.body = body;
+    }
+
+}
+```
+
+another way 
+
+```json
+import { BaseContextClass } from 'egg';
+import { Controller, Get, Post } from 'egg-pig';
+
+@Controller('cats') // => /cats
+export default class CatsController extends BaseContextClass{
+
+    @Get()
+    async index() {
+        return await this.service.foo.bar();
+    }
 }
 ```
 
@@ -89,96 +107,97 @@ export default class HomeController extends Controller {
 
 ```js
 @Controller('cats')
-export default class CatsController extends BaseContextClass{
+export default class CatsController {
 
-  @Get('/add')  // router.get('/cats/add', add)
-  async add(){
-    return 'zjl'; // this.ctx.body = 'zjl;
-  }
-  
-  @Get('bar')    // router.get('/cats/foo', foo)
-  async foo(){  
-    return await this.service.xxx.yyy(); // this.ctx.body = '';
-  }
+    @Get('/add')  // router.get('/cats/add', add)
+    async add() {
+        return 'zjl'; // this.ctx.body = 'zjl;
+    }
+
+    @Get('bar')    // router.get('/cats/foo', foo)
+    async foo() {
+        return await this.service.xxx.yyy(); // this.ctx.body = '';
+    }
 }
-
 ```
 use return value replace ctx.body;
 
-### Controller
 
+### Param Decorators
 ```js
-import { BaseContextClass } from 'egg';
-import {  Controller, Get, Post, Body, Param } from 'egg-pig';
+import { Context, Request, Response, Param, Query, Body, Session, Headers, Res, Req, UploadedFile, UploadedFiles } from 'egg-pig';
 
-@Controller('cats') // => /cats
-export default class CatsController extends BaseContextClass{
-
-  @Get()  // => router.get('/cats', index)
-  async index(){
-    this.ctx.body = 'index'; 
-    // or return 'index'
-  }
-
-  @Get('get')   // => router.get('/cats/get', get)
-  async get(){
-    return 'add'
-    // or this.ctx.body = 'add'; 
-  }
-  
-  @Post('/add')   // => router.post('/cats/add', add)
-  async add(@Body() body){
-    return body;
-    // or this.ctx.body = body;
-  }
-  
+@Controller('cats')
+export default class CatsController {
+    public async index(
+        @Context() ctx,
+        @Ctx() ctx, // alias
+        @Request() req,
+        @Response() res,
+        @Req() req, // alias
+        @Res() res,// alias
+        @Param() param,
+        @Query() query,
+        @Body() body,
+        @Session() session,
+        @Headers() headers,
+        @UploadedFile() stream,
+        @UploadedFiles() parts,
+    ) {
+        // ctx = this.ctx;
+        // req=  this.ctx.request;
+        // res = this.ctx.response;
+        // param = this.ctx.params;
+        // query = this.ctx.query;
+        // body = this.ctx.request.body;
+        // session = this.ctx.session;
+        // headers = this.ctx.headers;
+        // stream = await this.ctx.getFileStream();
+        // parts = this.ctx.multipart();
+    }
 }
-
 ```
+
 
 ### route name
 
 ```js
-import { BaseContextClass } from 'egg';
-import {  Controller, Get, Param } from 'egg-pig';
+import { Controller, Get, Param } from 'egg-pig';
 
 @Controller('cats')
-export default class CatsController extends BaseContextClass{
+export default class CatsController {
 
-  @Get('cats',':id') // router.get('cats', '/cats/:id', index)
-  async index(@Param('id') param){
-    return param;
-  }
+    @Get('cats', ':id') // router.get('cats', '/cats/:id', index)
+    async index(@Param('id') param) {
+        return param;
+    }
 }
-
 ```
 if you open `/cats/12` then `ctx.body = 12`
 
 ### restful
 
 ```js
-import { BaseContextClass } from 'egg';
-import {  Resources, Get } from 'egg-pig';
+import { Resources, Get } from 'egg-pig';
 
 @Resources('cats')    // => router.resources(''cats', /cats', CastController)
 // or @Restful('cats')
-export default class CatsController extends BaseContextClass{
+export default class CatsController {
 
-  async index(){  
-    return 'index';
-  }
+    async index() {
+        return 'index';
+    }
 
-  async new(){
-    return 'new';
-  }
+    async new() {
+        return 'new';
+    }
 
-  @Get('/add')    //  router.get('/cats/add', add)
-  async add(){
-    return 'add';
-  }
+    @Get('/add')    //  router.get('/cats/add', add)
+    async add() {
+        return 'add';
+    }
 
 }
-
 ```
 Use route name `@Resources('cats', '/cats')`
 You can also use `@Restful()` Decorator, the same as Resources;
@@ -188,7 +207,6 @@ You can also use `@Restful()` Decorator, the same as Resources;
 ```js
 import { Application } from 'egg';
 import { MiddlewareConsumer, RequestMethod } from 'egg-pig';
-
 
 export default (app: Application) => {
 
@@ -260,7 +278,7 @@ export default (app:Application) => {
 
 // cats.ts
 @Controller('cats')
-export default class CatsController extends BaseContextClass{
+export default class CatsController {
 
   @Get('/add')
   async add(){
@@ -273,11 +291,10 @@ export default class CatsController extends BaseContextClass{
 ### render-header
 
 ```js
-import { BaseContextClass} from 'egg';
 import { Render,Controller, Get, Header } from 'egg-pig';
 
 @Controller('home')
-export default class HomeController extends BaseContextClass{
+export default class HomeController {
 
   @Get()   // /home
   @Render('list.tpl')
@@ -314,7 +331,6 @@ you can see [nest.js](https://docs.nestjs.com/).
 ### Guard
 
 ```js
-import { BaseContextClass } from 'egg';
 import { Injectable, CanActivate, ExecutionContext, UseGuards } from 'egg-pig';
 import { Observable } from 'rxjs/Observable';
 
@@ -338,7 +354,6 @@ export default class HomeController extends Controller {
 
 ### Pipe
 ```js
-import { BaseContextClass } from 'egg';
 import { PipeTransform, Injectable, ArgumentMetadata, UsePipes, Param, Query, Body  } from 'egg-pig';
 
 @Injectable()
@@ -360,7 +375,7 @@ export default class HomeController extends Controller {
 #### Build-in ValidationPipe
 
 ```js
-import { ... ParseIntPipe, ValidationPipe } from 'egg-pig';
+import { ParseIntPipe, ValidationPipe } from 'egg-pig';
 import { IsInt, IsString, Length } from "class-validator";
 
 class User {
@@ -381,7 +396,7 @@ class User {
 }
 
 @Controller('pipetest')
-export default class PipetestController extends BaseContextClass {
+export default class PipetestController {
 
     @Get('parseint')
     async foo(@Query('id', ParseIntPipe) id) {
@@ -469,7 +484,7 @@ class UserEntity {
 
 @Controller('serializer')
 @UseInterceptors(new ClassSerializerInterceptor())
-export default class SerializerController extends BaseContextClass {
+export default class SerializerController {
 
     @Get()
     async foo() {
@@ -494,15 +509,11 @@ export default class SerializerController extends BaseContextClass {
 
 ```js
 
-import { BaseContextClass } from 'egg';
-import {
-  Controller,
-  Get,
-} from 'egg-pig';
+import { Controller, Get } from 'egg-pig';
 
 
 @Controller('cats')
-export default class CatsController extends BaseContextClass {
+export default class CatsController {
 
   @Get()
   async foo(){
@@ -521,7 +532,7 @@ import {
 } from 'egg-pig';
 
 @Controller('cats')
-export default class CatsController extends BaseContextClass {
+export default class CatsController {
   @Get()
   async foo(){
      throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
@@ -585,7 +596,7 @@ class ForbiddenException extends HttpException {
 
 @Controller('cats')
 @UseFilters(HttpExceptionFilter)
-export default class CatsController extends BaseContextClass {
+export default class CatsController {
   @Get()
   async foo(){
     throw new ForbiddenException();
@@ -655,7 +666,7 @@ class APipe extends PipeTransform {
 
 
 @Controller('user')
-export default class HomeController extends BaseContextClass {
+export default class HomeController {
   @Get()
   public async index(@User('test', APipe) user){
     return user;
