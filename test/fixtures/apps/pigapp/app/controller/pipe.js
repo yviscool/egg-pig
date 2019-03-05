@@ -19,7 +19,7 @@ let BPipe = class BPipe {
 BPipe = tslib_1.__decorate([
     egg_pig_1.Injectable()
 ], BPipe);
-let PipeController = class PipeController extends egg_1.BaseContextClass {
+let PipeController = class PipeController {
     async index(query) {
         this.ctx.body = query;
     }

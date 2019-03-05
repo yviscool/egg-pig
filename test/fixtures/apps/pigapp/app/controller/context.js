@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
 const egg_1 = require("egg");
 const egg_pig_1 = require("../../../../../../");
-let ContextController = class ContextController extends egg_1.BaseContextClass {
+let ContextController = class ContextController {
     async query(query) {
         this.ctx.body = query.id;
     }

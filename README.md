@@ -62,7 +62,7 @@ export default class CatsController {
     constructor(
         private ctx: Context,
         private app: Application,
-        private config: EggAppConfig
+        private config: EggAppConfig,
         private service: IService,
     ) { }
 
