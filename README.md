@@ -89,7 +89,7 @@ export default class CatsController {
 
 another way 
 
-```json
+```js
 import { BaseContextClass } from 'egg';
 import { Controller, Get, Post } from 'egg-pig';
 
