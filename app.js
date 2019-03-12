@@ -10,13 +10,12 @@ module.exports = app => {
 
     const loader = new FileLoader(app);
 
-    PigConsumer
-      .setConfig(loader.getConfig())
-      .setRouters(loader.getRouters())
-      .createMethodsProxy();
+    const pigConsumer = new PigConsumer(loader.getConfig(), loader.getRouters());
+
+    pigConsumer.routerExecutionContext.createMethodsProxy();
 
     RoutesResolver
-      .setRouters(PigConsumer.getRouters())
+      .setRouters(pigConsumer.routers)
       .resolveRouters(app);
 
   }
