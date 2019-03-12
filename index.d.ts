@@ -284,3 +284,20 @@ export class ValidationPipe extends PipeTransform {
 export class ClassSerializerInterceptor extends EggInterceptor {
   public intercept(context: ExecutionContext, call$: Observable<any>): Observable<any>;
 }
+
+export abstract class RestController extends BaseContextClass {
+  // get  /posts/new
+  async new(...params: any[]): Promise;
+  // get  /posts
+  async index(...params: any[]): Promise;
+  // get /posts/:id 
+  async show(...params: any[]): Promise;
+  // get /posts/:id/edit
+  async edit(...params: any[]): Promise;
+  //  post /posts
+  async create(...params: any[]): Promise;
+  // patch /posts/:id
+  async update(...params: any[]): Promise;
+  // delete /posts/:id
+  async destroy(...params: any[]): Promise
+}

@@ -343,7 +343,7 @@ class XXGuard extends CanActivate{
 }
 
 @UseGuards(XXGuard)
-export default class HomeController extends Controller {
+export default class HomeController {
   // @UseGuards(XXGuard)
   public async index() {
     // some logic
@@ -364,7 +364,7 @@ class XXPipe extends PipeTransform{
 }
 
 @UsePipes(XXPipe)
-export default class HomeController extends Controller {
+export default class HomeController {
   // @UsePipes(XXPipe)
   async index(@Param('xx', XXPipe) param; @Body('xx', XXPipe) body, @Query(XXPipe) quey) {
     // some logic
@@ -439,7 +439,7 @@ class LoggingInterceptor extends EggInterceptor {
 }
 
 @UseInterceptors(LoggingInterceptor)
-export default class HomeController extends Controller {
+export default class HomeController {
 
   //@UseInterceptors(LoggingInterceptor)
   public async index() {
