@@ -50,14 +50,14 @@ export enum HttpStatus {
 }
 
 export enum RequestMethod {
-  GET =  '0',
+  GET = '0',
   POST = '1',
   PUT = '2',
-  DELETE ='3',
-  PATCH ='4',
-  ALL ='5',
-  OPTIONS ='6',
-  HEAD ='7',
+  DELETE = '3',
+  PATCH = '4',
+  ALL = '5',
+  OPTIONS = '6',
+  HEAD = '7',
 };
 
 
@@ -65,6 +65,32 @@ export enum RequestMethod {
 type ParamData = object | string | number;
 
 type Paramtype = 'BODY' | 'QUERY' | 'PARAM' | 'CUSTOM';
+
+interface GetFileStreamOptions {
+  requireFile?: boolean; // required file submit, default is true
+  defCharset?: string;
+  limits?: {
+    fieldNameSize?: number;
+    fieldSize?: number;
+    fields?: number;
+    fileSize?: number;
+    files?: number;
+    parts?: number;
+    headerPairs?: number;
+  };
+  checkFile?(
+    fieldname: string,
+    file: any,
+    filename: string,
+    encoding: string,
+    mimetype: string
+  ): void | Error;
+}
+
+interface GetFilesStreamOptions extends GetFileStreamOptions {
+  autoFields?: boolean; 
+}
+
 
 export function Injectable(): any;
 
@@ -77,7 +103,9 @@ export function Res(): (target, key, index: number) => any;
 export function Headers(property?: string): (target, key, index: number) => any;
 export function Session(): (target, key, index: number) => any;
 export function UploadedFile(): (target, key, index: number) => any;
-export function UploadedFiles(opt?): (target, key, index: number) => any;
+export function UploadedFiles(): (target, key, index: number) => any;
+export function UploadedFileStream(opts?: GetFileStreamOptions): (target, key, index: number) => any;
+export function UploadedFilesStream(opts?: GetFilesStreamOptions): (target, key, index: number) => any;
 
 export function Param(): (target, key, index: number) => any;
 export function Param(...pipes: (Type<PipeTransform> | PipeTransform)[]): (target, key, index: number) => any;
@@ -141,7 +169,7 @@ interface ExecutionContext {
 interface IMiddleware {
   apply(...middleware: (Function | any)[]): this;
   forRoutes(...routes: (string | RouteInfo | object)[]): this;
-  exclude(...routes:Array<string | RouteInfo>): this;
+  exclude(...routes: Array<string | RouteInfo>): this;
 }
 
 export abstract class CanActivate extends BaseContextClass {
@@ -149,7 +177,7 @@ export abstract class CanActivate extends BaseContextClass {
   abstract canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean>;
 }
 
-export abstract class EggInterceptor<T=any, R=any> extends BaseContextClass {
+export abstract class EggInterceptor<T = any, R = any> extends BaseContextClass {
   constructor(...args: any[]): any;
   abstract intercept(
     context: ExecutionContext,
@@ -278,7 +306,7 @@ export class ValidationPipe extends PipeTransform {
   constructor(options?: ValidationPipeOptions);
   public async transform(value, metadata: ArgumentMetadata): any;
   private toValidate(metadata: ArgumentMetadata): boolean;
-  toEmptyIfNil<T=any, R=any>(value: T): R | {};
+  toEmptyIfNil<T = any, R = any>(value: T): R | {};
 }
 
 export class ClassSerializerInterceptor extends EggInterceptor {

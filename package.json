@@ -33,21 +33,22 @@
   "devDependencies": {
     "autod": "^3.0.1",
     "autod-egg": "^1.0.0",
+    "await-stream-ready": "^1.0.1",
+    "class-transformer": "^0.1.9",
+    "class-validator": "^0.9.1",
     "egg": "^2.6.1",
     "egg-bin": "^4.3.5",
     "egg-ci": "^1.8.0",
     "egg-mock": "^3.14.0",
-    "tslib": "^1.9.0",
-    "tslint": "^4.0.0",
+    "egg-view-nunjucks": "^2.2.0",
     "eslint": "^4.11.0",
     "eslint-config-egg": "^6.0.0",
-    "webstorm-disable-index": "^1.2.0",
-    "await-stream-ready": "^1.0.1",
+    "mz": "^2.7.0",
+    "mz-modules": "^2.1.0",
     "stream-wormhole": "^1.0.3",
-    "egg-view-nunjucks": "^2.2.0",
-    "class-transformer": "^0.1.9",
-    "class-validator": "^0.9.1",
-    "mz": "^2.7.0"
+    "tslib": "^1.9.0",
+    "tslint": "^4.0.0",
+    "webstorm-disable-index": "^1.2.0"
   },
   "engines": {
     "node": ">=8.9.0"

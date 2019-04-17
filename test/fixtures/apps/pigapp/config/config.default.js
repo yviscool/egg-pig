@@ -24,6 +24,9 @@ exports.default = (appInfo) => {
             '.tpl': 'nunjucks',
         },
     };
+    config.multipart = {
+        mode: 'file',
+    };
     // config.globalPrefix = 'api/v1'
     class Guard {
         canActivate(context) {

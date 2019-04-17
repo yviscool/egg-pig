@@ -3,8 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
 const egg_1 = require("egg");
 const egg_pig_1 = require("../../../../../../");
-const awaitWriteStream = require("await-stream-ready");
-const sendToWormhole = require("stream-wormhole");
+const pump = require('mz-modules/pump');
 const fs = require("fs");
 const path = require("path");
 let UploadController = class UploadController extends egg_1.BaseContextClass {
@@ -12,48 +11,66 @@ let UploadController = class UploadController extends egg_1.BaseContextClass {
         const filename = encodeURIComponent(stream.fields.name) + path.extname(stream.filename).toLowerCase();
         const target = path.join(this.config.baseDir, 'app/public', filename);
         const writeStream = fs.createWriteStream(target);
-        try {
-            await awaitWriteStream.write(stream.pipe(writeStream));
-        }
-        catch (err) {
-            await sendToWormhole(stream);
-            throw err;
-        }
+        await pump(stream, writeStream);
         return 'ok';
     }
     async multiple(parts) {
-        const files = [];
         let stream;
         while ((stream = await parts()) != null) {
             const filename = stream.filename.toLowerCase();
             const target = path.join(this.config.baseDir, 'app/public', filename);
             const writeStream = fs.createWriteStream(target);
-            try {
-                await awaitWriteStream.write(stream.pipe(writeStream));
-            }
-            catch (err) {
-                await sendToWormhole(stream);
-                throw err;
-            }
-            files.push(filename);
+            await pump(stream, writeStream);
+        }
+        return 'ok';
+    }
+    async fileMethod(file) {
+        const filename = encodeURIComponent(this.ctx.request.body.name) + path.extname(file.filename).toLowerCase();
+        const targetPath = path.join(this.config.baseDir, 'app/public', filename);
+        const source = fs.createReadStream(file.filepath);
+        const target = fs.createWriteStream(targetPath);
+        await pump(source, target);
+        return 'ok';
+    }
+    async filesMethod(files) {
+        for (const file of files) {
+            const filename = file.filename.toLowerCase();
+            const targetPath = path.join(this.config.baseDir, 'app/public', filename);
+            const source = fs.createReadStream(file.filepath);
+            const target = fs.createWriteStream(targetPath);
+            await pump(source, target);
         }
         return 'ok';
     }
 };
 tslib_1.__decorate([
     egg_pig_1.Post('form'),
-    tslib_1.__param(0, egg_pig_1.UploadedFile()),
+    tslib_1.__param(0, egg_pig_1.UploadedFileStream()),
     tslib_1.__metadata("design:type", Function),
     tslib_1.__metadata("design:paramtypes", [Object]),
     tslib_1.__metadata("design:returntype", Promise)
 ], UploadController.prototype, "index", null);
 tslib_1.__decorate([
     egg_pig_1.Post('multiple'),
-    tslib_1.__param(0, egg_pig_1.UploadedFiles({ autoFields: true })),
+    tslib_1.__param(0, egg_pig_1.UploadedFilesStream({ autoFields: true })),
     tslib_1.__metadata("design:type", Function),
     tslib_1.__metadata("design:paramtypes", [Object]),
     tslib_1.__metadata("design:returntype", Promise)
 ], UploadController.prototype, "multiple", null);
+tslib_1.__decorate([
+    egg_pig_1.Post('file'),
+    tslib_1.__param(0, egg_pig_1.UploadedFile()),
+    tslib_1.__metadata("design:type", Function),
+    tslib_1.__metadata("design:paramtypes", [Object]),
+    tslib_1.__metadata("design:returntype", Promise)
+], UploadController.prototype, "fileMethod", null);
+tslib_1.__decorate([
+    egg_pig_1.Post('files'),
+    tslib_1.__param(0, egg_pig_1.UploadedFiles()),
+    tslib_1.__metadata("design:type", Function),
+    tslib_1.__metadata("design:paramtypes", [Object]),
+    tslib_1.__metadata("design:returntype", Promise)
+], UploadController.prototype, "filesMethod", null);
 UploadController = tslib_1.__decorate([
     egg_pig_1.Controller('upload')
 ], UploadController);
