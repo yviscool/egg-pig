@@ -125,7 +125,7 @@ use return value replace ctx.body;
 
 ### Param Decorators
 ```js
-import { Context, Request, Response, Param, Query, Body, Session, Headers, Res, Req, UploadedFile, UploadedFiles } from 'egg-pig';
+import { Context, Request, Response, Param, Query, Body, Session, Headers, Res, Req, UploadedFile, UploadedFiles, UploadedFileStream, UploadedFilesStream } from 'egg-pig';
 
 @Controller('cats')
 export default class CatsController {
@@ -141,8 +141,10 @@ export default class CatsController {
         @Body() body,
         @Session() session,
         @Headers() headers,
-        @UploadedFile() stream,
-        @UploadedFiles() parts,
+        @UploadedFile() file,
+        @UploadedFiles() fils,
+        @UploadedFileStream() stream,
+        @UploadedFilesStream() parts
     ) {
         // ctx = this.ctx;
         // req=  this.ctx.request;
@@ -152,6 +154,8 @@ export default class CatsController {
         // body = this.ctx.request.body;
         // session = this.ctx.session;
         // headers = this.ctx.headers;
+        // file = this.ctx.request.files[0]
+        // files = this.ctx.request.files;
         // stream = await this.ctx.getFileStream();
         // parts = this.ctx.multipart();
     }
