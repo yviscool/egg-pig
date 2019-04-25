@@ -173,12 +173,12 @@ interface IMiddleware {
 }
 
 export abstract class CanActivate extends BaseContextClass {
-  constructor(...args: any[]): any;
+  constructor(...args: any[]);
   abstract canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean>;
 }
 
 export abstract class EggInterceptor<T = any, R = any> extends BaseContextClass {
-  constructor(...args: any[]): any;
+  constructor(...args: any[]);
   abstract intercept(
     context: ExecutionContext,
     call$: Observable<T>,
@@ -186,16 +186,16 @@ export abstract class EggInterceptor<T = any, R = any> extends BaseContextClass 
 }
 
 export abstract class PipeTransform<T = any, R = any> extends BaseContextClass {
-  constructor(...args: any[]): any;
+  constructor(...args: any[]);
   abstract transform(value: T, metadata: ArgumentMetadata): R;
 }
 
-export abstract class ExceptionFilter extends BaseContextClass {
-  constructor(...args: any[]): any;
-  abstract catch(exception): any;
+export abstract class ExceptionFilter<T=any> extends BaseContextClass {
+  constructor(...args: any[]);
+  abstract catch(exception: T): any;
 }
 
-export function Catch(...exceptions): any;
+export function Catch(...exceptions: Type<any>[]): any;
 
 export function createParamDecorator(factory: (data, req) => any): (data?: any, ...pipes) => any;
 
@@ -299,14 +299,12 @@ interface ValidationPipeOptions extends ValidatorOptions {
 
 
 export class ParseIntPipe extends PipeTransform {
-  async transform(value: string, metadata: ArgumentMetadata): Promise<number>;
+  transform(value: string, metadata: ArgumentMetadata): any;
 }
 
 export class ValidationPipe extends PipeTransform {
   constructor(options?: ValidationPipeOptions);
-  public async transform(value, metadata: ArgumentMetadata): any;
-  private toValidate(metadata: ArgumentMetadata): boolean;
-  toEmptyIfNil<T = any, R = any>(value: T): R | {};
+  transform(value, metadata: ArgumentMetadata);
 }
 
 export class ClassSerializerInterceptor extends EggInterceptor {
