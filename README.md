@@ -416,8 +416,8 @@ export default class PipetestController {
 ```
 
 Notice You may find more information about the 
-  [class-validator](https://github.com/yviscool/understanding-nest/blob/master/book/3.1%20class-validator%20%E8%A7%A3%E6%9E%90%E4%BB%A5%E5%8F%8A%20validaiton.pipe%20%E4%BD%BF%E7%94%A8.md)/
-  [class-transformer](https://github.com/yviscool/understanding-nest/blob/master/book/3.2%20class-transformer%20%E8%A7%A3%E6%9E%90.md)
+  [class-validator](https://github.com/typestack/class-validator)/
+  [class-transformer](https://github.com/typestack/class-transformer)
 
 
 ### Interceptor
