@@ -177,7 +177,6 @@ export default class CatsController {
     }
 }
 ```
-if you open `/cats/12` then `ctx.body = 12`
 
 ### restful
 
