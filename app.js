@@ -1,20 +1,25 @@
 'use strict';
-const Application = require('./lib/consumer');
+
 const { EggLoader } = require('egg-core');
 
-module.exports = app => {
+module.exports = () => {
+
+  const defaultLoadController = EggLoader.prototype.loadController;
 
   EggLoader.prototype.loadController = function() {
-    app.logger.info('[egg-pig] prevent default loadController success.');
+
+    defaultLoadController.call(this);
+
+    if (this.config.eggpig.pig) {
+
+      // extends
+      this.createMethodsProxy();
+      this.resolveRouters();
+
+    }
+
   };
 
-
-  if (app.config.eggpig.pig) {
-
-    new Application(app)
-      .createMethodsProxy()
-      .resolveRouters();
-
-  }
+  Object.assign(EggLoader.prototype, require('./lib/loader/egg_loader'));
 
 };
