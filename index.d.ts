@@ -145,6 +145,7 @@ export function Resources(name: string, path: string): (target: object) => any;
 export function Restful(path: string): (target: object) => any;
 export function Restful(name: string, path: string): (target: object) => any;
 
+export function Priority(priority?: number): (target: object) => any
 
 interface ArgumentMetadata {
   readonly type: Paramtype;
