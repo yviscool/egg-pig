@@ -58,7 +58,7 @@ export enum RequestMethod {
   ALL = '5',
   OPTIONS = '6',
   HEAD = '7',
-};
+}
 
 
 

@@ -761,5 +761,14 @@ describe('test/pig.test.js', () => {
     });
   });
 
+  describe('test/exportcommon.js', () => {
+    it('should GET /exports/test', () => {
+      return app.httpRequest()
+        .get('/exports/test')
+        .expect(200)
+        .expect('hello');
+    });
+  });
+
 });
 
