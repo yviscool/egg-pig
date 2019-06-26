@@ -57,7 +57,7 @@ import { IService, EggAppConfig, Application, Context } from 'egg';
 import { Controller, Get, Post } from 'egg-pig';
 
 @Controller('cats') // => /cats
-export default class CatsController {
+export class CatsController {
     
     constructor(
         private ctx: Context,
@@ -94,7 +94,7 @@ import { BaseContextClass } from 'egg';
 import { Controller, Get, Post } from 'egg-pig';
 
 @Controller('cats') // => /cats
-export default class CatsController extends BaseContextClass{
+export class CatsController extends BaseContextClass{
 
     @Get()
     async index() {
@@ -107,7 +107,7 @@ export default class CatsController extends BaseContextClass{
 
 ```js
 @Controller('cats')
-export default class CatsController {
+export class CatsController {
 
     @Get('/add')  // router.get('/cats/add', add)
     async add() {
@@ -128,7 +128,7 @@ use return value replace ctx.body;
 import { Context, Request, Response, Param, Query, Body, Session, Headers, Res, Req, UploadedFile, UploadedFiles, UploadedFileStream, UploadedFilesStream } from 'egg-pig';
 
 @Controller('cats')
-export default class CatsController {
+export class CatsController {
     public async index(
         @Context() ctx,
         @Ctx() ctx, // alias
@@ -169,7 +169,7 @@ export default class CatsController {
 import { Controller, Get, Param } from 'egg-pig';
 
 @Controller('cats')
-export default class CatsController {
+export class CatsController {
 
     @Get('cats', ':id') // router.get('cats', '/cats/:id', index)
     async index(@Param('id') param) {
@@ -185,7 +185,7 @@ import { Resources, Get } from 'egg-pig';
 
 @Resources('cats')    // => router.resources(''cats', /cats', CastController)
 // or @Restful('cats')
-export default class CatsController {
+export class CatsController {
 
     async index() {
         return 'index';
@@ -281,7 +281,7 @@ export default (app:Application) => {
 
 // cats.ts
 @Controller('cats')
-export default class CatsController {
+export class CatsController {
 
   @Get('/add')
   async add(){
@@ -297,7 +297,7 @@ export default class CatsController {
 import { Render,Controller, Get, Header } from 'egg-pig';
 
 @Controller('home')
-export default class HomeController {
+export class HomeController {
 
   @Get()   // /home
   @Render('list.tpl')
@@ -346,7 +346,7 @@ class XXGuard extends CanActivate{
 }
 
 @UseGuards(XXGuard)
-export default class HomeController {
+export class HomeController {
   // @UseGuards(XXGuard)
   public async index() {
     // some logic
@@ -367,7 +367,7 @@ class XXPipe extends PipeTransform{
 }
 
 @UsePipes(XXPipe)
-export default class HomeController {
+export class HomeController {
   // @UsePipes(XXPipe)
   async index(@Param('xx', XXPipe) param; @Body('xx', XXPipe) body, @Query(XXPipe) quey) {
     // some logic
@@ -399,7 +399,7 @@ class User {
 }
 
 @Controller('pipetest')
-export default class PipetestController {
+export class PipetestController {
 
     @Get('parseint')
     async foo(@Query('id', ParseIntPipe) id) {
@@ -442,7 +442,7 @@ class LoggingInterceptor extends EggInterceptor {
 }
 
 @UseInterceptors(LoggingInterceptor)
-export default class HomeController {
+export class HomeController {
 
   //@UseInterceptors(LoggingInterceptor)
   public async index() {
@@ -487,7 +487,7 @@ class UserEntity {
 
 @Controller('serializer')
 @UseInterceptors(new ClassSerializerInterceptor())
-export default class SerializerController {
+export class SerializerController {
 
     @Get()
     async foo() {
@@ -516,7 +516,7 @@ import { Controller, Get } from 'egg-pig';
 
 
 @Controller('cats')
-export default class CatsController {
+export class CatsController {
 
   @Get()
   async foo(){
@@ -535,7 +535,7 @@ import {
 } from 'egg-pig';
 
 @Controller('cats')
-export default class CatsController {
+export class CatsController {
   @Get()
   async foo(){
      throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
@@ -599,7 +599,7 @@ class ForbiddenException extends HttpException {
 
 @Controller('cats')
 @UseFilters(HttpExceptionFilter)
-export default class CatsController {
+export class CatsController {
   @Get()
   async foo(){
     throw new ForbiddenException();
@@ -669,7 +669,7 @@ class APipe extends PipeTransform {
 
 
 @Controller('user')
-export default class HomeController {
+export class HomeController {
   @Get()
   public async index(@User('test', APipe) user){
     return user;
