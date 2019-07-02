@@ -94,8 +94,6 @@ interface GetFilesStreamOptions extends GetFileStreamOptions {
 
 export function Injectable(): any;
 
-export function Context(): (target, key, index: number) => any;
-export function Ctx(): (target, key, index: number) => any;
 export function Request(): (target, key, index: number) => any;
 export function Response(): (target, key, index: number) => any;
 export function Req(): (target, key, index: number) => any;

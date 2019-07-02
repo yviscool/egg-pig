@@ -25,9 +25,6 @@ let ContextController = class ContextController {
     async session(session) {
         this.ctx.body = session;
     }
-    async context(ctx) {
-        ctx.body = 'ok';
-    }
     async ctx2(ctx) {
         ctx.body = 'ok';
     }
@@ -84,20 +81,6 @@ tslib_1.__decorate([
     tslib_1.__metadata("design:paramtypes", [Object]),
     tslib_1.__metadata("design:returntype", Promise)
 ], ContextController.prototype, "session", null);
-tslib_1.__decorate([
-    egg_pig_1.Get('/context'),
-    tslib_1.__param(0, egg_pig_1.Context()),
-    tslib_1.__metadata("design:type", Function),
-    tslib_1.__metadata("design:paramtypes", [Object]),
-    tslib_1.__metadata("design:returntype", Promise)
-], ContextController.prototype, "context", null);
-tslib_1.__decorate([
-    egg_pig_1.Get('/ctx'),
-    tslib_1.__param(0, egg_pig_1.Ctx()),
-    tslib_1.__metadata("design:type", Function),
-    tslib_1.__metadata("design:paramtypes", [Object]),
-    tslib_1.__metadata("design:returntype", Promise)
-], ContextController.prototype, "ctx2", null);
 tslib_1.__decorate([
     egg_pig_1.Post('/body'),
     tslib_1.__param(0, egg_pig_1.Body()),
