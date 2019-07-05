@@ -73,13 +73,13 @@ export class CatsController {
     }
 
     @Get('get')   // => router.get('/cats/get', get)
-    async get() {
+    async foo() {
         return 'add'
         // or this.ctx.body = 'add'; 
     }
 
     @Post('/add')   // => router.post('/cats/add', add)
-    async add(@Body() body) {
+    async bar(@Body() body) {
         return body;
         // or this.ctx.body = body;
     }
@@ -97,7 +97,7 @@ import { Controller, Get, Post } from 'egg-pig';
 export class CatsController extends BaseContextClass{
 
     @Get()
-    async index() {
+    async foo() {
         return await this.service.foo.bar();
     }
 }
@@ -110,12 +110,12 @@ export class CatsController extends BaseContextClass{
 export class CatsController {
 
     @Get('/add')  // router.get('/cats/add', add)
-    async add() {
+    async foo() {
         return 'zjl'; // this.ctx.body = 'zjl;
     }
 
     @Get('bar')    // router.get('/cats/foo', foo)
-    async foo() {
+    async bar() {
         return await this.service.xxx.yyy(); // this.ctx.body = '';
     }
 }
@@ -129,9 +129,7 @@ import { Context, Request, Response, Param, Query, Body, Session, Headers, Res, 
 
 @Controller('cats')
 export class CatsController {
-    public async index(
-        @Context() ctx,
-        @Ctx() ctx, // alias
+    public async foo(
         @Request() req,
         @Response() res,
         @Req() req, // alias
@@ -146,7 +144,6 @@ export class CatsController {
         @UploadedFileStream() stream,
         @UploadedFilesStream() parts
     ) {
-        // ctx = this.ctx;
         // req=  this.ctx.request;
         // res = this.ctx.response;
         // param = this.ctx.params;
@@ -172,7 +169,7 @@ import { Controller, Get, Param } from 'egg-pig';
 export class CatsController {
 
     @Get('cats', ':id') // router.get('cats', '/cats/:id', index)
-    async index(@Param('id') param) {
+    async foo(@Param('id') param) {
         return param;
     }
 }
@@ -284,7 +281,7 @@ export default (app:Application) => {
 export class CatsController {
 
   @Get('/add')
-  async add(){
+  async foo(){
     this.ctx.body = 'add'; 
   }
 }
@@ -301,7 +298,7 @@ export class HomeController {
 
   @Get()   // /home
   @Render('list.tpl')
-  async index() {
+  async foo() {
     const dataList = {
       list: [
         { id: 1, title: 'this is news 1', url: '/news/1' },
@@ -313,7 +310,7 @@ export class HomeController {
 
   @Header('ETag','123')
   @Get('etag')
-  async foo() {
+  async bar() {
     ...
   }
 
@@ -322,7 +319,7 @@ export class HomeController {
       'Last-Modified': new Date(),
   })
   @Get('other')
-  async bar() {
+  async baz() {
       ...
   }
 }
@@ -348,7 +345,7 @@ class XXGuard extends CanActivate{
 @UseGuards(XXGuard)
 export class HomeController {
   // @UseGuards(XXGuard)
-  public async index() {
+  public async foo() {
     // some logic
   }
 }
@@ -369,7 +366,7 @@ class XXPipe extends PipeTransform{
 @UsePipes(XXPipe)
 export class HomeController {
   // @UsePipes(XXPipe)
-  async index(@Param('xx', XXPipe) param; @Body('xx', XXPipe) body, @Query(XXPipe) quey) {
+  async foo(@Param('xx', XXPipe) param; @Body('xx', XXPipe) body, @Query(XXPipe) quey) {
     // some logic
   }
 }
@@ -445,7 +442,7 @@ class LoggingInterceptor extends EggInterceptor {
 export class HomeController {
 
   //@UseInterceptors(LoggingInterceptor)
-  public async index() {
+  public async foo() {
     // some login
   }
 }
