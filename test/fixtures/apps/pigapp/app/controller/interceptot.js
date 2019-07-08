@@ -8,7 +8,7 @@ let AInterceptor = class AInterceptor {
     async intercept(context, stream$) {
         const { getClass, getHandler } = context
         this.ctx.req.query = { id: 1 };
-        return stream$.pipe(tap(() => { console.log(getClass(), getHandler()) }));
+        return stream$.handle().pipe(tap(() => { console.log(getClass(), getHandler()) }));
     }
 };
 AInterceptor = tslib_1.__decorate([
@@ -17,7 +17,7 @@ AInterceptor = tslib_1.__decorate([
 let BInterceptor = class BInterceptor {
     async intercept( _, stream$) {
         this.ctx.req.path = '/';
-        return stream$.pipe(tap(() => { }));
+        return stream$.handle().pipe(tap(() => { }));
     }
 };
 BInterceptor = tslib_1.__decorate([

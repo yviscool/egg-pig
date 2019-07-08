@@ -49,11 +49,11 @@ exports.default = (appInfo) => {
     class Interceptor {
         intercept(context, call$) {
             if (this['ctx'].url === '/global/interceptor') {
-                return call$.pipe(operators_1.map(data => ({
+                return call$.handle().pipe(operators_1.map(data => ({
                     'global': 'global'
                 })));
             }
-            return call$.pipe(operators_1.tap(data => ({
+            return call$.handle().pipe(operators_1.tap(data => ({
                 data
             })));
         }
@@ -97,7 +97,7 @@ exports.default = (appInfo) => {
     config.globalInterceptors = [
         class {
             intercept(context, call$) {
-                return call$.pipe(operators_1.tap(data => {}));
+                return call$.handle().pipe(operators_1.tap(data => {}));
             }
         },
         new Interceptor()

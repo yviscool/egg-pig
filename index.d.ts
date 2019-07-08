@@ -176,11 +176,16 @@ export abstract class CanActivate extends BaseContextClass {
   abstract canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean>;
 }
 
+
+export interface CallHandler<T = any> {
+  handle(): Observable<T>;
+}
+
 export abstract class EggInterceptor<T = any, R = any> extends BaseContextClass {
   constructor(...args: any[]);
   abstract intercept(
     context: ExecutionContext,
-    call$: Observable<T>,
+    call$: CallHandler<T>,
   ): Observable<R> | Promise<Observable<R>>;
 }
 
@@ -276,7 +281,6 @@ export class ServiceUnavailableException extends HttpException {
 export class GatewayTimeoutException extends HttpException {
   constructor(message?: string | object | any, error = 'Gateway Timeout');
 }
-
 
 interface ValidatorOptions {
   skipMissingProperties?: boolean;

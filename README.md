@@ -420,7 +420,7 @@ Notice You may find more information about the
 
 ```js
 import { EggInterceptor, UseInterceptors, Interceptor} from 'egg-pig';
-import { Injectable, EggInterceptor, ExecutionContext } from 'egg-pig';
+import { Injectable, EggInterceptor, ExecutionContext, CallHandler } from 'egg-pig';
 import { Observable } from 'rxjs/Observable';
 import { tap } from 'rxjs/operators';
 
@@ -428,7 +428,7 @@ import { tap } from 'rxjs/operators';
 class LoggingInterceptor extends EggInterceptor {
   intercept(
     context: ExecutionContext,
-    call$: Observable<any>,
+    call$: CallHandler,
   ): Observable<any> {
     console.log('Before...');
     const now = Date.now();
