@@ -432,7 +432,7 @@ class LoggingInterceptor extends EggInterceptor {
   ): Observable<any> {
     console.log('Before...');
     const now = Date.now();
-    return call$.pipe(
+    return call$.handle().pipe(
       tap(() => console.log(`After... ${Date.now() - now}ms`)),
     );
   }
