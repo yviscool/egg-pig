@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = () => {
-    return async function (_, next) {
+    return async function (__, next) {
         console.log('this is loga middleare');
         return next();
     };

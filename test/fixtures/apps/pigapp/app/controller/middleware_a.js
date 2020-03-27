@@ -12,7 +12,7 @@ let MiddlewareAController = class MiddlewareAController extends egg_1.BaseContex
     }
 };
 tslib_1.__decorate([
-    egg_pig_1.Get('foo'),
+    egg_pig_1.Get('foo', { middleware: ['loga'] }),
     tslib_1.__metadata("design:type", Function),
     tslib_1.__metadata("design:paramtypes", []),
     tslib_1.__metadata("design:returntype", Promise)

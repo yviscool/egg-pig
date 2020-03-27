@@ -5,8 +5,8 @@ exports.default = (app) => {
     const { router, controller, middleware } = app;
     egg_pig_1.MiddlewareConsumer
         .setRouter(router)
-        .apply(middleware['loga']())
-        .forRoutes('middleware_a/foo')
+        // .apply(middleware['loga']())
+        // .forRoutes('middleware_a/foo')
         .apply(middleware['loga'](), middleware['logb']())
         .forRoutes(controller.middlewareB)
         .apply(middleware['loga'])

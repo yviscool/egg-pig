@@ -168,7 +168,7 @@ import { Controller, Get, Param } from 'egg-pig';
 @Controller('cats')
 export class CatsController {
 
-    @Get('cats', ':id') // router.get('cats', '/cats/:id', index)
+    @Get(':id',{ routerName: 'cats'}) // router.get('cats', '/cats/:id', index)
     async foo(@Param('id') param) {
         return param;
     }
@@ -203,6 +203,23 @@ Use route name `@Resources('cats', '/cats')`
 You can also use `@Restful()` Decorator, the same as Resources;
 
 ### multiple-middleware
+
+
+1. use  decorator router options 
+
+```ts
+@Controller('/', {middleware: ['homeMiddleware']})  
+export class Test {
+    
+  @Get('/', {middleware: ['apiMiddleware']})
+  async index() {
+    this.ctx.body = this.ctx.home + this.ctx.api;
+  }
+   
+}
+```
+
+2. use MiddlewareConsumer on router.ts (now is deprecated)
 
 ```js
 import { Application } from 'egg';
@@ -260,7 +277,7 @@ Whilst class is used, quite often we might want to exclude certain routes. That 
   ...
 ```
 
-another way
+3. use koa-router feature 
 
 ```js
 // router.ts

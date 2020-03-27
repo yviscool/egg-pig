@@ -370,6 +370,21 @@ describe('test/pig.test.js', () => {
     });
   });
 
+  describe('test/controller_options.js', () => {
+    it('should GET controller_options/foo', () => {
+      return app.httpRequest()
+        .get('/controller_options/foo')
+        .expect(200)
+        .expect('foo');
+    });
+    it('should GET controller_options/bar', () => {
+      return app.httpRequest()
+        .get('/controller_options/bar')
+        .expect(200)
+        .expect('bar');
+    });
+  });
+
 
   describe('test/middleware.js', () => {
     it('should GET middleware_a/foo', () => {
