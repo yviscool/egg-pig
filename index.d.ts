@@ -143,7 +143,7 @@ export function UseGuards(...guards: (CanActivate | Function)[]): any;
 export function UseInterceptors(...interceptors: (EggInterceptor | Function)[]): any;
 export function UseFilters(...filters: (ExceptionFilter | Function)[]): any;
 
-export function Controller(path?: string, routerOptions?: { sensitive?: boolean; middleware?: []; }): (target: object) => any;
+export function Controller(path?: string, routerOptions?: { sensitive?: boolean; middleware?: (string | Function)[]; }): (target: object) => any;
 
 export function Resources(name: string, options?: { name?: string; middleware?: (string | Function)[], }): (target: object) => any;
 export function Restful(path: string): (target: object) => any;
