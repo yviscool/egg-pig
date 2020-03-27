@@ -146,8 +146,7 @@ export function UseFilters(...filters: (ExceptionFilter | Function)[]): any;
 export function Controller(path?: string, routerOptions?: { sensitive?: boolean; middleware?: (string | Function)[]; }): (target: object) => any;
 
 export function Resources(name: string, options?: { name?: string; middleware?: (string | Function)[], }): (target: object) => any;
-export function Restful(path: string): (target: object) => any;
-export function Restful(name: string, path: string): (target: object) => any;
+export function Restful(name: string, options?: { name?: string; middleware?: (string | Function)[], }): (target: object) => any;
 
 export function Priority(priority?: number): (target: object) => any
 
