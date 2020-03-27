@@ -88,7 +88,12 @@ interface GetFileStreamOptions {
 }
 
 interface GetFilesStreamOptions extends GetFileStreamOptions {
-  autoFields?: boolean; 
+  autoFields?: boolean;
+}
+
+interface ParamRouterOptions {
+  routerName?: string;
+  middleware?: (string | Function)[],
 }
 
 
@@ -118,14 +123,15 @@ export function Body(...pipes: (Type<PipeTransform> | PipeTransform)[]): (target
 export function Body(property: string, ...pipes: (Type<PipeTransform> | PipeTransform)[]): (target, key, index: number) => any;
 
 
-export function Head(name?: string, path?: string): (target, key, descriptor: PropertyDescriptor) => any;
-export function Get(name?: string, path?: string): (target, key, descriptor: PropertyDescriptor) => any;
-export function All(name?: string, path?: string): (target, key, descriptor: PropertyDescriptor) => any;
-export function Post(name?: string, path?: string): (target, key, descriptor: PropertyDescriptor) => any;
-export function Delete(name?: string, path?: string): (target, key, descriptor: PropertyDescriptor) => any;
-export function Options(name?: string, path?: string): (target, key, descriptor: PropertyDescriptor) => any;
-export function Put(name?: string, path?: string): (target, key, descriptor: PropertyDescriptor) => any;
-export function Patch(name?: string, path?: string): (target, key, descriptor: PropertyDescriptor) => any;
+
+export function Head(path?: string, routerOptions?: ParamRouterOptions): (target, key, descriptor: PropertyDescriptor) => any;
+export function Get(path?: string, routerOptions?: ParamRouterOptions): (target, key, descriptor: PropertyDescriptor) => any;
+export function All(path?: string, routerOptions?: ParamRouterOptions): (target, key, descriptor: PropertyDescriptor) => any;
+export function Post(path?: string, routerOptions?: ParamRouterOptions): (target, key, descriptor: PropertyDescriptor) => any;
+export function Delete(path?: string, routerOptions?: ParamRouterOptions): (target, key, descriptor: PropertyDescriptor) => any;
+export function Options(path?: string, routerOptions?: ParamRouterOptions): (target, key, descriptor: PropertyDescriptor) => any;
+export function Put(path?: string, routerOptions?: ParamRouterOptions): (target, key, descriptor: PropertyDescriptor) => any;
+export function Patch(path?: string, routerOptions?: ParamRouterOptions): (target, key, descriptor: PropertyDescriptor) => any;
 
 export function Render(template: string): (target, key, descriptor: PropertyDescriptor) => any;
 export function Header(name: string, value: string): (target, key, descriptor: PropertyDescriptor) => any;
@@ -137,9 +143,9 @@ export function UseGuards(...guards: (CanActivate | Function)[]): any;
 export function UseInterceptors(...interceptors: (EggInterceptor | Function)[]): any;
 export function UseFilters(...filters: (ExceptionFilter | Function)[]): any;
 
-export function Controller(path?: string): (target: object) => any;
-export function Resources(path: string): (target: object) => any;
-export function Resources(name: string, path: string): (target: object) => any;
+export function Controller(path?: string, routerOptions?: { sensitive?: boolean; middleware?: []; }): (target: object) => any;
+
+export function Resources(name: string, options?: { name?: string; middleware?: (string | Function)[], }): (target: object) => any;
 export function Restful(path: string): (target: object) => any;
 export function Restful(name: string, path: string): (target: object) => any;
 
@@ -194,7 +200,7 @@ export abstract class PipeTransform<T = any, R = any> extends BaseContextClass {
   abstract transform(value: T, metadata: ArgumentMetadata): R;
 }
 
-export abstract class ExceptionFilter<T=any> extends BaseContextClass {
+export abstract class ExceptionFilter<T = any> extends BaseContextClass {
   constructor(...args: any[]);
   abstract catch(exception: T): any;
 }

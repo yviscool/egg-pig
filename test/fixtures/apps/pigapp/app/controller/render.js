@@ -34,7 +34,7 @@ tslib_1.__decorate([
     tslib_1.__metadata("design:returntype", Promise)
 ], HomeController.prototype, "index", null);
 tslib_1.__decorate([
-    egg_pig_1.Get('renders', '/home'),
+    egg_pig_1.Get('/home', { routerName: 'renders' }),
     tslib_1.__metadata("design:type", Function),
     tslib_1.__metadata("design:paramtypes", []),
     tslib_1.__metadata("design:returntype", Promise)

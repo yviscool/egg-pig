@@ -351,25 +351,7 @@ describe('test/pig.test.js', () => {
       return app.httpRequest()
         .get('/render?id=1')
         .expect(200)
-        .expect(`<html>
-  <head>
-    <title>Hacker News</title>
-    <link rel="stylesheet" href="/public/css/news.css" />
-  </head>
-  <body>
-    <ul class="news-view view">
-      
-        <li class="item">
-          <a href="/news/1">this is news 1</a>
-        </li>
-      
-        <li class="item">
-          <a href="/news/2">this is news 2</a>
-        </li>
-      
-    </ul>
-  </body>
-</html>`);
+        .expect('<html><head><title>Hacker News</title><link rel="stylesheet" href="/public/css/news.css" /></head><body><ul class="news-view view"><li class="item"><a href="/news/1">this is news 1</a></li><li class="item"><a href="/news/2">this is news 2</a></li></ul></body></html>');
     });
     it('should GET render/home', () => {
       return app.httpRequest()
