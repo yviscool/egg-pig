@@ -199,7 +199,6 @@ export class CatsController {
 
 }
 ```
-Use route name `@Resources('cats', '/cats')`
 You can also use `@Restful()` Decorator, the same as Resources;
 
 ### multiple-middleware
