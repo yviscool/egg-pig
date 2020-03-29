@@ -207,12 +207,13 @@ You can also use `@Restful()` Decorator, the same as Resources;
 1. use  decorator router options 
 
 ```ts
-@Controller('/', {middleware: ['homeMiddleware']})  
+@Controller('/', {middleware: ['homeMiddleware']})   //  this.app.middleware['homeMiddleware']
 export class Test {
     
-  @Get('/', {middleware: ['apiMiddleware']})
+  @Get('/', {middleware: ['apiMiddleware']})  // this.app.middleware['apiMiddleware']
   async index() {
-    this.ctx.body = this.ctx.home + this.ctx.api;
+    const ctx = this.ctx;
+    return ctx.home + ctx.api;
   }
    
 }
