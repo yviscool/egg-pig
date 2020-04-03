@@ -224,50 +224,50 @@ describe('test/pig.test.js', () => {
   // });
 
 
-  // describe('test/resources.js', () => {
-  //   it('should GET /cats', () => {
-  //     return app.httpRequest()
-  //       .get('/cats')
-  //       .expect(200)
-  //       .expect('/cats/');
-  //   });
-  //   it('should GET /cats/new', () => {
-  //     return app.httpRequest()
-  //       .get('/cats/new')
-  //       .expect(200)
-  //       .expect('/cats/new');
-  //   });
-  //   it('should GET /cats/:id', () => {
-  //     return app.httpRequest()
-  //       .get('/cats/12')
-  //       .expect(200)
-  //       .expect('/cats/1');
-  //   });
-  //   it('should GET /cats/:id/edit', () => {
-  //     return app.httpRequest()
-  //       .get('/cats/12/edit')
-  //       .expect(200)
-  //       .expect('/cats/1/edit');
-  //   });
-  //   it('should GET /cats/create', () => {
-  //     return app.httpRequest()
-  //       .post('/cats')
-  //       .expect(200)
-  //       .expect('/cats/?id=1');
-  //   });
-  //   it('should GET /cats/update', () => {
-  //     return app.httpRequest()
-  //       .put('/cats/12')
-  //       .expect(200)
-  //       .expect('/cats/1');
-  //   });
-  //   it('should GET /cats/dectory', () => {
-  //     return app.httpRequest()
-  //       .delete('/cats/12')
-  //       .expect(200)
-  //       .expect('/cats/1');
-  //   });
-  // });
+  describe('test/resources.js', () => {
+    it('should GET /cats', () => {
+      return app.httpRequest()
+        .get('/cats')
+        .expect(200)
+        .expect('/cats/');
+    });
+    it('should GET /cats/new', () => {
+      return app.httpRequest()
+        .get('/cats/new')
+        .expect(200)
+        .expect('/cats/new');
+    });
+    it('should GET /cats/:id', () => {
+      return app.httpRequest()
+        .get('/cats/12')
+        .expect(200)
+        .expect('/cats/1');
+    });
+    it('should GET /cats/:id/edit', () => {
+      return app.httpRequest()
+        .get('/cats/12/edit')
+        .expect(200)
+        .expect('/cats/1/edit');
+    });
+    it('should GET /cats/create', () => {
+      return app.httpRequest()
+        .post('/cats')
+        .expect(200)
+        .expect('/cats/?id=1');
+    });
+    it('should GET /cats/update', () => {
+      return app.httpRequest()
+        .put('/cats/12')
+        .expect(200)
+        .expect('/cats/1');
+    });
+    it('should GET /cats/dectory', () => {
+      return app.httpRequest()
+        .delete('/cats/12')
+        .expect(200)
+        .expect('/cats/1');
+    });
+  });
 
   // describe('test/upload.js', () => {
   //   // it('should form stream ', async () => {
