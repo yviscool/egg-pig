@@ -72,13 +72,13 @@ export class CatsController {
         // or return 'index'
     }
 
-    @Get('get')   // => router.get('/cats/get', get)
+    @Get('get')   // => router.get('/cats/get', foo)
     async foo() {
         return 'add'
         // or this.ctx.body = 'add'; 
     }
 
-    @Post('/add')   // => router.post('/cats/add', add)
+    @Post('/add')   // => router.post('/cats/add', bar)
     async bar(@Body() body) {
         return body;
         // or this.ctx.body = body;
@@ -109,12 +109,12 @@ export class CatsController extends BaseContextClass{
 @Controller('cats')
 export class CatsController {
 
-    @Get('/add')  // router.get('/cats/add', add)
+    @Get('/add')  // router.get('/cats/add', foo)
     async foo() {
         return 'zjl'; // this.ctx.body = 'zjl;
     }
 
-    @Get('bar')    // router.get('/cats/foo', foo)
+    @Get('bar')    // router.get('/cats/foo', bar)
     async bar() {
         return await this.service.xxx.yyy(); // this.ctx.body = '';
     }
@@ -168,7 +168,7 @@ import { Controller, Get, Param } from 'egg-pig';
 @Controller('cats')
 export class CatsController {
 
-    @Get(':id',{ routerName: 'cats'}) // router.get('cats', '/cats/:id', index)
+    @Get(':id',{ routerName: 'cats'}) // router.get('cats', '/cats/:id', foo)
     async foo(@Param('id') param) {
         return param;
     }

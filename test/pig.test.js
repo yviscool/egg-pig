@@ -278,48 +278,48 @@ describe('test/pig.test.js', () => {
   //   //     .attach('file', path.join(__dirname, '1.jpg'))
   //   //     .expect('ok');
 
-  //   //   await app.httpRequest()
-  //   //     .get('/public/form.jpg')
-  //   //     .expect('content-length', '16424')
-  //   //     .expect(200);
-  //   // });
+    //   //   await app.httpRequest()
+    //   //     .get('/public/form.jpg')
+    //   //     .expect('content-length', '16424')
+    //   //     .expect(200);
+    //   // });
 
 
-  //   // it('should multiple stream', async () => {
-  //   //   app.mockCsrf();
-  //   //   await app.httpRequest()
-  //   //     .post('/upload/multiple')
-  //   //     .field('name1', '1')
-  //   //     .attach('file1', path.join(__dirname, '1.jpg'))
-  //   //     .field('name2', '2')
-  //   //     .attach('file2', path.join(__dirname, '2.jpg'))
-  //   //     .field('name3', '3')
-  //   //     .expect('ok');
+    //   // it('should multiple stream', async () => {
+    //   //   app.mockCsrf();
+    //   //   await app.httpRequest()
+    //   //     .post('/upload/multiple')
+    //   //     .field('name1', '1')
+    //   //     .attach('file1', path.join(__dirname, '1.jpg'))
+    //   //     .field('name2', '2')
+    //   //     .attach('file2', path.join(__dirname, '2.jpg'))
+    //   //     .field('name3', '3')
+    //   //     .expect('ok');
 
-  //   //   await app.httpRequest()
-  //   //     .get('/public/1.jpg')
-  //   //     .expect('content-length', '16424')
-  //   //     .expect(200);
+    //   //   await app.httpRequest()
+    //   //     .get('/public/1.jpg')
+    //   //     .expect('content-length', '16424')
+    //   //     .expect(200);
 
-  //   //   await app.httpRequest()
-  //   //     .get('/public/2.jpg')
-  //   //     .expect('content-length', '16424')
-  //   //     .expect(200);
-  //   // });
+    //   //   await app.httpRequest()
+    //   //     .get('/public/2.jpg')
+    //   //     .expect('content-length', '16424')
+    //   //     .expect(200);
+    //   // });
 
-  //   // it('should form file ', async () => {
-  //   //   app.mockCsrf();
-  //   //   await app.httpRequest()
-  //   //     .post('/upload/file')
-  //   //     .field('name', '3')
-  //   //     .attach('file', path.join(__dirname, '1.jpg'))
-  //   //     .expect('ok');
+    //   // it('should form file ', async () => {
+    //   //   app.mockCsrf();
+    //   //   await app.httpRequest()
+    //   //     .post('/upload/file')
+    //   //     .field('name', '3')
+    //   //     .attach('file', path.join(__dirname, '1.jpg'))
+    //   //     .expect('ok');
 
-  //   //   await app.httpRequest()
-  //   //     .get('/public/3.jpg')
-  //   //     .expect('content-length', '16424')
-  //   //     .expect(200);
-  //   // });
+    //   //   await app.httpRequest()
+    //   //     .get('/public/3.jpg')
+    //   //     .expect('content-length', '16424')
+    //   //     .expect(200);
+    //   // });
 
 
     it('should multiple files ', async () => {
