@@ -14,7 +14,6 @@ module.exports = () => {
 
       // extends
       this.createMethodsProxy();
-      // this.resolveRouters();
     }
 
   };
