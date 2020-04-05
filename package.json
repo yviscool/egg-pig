@@ -15,9 +15,6 @@
   "eggPlugin": {
     "name": "eggpig"
   },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
-  },
   "bugs": {
     "url": "https://github.com/yviscool/egg-pig/issues"
   },
