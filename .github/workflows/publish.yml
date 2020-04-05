@@ -3,12 +3,7 @@
 
 name: Node.js Package
 
-on:
-  push:
-    tags: 
-      - 'v*'
-  release:
-    types: [published]
+on: [push, pull_request]
 
 jobs:
   build:
@@ -21,18 +16,7 @@ jobs:
       - run: npm install
       - run: npm test
 
-  publish-npm:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 12
-          registry-url: https://registry.npmjs.org/
-      - run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
+
 
   publish-gpr:
     needs: build
@@ -43,7 +27,6 @@ jobs:
         with:
           node-version: 12
           registry-url: https://npm.pkg.github.com/
-          scope: '@yviscool'
       - run: npm publish --registry=https://npm.pkg.github.com/
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
