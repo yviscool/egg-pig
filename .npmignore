@@ -16,6 +16,7 @@ run/
 .nyc_output
 .travis.yml
 .vscode
+.github
 
 appveyor.yml
 commitlint.config.js
