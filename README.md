@@ -219,65 +219,7 @@ export class Test {
 }
 ```
 
-2. use MiddlewareConsumer on router.ts (now is deprecated)
-
-```js
-import { Application } from 'egg';
-import { MiddlewareConsumer, RequestMethod } from 'egg-pig';
-
-export default (app: Application) => {
-
-  const { router,controller, middleware, config} = app;
-
-  MiddlewareConsumer
-
-    .setRouter(router)
-    
-    .apply(middleware.log(config.xxx))
-
-    // router.all('foo/bar', log)
-    // router.all('foo/xxx', log)
-    .forRoutes(
-      'foo/bar',
-      'foo/xxx',
-    )  
-
-    .apply(middleware.log(), middleware.logXX(confix.yyy))
-
-    // router.xxx('controllerFoo/xxMethod', log, logXX)
-    // router.xxx('controllerFoo/yyMethod', log, logXX)
-    .forRoutes(controller.foo)
-
-    .apply(middleware.log) 
-
-
-    .forRoutes(
-      { path:'xxx/yyy', method: RequestMethod.GET},
-      { path:'xxx/zzz', method: RequestMethod.POST},
-      'xxx/bar',
-      controller.foo,
-      controller.bar,
-    )
-
-    ..
-}
-
-```
-Whilst class is used, quite often we might want to exclude certain routes. That is very intuitive due to the exclude() method.
-```js
-  ...
-   MiddlewareConsumer
-      .setRouter(router)
-      .apply(middleware.bar)
-      .exclude(
-        { path: 'cats', method: RequestMethod.GET },
-        { path: 'cats', method: RequestMethod.POST },
-      )
-      .forRoutes(controller.foo);
-  ...
-```
-
-3. use koa-router feature 
+2. use koa-router feature 
 
 ```js
 // router.ts
