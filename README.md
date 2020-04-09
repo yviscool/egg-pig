@@ -72,13 +72,13 @@ export class CatsController {
         // or return 'index'
     }
 
-    @Get('get')   // => router.get('/cats/get', get)
+    @Get('get')   // => router.get('/cats/get', foo)
     async foo() {
         return 'add'
         // or this.ctx.body = 'add'; 
     }
 
-    @Post('/add')   // => router.post('/cats/add', add)
+    @Post('/add')   // => router.post('/cats/add', bar)
     async bar(@Body() body) {
         return body;
         // or this.ctx.body = body;
@@ -109,12 +109,12 @@ export class CatsController extends BaseContextClass{
 @Controller('cats')
 export class CatsController {
 
-    @Get('/add')  // router.get('/cats/add', add)
+    @Get('/add')  // router.get('/cats/add', foo)
     async foo() {
         return 'zjl'; // this.ctx.body = 'zjl;
     }
 
-    @Get('bar')    // router.get('/cats/foo', foo)
+    @Get('bar')    // router.get('/cats/foo', bar)
     async bar() {
         return await this.service.xxx.yyy(); // this.ctx.body = '';
     }
@@ -168,7 +168,7 @@ import { Controller, Get, Param } from 'egg-pig';
 @Controller('cats')
 export class CatsController {
 
-    @Get(':id',{ routerName: 'cats'}) // router.get('cats', '/cats/:id', index)
+    @Get(':id',{ routerName: 'cats'}) // router.get('cats', '/cats/:id', foo)
     async foo(@Param('id') param) {
         return param;
     }
@@ -219,65 +219,7 @@ export class Test {
 }
 ```
 
-2. use MiddlewareConsumer on router.ts (now is deprecated)
-
-```js
-import { Application } from 'egg';
-import { MiddlewareConsumer, RequestMethod } from 'egg-pig';
-
-export default (app: Application) => {
-
-  const { router,controller, middleware, config} = app;
-
-  MiddlewareConsumer
-
-    .setRouter(router)
-    
-    .apply(middleware.log(config.xxx))
-
-    // router.all('foo/bar', log)
-    // router.all('foo/xxx', log)
-    .forRoutes(
-      'foo/bar',
-      'foo/xxx',
-    )  
-
-    .apply(middleware.log(), middleware.logXX(confix.yyy))
-
-    // router.xxx('controllerFoo/xxMethod', log, logXX)
-    // router.xxx('controllerFoo/yyMethod', log, logXX)
-    .forRoutes(controller.foo)
-
-    .apply(middleware.log) 
-
-
-    .forRoutes(
-      { path:'xxx/yyy', method: RequestMethod.GET},
-      { path:'xxx/zzz', method: RequestMethod.POST},
-      'xxx/bar',
-      controller.foo,
-      controller.bar,
-    )
-
-    ..
-}
-
-```
-Whilst class is used, quite often we might want to exclude certain routes. That is very intuitive due to the exclude() method.
-```js
-  ...
-   MiddlewareConsumer
-      .setRouter(router)
-      .apply(middleware.bar)
-      .exclude(
-        { path: 'cats', method: RequestMethod.GET },
-        { path: 'cats', method: RequestMethod.POST },
-      )
-      .forRoutes(controller.foo);
-  ...
-```
-
-3. use koa-router feature 
+2. use koa-router feature 
 
 ```js
 // router.ts

@@ -160,21 +160,21 @@ interface Type<T> extends Function {
   new(...args: any[]): T;
 }
 
-interface RouteInfo {
-  readonly path: string;
-  readonly method: RequestMethod;
-}
+// interface RouteInfo {
+//   readonly path: string;
+//   readonly method: RequestMethod;
+// }
 
 interface ExecutionContext {
   getClass<T = any>(): Type<T>;  // use for class 
   getHandler(): Function;    // classMethod 
 }
 
-interface IMiddleware {
-  apply(...middleware: (Function | any)[]): this;
-  forRoutes(...routes: (string | RouteInfo | object)[]): this;
-  exclude(...routes: Array<string | RouteInfo>): this;
-}
+// interface IMiddleware {
+//   apply(...middleware: (Function | any)[]): this;
+//   forRoutes(...routes: (string | RouteInfo | object)[]): this;
+//   exclude(...routes: Array<string | RouteInfo>): this;
+// }
 
 export abstract class CanActivate extends BaseContextClass {
   constructor(...args: any[]);
@@ -209,10 +209,10 @@ export function Catch(...exceptions: Type<any>[]): any;
 export function createParamDecorator(factory: (data, req) => any): (data?: any, ...pipes) => any;
 
 
-export class MiddlewareConsumer {
-  static setRouter(router: Router): IMiddleware;
-  static apply(...middleware: (Function | any)[]): IMiddleware;
-}
+// export class MiddlewareConsumer {
+//   static setRouter(router: Router): IMiddleware;
+//   static apply(...middleware: (Function | any)[]): IMiddleware;
+// }
 
 export function ReflectMetadata(metadataKey, metadataValue): (target, key?, descriptor?) => any;
 
