@@ -267,6 +267,12 @@ describe('test/pig.test.js', () => {
         .expect(200)
         .expect('/cats/1');
     });
+    it('should GET /cats/foo', () => {
+      return app.httpRequest()
+        .get('/cats/foo')
+        .expect(200)
+        .expect('foo');
+    });
   });
 
   describe('test/upload.js', () => {
