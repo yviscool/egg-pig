@@ -35,7 +35,7 @@
     "autod": "^3.0.1",
     "autod-egg": "^1.0.0",
     "await-stream-ready": "^1.0.1",
-    "class-transformer": "^0.2.3",
+    "class-transformer": "^0.3.1",
     "class-validator": "^0.11.1",
     "egg": "^2.21.1",
     "egg-bin": "^4.12.3",
